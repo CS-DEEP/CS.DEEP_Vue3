@@ -15,7 +15,8 @@
   "dependencies": {
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
-    "element-plus": "^2.3.5",
+    "element-plus": "^2.3.7",
+    "sass": "^1.63.6",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0",
     "vuex": "^4.1.0",
@@ -40,6 +41,8 @@
     "prettier": "^2.8.8",
     "sass-loader": "^7.0.1",
     "typescript": "~5.0.4",
+    "unplugin-auto-import": "^0.16.4",
+    "unplugin-vue-components": "^0.25.1",
     "vite": "^4.3.5",
     "vitest": "^0.31.0",
     "vue-tsc": "^1.6.4"
