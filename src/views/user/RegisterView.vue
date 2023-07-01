@@ -49,9 +49,7 @@
 </template>
 
 <script lang="ts">
-import userApi from '../../api/modules/user/index.ts'
-import {send} from "vite";
-
+import api from "@/api/modules";
 
 export default {
   name: "RegisterView",
@@ -74,27 +72,27 @@ export default {
   methods: {
     SendCodeHandle() {
       const sendBtn = this.$refs.sendCode as HTMLButtonElement;
-      userApi.sendCode({email: this.userEmail}).then(res => {
+      api.userApi.sendCode({email: this.userEmail}).then(res => {
         console.log(res)
+        let timer = setInterval(() => {
+          // 判断剩余秒数
+          if (this.time == 0) {
+            // 清除定时器和复原按钮
+            clearInterval(timer);
+            this.haveSendCode = false;
+            sendBtn.textContent = '发送验证码';
+          } else {
+            this.haveSendCode = true;
+            sendBtn.textContent = `${this.time}秒后重新获取`;
+            this.time--;
+          }
+        }, 1000);
       }).catch(err => {
         console.log(err)
       })
-      let timer = setInterval(() => {
-        // 判断剩余秒数
-        if (this.time == 0) {
-          // 清除定时器和复原按钮
-          clearInterval(timer);
-          this.haveSendCode = false;
-          sendBtn.textContent = '发送验证码';
-        } else {
-          this.haveSendCode = true;
-          sendBtn.textContent = `${this.time}秒后重新获取`;
-          this.time--;
-        }
-      }, 1000);
     },
     RegisterHandle() {
-      userApi.register({
+      api.userApi.register({
         username: this.username,
         userEmail: this.userEmail,
         Code: this.checkCode,
@@ -217,7 +215,7 @@ export default {
 
         button {
           width: 30%;
-          height: 35px;
+          height: 36px;
           color: white;
           border-radius: 10px;
           background: #808080;

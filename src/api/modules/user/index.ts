@@ -13,4 +13,8 @@ const register = (data: any) => {
     return service.post('/user/register', data)
 }
 
-export default {login, sendCode, register};
+const resetPwd = (data: any) => {
+    return service.post('/user/password', data)
+}
+
+export default {login, sendCode, register, resetPwd};

@@ -14,22 +14,30 @@
 
         </div>
       </div>
-      <div class="login-form">
-        <h1>用户登录</h1>
+      <div class="reset-form">
+        <h1>重置密码</h1>
         <div class="email">
           <img src="../../assets/email.png">
-          <input type="email" placeholder="email" v-model="userEmail">
+          <input type="email" placeholder="邮箱" v-model="userEmail">
+        </div>
+        <div class="checkCode">
+          <img src="../../assets/checkCode.png">
+          <input class="check" type="text" placeholder="邮箱验证码" v-model="checkCode">
+          <button class="send" @click="SendCodeHandle" :disabled="isDisabled" ref="sendCode">发送验证码</button>
         </div>
         <div class="pwd">
           <img src="../../assets/pwd.png">
-          <input type="password" placeholder="password" v-model="userPwd">
+          <input type="password" placeholder="密码" v-model="pwd">
+        </div>
+        <div class="pwd">
+          <img src="../../assets/pwd.png">
+          <input type="password" placeholder="确认密码" v-model="confirmPwd">
         </div>
         <div class="others">
-          <router-link class="register" to="/register">新用户？点我注册</router-link>
-          <router-link class="resetPwd" to="/resetPwd">忘记密码</router-link>
+          <router-link class="login" to="/login">前往登录</router-link>
         </div>
         <button class="button">
-          <span class="button-content" @click="LoginHandle">登录</span>
+          <span class="button-content" @click="ResetPwdHandle">提交</span>
         </button>
       </div>
     </div>
@@ -40,18 +48,50 @@
 import api from "@/api/modules";
 
 export default {
-  name: "LoginView",
+  name: "ResetPwdView",
   data() {
     return {
-      userEmail: "",
-      userPwd: "",
+      userEmail: '',
+      checkCode: '',
+      pwd: '',
+      confirmPwd: '',
+      haveSendCode: false,
+      time: 59
+    }
+  },
+  computed: {
+    isDisabled(): boolean {
+      return this.haveSendCode
     }
   },
   methods: {
-    LoginHandle() {
-      api.userApi.login({
-        email: this.userEmail,
-        pwd: this.userPwd
+    SendCodeHandle() {
+      const sendBtn = this.$refs.sendCode as HTMLButtonElement;
+      api.userApi.sendCode({email: this.userEmail}).then(res => {
+        console.log(res)
+        let timer = setInterval(() => {
+          // 判断剩余秒数
+          if (this.time == 0) {
+            // 清除定时器和复原按钮
+            clearInterval(timer);
+            this.haveSendCode = false;
+            sendBtn.textContent = '发送验证码';
+          } else {
+            this.haveSendCode = true;
+            sendBtn.textContent = `${this.time}秒后重新获取`;
+            this.time--;
+          }
+        }, 1000);
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    ResetPwdHandle() {
+      api.userApi.resetPwd({
+        userEmail: this.userEmail,
+        Code: this.checkCode,
+        pwd: this.pwd,
+        confirmPwd: this.confirmPwd,
       }).then(res => {
         console.log(res)
       }).catch(err => {
@@ -118,7 +158,7 @@ export default {
       }
     }
 
-    .login-form {
+    .reset-form {
       width: 50%;
       height: 100%;
       justify-content: center;
@@ -128,13 +168,13 @@ export default {
 
       h1 {
         margin-top: 10%;
-        margin-bottom: 15%;
+        margin-bottom: 10%;
       }
 
       div {
-        height: 60px;
+        height: 55px;
         width: 95%;
-        margin: 3% auto;
+        margin: auto;
 
         img {
           width: auto;
@@ -155,28 +195,41 @@ export default {
         }
       }
 
+      .checkCode {
+        display: flex;
+        height: 55px;
+        margin-left: 15px;
+
+        input {
+          width: 55%;
+          height: 30px;
+        }
+
+        button {
+          width: 30%;
+          height: 36px;
+          color: white;
+          border-radius: 10px;
+          background: #808080;
+        }
+
+        button:hover {
+          background-color: #696969;
+        }
+      }
+
       .others {
         height: 20px;
         width: 93%;
-        margin: 3% auto;
+        margin: auto;
 
-        .register {
-          font-size: 15px;
-          font-family: '楷体', 'sans-serif';
-          float: left;
-        }
-
-        .register:hover {
-          color: royalblue;
-        }
-
-        .resetPwd {
+        .login {
           font-size: 15px;
           font-family: '楷体', 'sans-serif';
           float: right;
         }
 
-        .resetPwd:hover {
+        .login:hover {
           color: royalblue;
         }
       }
