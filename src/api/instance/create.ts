@@ -80,16 +80,14 @@ export class Request {
     // 定义请求方法
     public get<T = any>(
         url: string,
-        config?: axios.AxiosRequestConfig
     ): Promise<AxiosResponse<ResponseResult<T>>> {
-        return this.instance.get(url, config);
+        return this.instance.get(url);
     }
 
     public post<T = any>(
         url: string,
         data?: any,
-        config?: axios.AxiosRequestConfig
     ): Promise<AxiosResponse<ResponseResult<T>>> {
-        return this.instance.post(url, data, config);
+        return this.instance.post(url, data);
     }
 }

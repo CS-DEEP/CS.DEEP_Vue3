@@ -100,6 +100,11 @@ export default {
         confirmPwd: this.confirmPwd
       }).then(res => {
         console.log(res)
+        if (res.data.code === 200) {
+          this.$router.push('/login')
+        } else {
+          alert(res.data.message)
+        }
       }).catch(err => {
         console.log(err)
       })

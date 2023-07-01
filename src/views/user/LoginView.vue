@@ -53,7 +53,11 @@ export default {
         email: this.userEmail,
         password: this.userPwd
       }).then(res => {
-        console.log(res)
+        if (res.data.code === 200) {
+          this.$router.push('/')
+        } else {
+          alert(res.data.message)
+        }
       }).catch(err => {
         console.log(err)
       })

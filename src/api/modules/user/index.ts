@@ -9,7 +9,7 @@ const login = (data: any) => {
 
 const sendRegisterCode = (data: any) => {
     return service.get('/checkcode/register/code' +
-        '?email=' + data.email, data)
+        '?email=' + data.email)
 }
 
 const register = (data: any) => {
@@ -31,7 +31,7 @@ const resetPwd = (data: any) => {
 
 const sendResetCode = (data: any) => {
     return service.get('/checkcode/reset/code' +
-        '?email=' + data.email, data)
+        '?email=' + data.email)
 }
 
 export default {login, sendRegisterCode, register, resetPwd, sendResetCode};
