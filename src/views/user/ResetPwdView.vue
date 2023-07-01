@@ -67,7 +67,7 @@ export default {
   methods: {
     SendCodeHandle() {
       const sendBtn = this.$refs.sendCode as HTMLButtonElement;
-      api.userApi.sendCode({email: this.userEmail}).then(res => {
+      api.userApi.sendResetCode({email: this.userEmail}).then(res => {
         console.log(res)
         let timer = setInterval(() => {
           // 判断剩余秒数
@@ -88,9 +88,9 @@ export default {
     },
     ResetPwdHandle() {
       api.userApi.resetPwd({
-        userEmail: this.userEmail,
-        Code: this.checkCode,
-        pwd: this.pwd,
+        email: this.userEmail,
+        checkCode: this.checkCode,
+        password: this.pwd,
         confirmPwd: this.confirmPwd,
       }).then(res => {
         console.log(res)

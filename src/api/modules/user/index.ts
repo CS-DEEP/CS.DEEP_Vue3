@@ -7,8 +7,9 @@ const login = (data: any) => {
         '&password=' + data.password, data)
 }
 
-const sendCode = (data: any) => {
-    return service.get('/checkcode/register/code?email=' + data.email, data)
+const sendRegisterCode = (data: any) => {
+    return service.get('/checkcode/register/code' +
+        '?email=' + data.email, data)
 }
 
 const register = (data: any) => {
@@ -21,7 +22,16 @@ const register = (data: any) => {
 }
 
 const resetPwd = (data: any) => {
-    return service.post('/user/password', data)
+    return service.post('/user/reset/password' +
+        '?email=' + data.email +
+        '&checkCode=' + data.checkCode +
+        '&password=' + data.password +
+        '&confirmPwd=' + data.confirmPwd, data)
 }
 
-export default {login, sendCode, register, resetPwd};
+const sendResetCode = (data: any) => {
+    return service.get('/checkcode/reset/code' +
+        '?email=' + data.email, data)
+}
+
+export default {login, sendRegisterCode, register, resetPwd, sendResetCode};

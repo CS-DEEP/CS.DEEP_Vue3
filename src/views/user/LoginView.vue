@@ -51,7 +51,7 @@ export default {
     LoginHandle() {
       api.userApi.login({
         email: this.userEmail,
-        pwd: this.userPwd
+        password: this.userPwd
       }).then(res => {
         console.log(res)
       }).catch(err => {

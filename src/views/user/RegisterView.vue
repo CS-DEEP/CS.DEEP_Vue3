@@ -72,7 +72,7 @@ export default {
   methods: {
     SendCodeHandle() {
       const sendBtn = this.$refs.sendCode as HTMLButtonElement;
-      api.userApi.sendCode({email: this.userEmail}).then(res => {
+      api.userApi.sendRegisterCode({email: this.userEmail}).then(res => {
         console.log(res)
         let timer = setInterval(() => {
           // 判断剩余秒数
