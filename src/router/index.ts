@@ -20,10 +20,10 @@ const router = createRouter({
             component: () => import('../views/user/RegisterView.vue')
         },
         {
-            path: '/about',
-            name: 'about',
-            component: () => import('../views/AboutView.vue')
-        }
+            path: '/resetPwd',
+            name: 'resetPwd',
+            component: () => import('../views/user/ResetPwdView.vue')
+        },
     ]
 } as RouterOptions)
 

@@ -20,4 +20,8 @@ const register = (data: any) => {
         '&confirmPwd=' + data.confirmPwd, data)
 }
 
-export default {login, sendCode, register};
+const resetPwd = (data: any) => {
+    return service.post('/user/password', data)
+}
+
+export default {login, sendCode, register, resetPwd};
