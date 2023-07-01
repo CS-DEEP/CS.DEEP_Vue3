@@ -96,12 +96,10 @@ export default {
     RegisterHandle() {
       userApi.register({
         username: this.username,
-        userEmail: this.userEmail,
-        Code: this.checkCode,
-        pwd: this.pwd,
-        confirmPwd: this.confirmPwd,
-        gender: 1,
-        age: 18
+        email: this.userEmail,
+        checkCode: this.checkCode,
+        password: this.pwd,
+        confirmPwd: this.confirmPwd
       }).then(res => {
         console.log(res)
       }).catch(err => {
