@@ -13,7 +13,7 @@
           :key="dateIndex"
           :style="`background:${dateData['color']};`"
       >
-        <el-tooltip placement="top" :delay="300" :content="`${dateData['data']}`">
+        <el-tooltip placement="top" :delay="300" :content="`${dateData['data']}`" hide-after="0">
           <div class="date"></div>
         </el-tooltip>
       </div>
