@@ -3,7 +3,7 @@
     <div class="login-container">
       <div class="container-left">
         <div>
-          <img src="../../assets/forum.png" alt="logo">
+          <img src="../../assets/image/forum.png" alt="logo">
         </div>
         <div>
           <h3>Welcome to CS.DEEP!</h3>
@@ -17,11 +17,11 @@
       <div class="login-form">
         <h1>用户登录</h1>
         <div class="email">
-          <img src="../../assets/email.png">
+          <img src="../../assets/image/email.png">
           <input type="email" placeholder="email" v-model="userEmail">
         </div>
         <div class="pwd">
-          <img src="../../assets/pwd.png">
+          <img src="../../assets/image/pwd.png">
           <input type="password" placeholder="password" v-model="userPwd">
         </div>
         <div class="others">

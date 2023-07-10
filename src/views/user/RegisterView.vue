@@ -3,7 +3,7 @@
     <div class="login-container">
       <div class="container-left">
         <div>
-          <img src="../../assets/forum.png" alt="logo">
+          <img src="../../assets/image/forum.png" alt="logo">
         </div>
         <div>
           <h3>Welcome to CS.DEEP!</h3>
@@ -17,24 +17,24 @@
       <div class="register-form">
         <h1>用户注册</h1>
         <div class="name">
-          <img src="../../assets/username.png">
+          <img src="../../assets/image/username.png">
           <input type="text" placeholder="用户名" v-model="username">
         </div>
         <div class="email">
-          <img src="../../assets/email.png">
+          <img src="../../assets/image/email.png">
           <input type="email" placeholder="邮箱" v-model="userEmail">
         </div>
         <div class="checkCode">
-          <img src="../../assets/checkCode.png">
+          <img src="../../assets/image/checkCode.png">
           <input class="check" type="text" placeholder="邮箱验证码" v-model="checkCode">
           <button class="send" @click="SendCodeHandle" :disabled="isDisabled" ref="sendCode">发送验证码</button>
         </div>
         <div class="pwd">
-          <img src="../../assets/pwd.png">
+          <img src="../../assets/image/pwd.png">
           <input type="password" placeholder="密码" v-model="pwd">
         </div>
         <div class="pwd">
-          <img src="../../assets/pwd.png">
+          <img src="../../assets/image/pwd.png">
           <input type="password" placeholder="确认密码" v-model="confirmPwd">
         </div>
         <div class="others">

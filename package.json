@@ -16,6 +16,7 @@
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "element-plus": "^2.3.7",
+    "moment": "^2.29.4",
     "sass": "^1.63.6",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0",

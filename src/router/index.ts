@@ -24,6 +24,11 @@ const router = createRouter({
             name: 'resetPwd',
             component: () => import('../views/user/ResetPwdView.vue')
         },
+        {
+            path: '/userInfo',
+            name: 'userInfo',
+            component: () => import('../views/user/UserInfoView.vue')
+        }
     ]
 } as RouterOptions)
 
