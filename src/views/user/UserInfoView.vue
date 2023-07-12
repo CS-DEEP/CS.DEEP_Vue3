@@ -1,15 +1,16 @@
 <template>
-  <calendarHeatmap/>
-
+  <div>
+    <CalendarHeatmap/>
+  </div>
 </template>
 
 <script>
-import calendarHeatmap from '../../components/common/calendarHeatmap.vue'
+import CalendarHeatmap from '../../components/common/CalendarHeatmap.vue'
 
 export default {
   name: "UserInfoView",
   components: [
-    calendarHeatmap,
+    CalendarHeatmap,
   ]
 }
 </script>
