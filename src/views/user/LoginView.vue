@@ -55,6 +55,7 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.push('/')
+          alert(res.data.message)
         } else {
           alert(res.data.message)
         }

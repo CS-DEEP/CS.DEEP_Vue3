@@ -96,6 +96,7 @@ export default {
         console.log(res)
         if (res.data.code === 200) {
           this.$router.push('/login')
+          alert(res.data.message)
         } else {
           alert(res.data.message)
         }
