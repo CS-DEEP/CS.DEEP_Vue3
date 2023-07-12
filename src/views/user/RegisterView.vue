@@ -101,8 +101,8 @@ export default {
       }).then(res => {
         console.log(res)
         if (res.data.code === 200) {
-          this.$router.push('/login')
           alert(res.data.message)
+          this.$router.push('/login')
         } else {
           alert(res.data.message)
         }
