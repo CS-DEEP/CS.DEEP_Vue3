@@ -1,10 +1,10 @@
 <template>
   <div class="footer">
-    <router-link to="/">HomePage</router-link>
+    <router-link to="/"><span>HomePage</span></router-link>
     |
-    <router-link to="#">UsefulLinks</router-link>
+    <router-link to="#"><span>UsefulLinks</span></router-link>
     |
-    <router-link to="#">AboutUs</router-link>
+    <router-link to="#"><span>AboutUs</span></router-link>
   </div>
 </template>
 
@@ -14,8 +14,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .footer {
+  min-width: 1500px;
   width: 300px;
   padding: 20px;
   position: absolute;
@@ -25,7 +26,12 @@ export default {
   margin: auto;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: center;
   font-family: "Times New Roman", "sans-serif";
+
+  span{
+    margin: 0 20px 0 20px;
+    font-size: larger;
+  }
 }
 </style>

@@ -13,7 +13,8 @@ import FooterBar from './components/common/FooterBar.vue'
   margin: 0;
   padding: 0;
 }
-body{
+
+body {
   min-width: 1500px;
 }
 </style>
