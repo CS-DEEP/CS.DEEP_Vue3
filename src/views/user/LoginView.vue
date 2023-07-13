@@ -55,6 +55,7 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.push('/')
+          this.$store.commit('updateUserId', res.data.data.userId)
           alert(res.data.message)
         } else {
           alert(res.data.message)

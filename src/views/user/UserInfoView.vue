@@ -1,17 +1,21 @@
 <template>
-  <div>
-    <CalendarHeatmap/>
+  <div class="user-page">
+    <span>此用户userId为: {{ userId }}</span>
   </div>
 </template>
 
 <script>
-import CalendarHeatmap from '../../components/common/CalendarHeatmap.vue'
 
 export default {
   name: "UserInfoView",
-  components: [
-    CalendarHeatmap,
-  ]
+  created() {
+    this.userId = this.$route.params.userId;
+  },
+  data() {
+    return {
+      userId: null
+    }
+  }
 }
 </script>
 

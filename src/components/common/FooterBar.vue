@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-.footer{
+.footer {
   width: 300px;
   padding: 20px;
   position: absolute;
@@ -26,5 +26,6 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
+  font-family: "Times New Roman", "sans-serif";
 }
 </style>

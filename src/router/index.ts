@@ -25,7 +25,7 @@ const router = createRouter({
             component: () => import('../views/user/ResetPwdView.vue')
         },
         {
-            path: '/userInfo',
+            path: '/user/:userId',
             name: 'userInfo',
             component: () => import('../views/user/UserInfoView.vue')
         }

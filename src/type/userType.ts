@@ -24,10 +24,3 @@ export type resetPwdType = {
     password: string;
     confirmPwd: string;
 }
-// 用户更新个人信息传后端数据类型
-export type updateInfoType = {
-    gender: number;
-    age: number;
-    username: string;
-    avatar: string;
-}
