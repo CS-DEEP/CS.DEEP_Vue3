@@ -1,6 +1,7 @@
 import {createStore, Store,} from 'vuex'
 import StateTypes from "@/store/interface";
 import {InjectionKey} from "vue";
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore<StateTypes>({
     state: {
@@ -11,6 +12,7 @@ export default createStore<StateTypes>({
             state.userId = id;
         }
     },
+    plugins: [createPersistedState()]
 })
 
 export const key: InjectionKey<Store<StateTypes>> = Symbol('vue-store') as InjectionKey<Store<StateTypes>>;
