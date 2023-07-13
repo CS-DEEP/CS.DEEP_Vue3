@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CalendarHeatmap: typeof import('./src/components/common/CalendarHeatmap.vue')['default']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FooterBar: typeof import('./src/components/common/FooterBar.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
