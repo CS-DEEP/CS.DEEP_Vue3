@@ -27,5 +27,16 @@ export default defineConfig({
     server: {
         host: '127.0.0.1',
         port: 8080
-    }
+    },
+    css: {
+      // css预处理器
+      preprocessorOptions: {
+        less: {
+          charset: false,
+          additionalData: '@import "./src/assets/base.css";',
+        },
+      },
+    },
+    
+  
 })

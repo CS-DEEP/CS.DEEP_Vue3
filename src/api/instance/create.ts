@@ -7,10 +7,10 @@ import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaul
 export class Request {
     // axios 实例
     instance: AxiosInstance
-    // 基础配置，url和超时时间（异步方法可能不只需要 1s 的调用时间，这里改成了 3min
+    // 基础配置，url和超时时间
     baseConfig: AxiosRequestConfig = {
         baseURL: 'http://localhost:3000',
-        timeout: 180000
+        timeout: 1000
     }
 
     constructor(config: AxiosRequestConfig) {
