@@ -24,3 +24,16 @@ export type resetPwdType = {
     password: string;
     confirmPwd: string;
 }
+export type userType<T> = {
+    nodeId: number;
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+    gender: number;
+    age: number;
+    avatar: string;
+    description: string;
+    version: number;
+    following: T;
+}
