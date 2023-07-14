@@ -1,3 +1,6 @@
+import {userType} from "@/type";
+
 export default interface StateTypes {
-    userId: number
+    userinfo: userType<any>;
+    haveLogin: boolean;
 }

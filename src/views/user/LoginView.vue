@@ -54,8 +54,10 @@ export default {
         password: this.userPwd
       }).then(res => {
         if (res.data.code === 200) {
+          localStorage.setItem('token', res.data.data.token)
           this.$router.push('/')
-          this.$store.commit('updateUserId', res.data.data.userId)
+          this.$store.commit('updateUserId', res.data.data.user)
+          this.$store.commit('updateLoginState')
           alert(res.data.message)
         } else {
           alert(res.data.message)
