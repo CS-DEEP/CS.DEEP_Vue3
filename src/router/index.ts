@@ -25,10 +25,21 @@ const router = createRouter({
             component: () => import('../views/user/ResetPwdView.vue')
         },
         {
-            path: '/userInfo',
+            // userId只匹配数字
+            path: '/user/:userId(\\d+)',
             name: 'userInfo',
             component: () => import('../views/user/UserInfoView.vue')
         },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'notFound',
+            component: () => import('../views/common/NotFoundView.vue')
+        },
+        {
+            path: '/userInfo',
+            name: 'userInfo',
+            component: ()=> import('../views/user/UserInfoView.vue')
+        }
     ]
 } as RouterOptions)
 

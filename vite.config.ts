@@ -29,14 +29,12 @@ export default defineConfig({
         port: 8080
     },
     css: {
-      // css预处理器
-      preprocessorOptions: {
-        less: {
-          charset: false,
-          additionalData: '@import "./src/assets/base.css";',
+        // css预处理器
+        preprocessorOptions: {
+          less: {
+            charset: false,
+            additionalData: '@import "./src/assets/base.css";',
+          },
         },
       },
-    },
-    
-  
 })

@@ -27,7 +27,7 @@ import CONST from '../../global/const/index'
 import {columnDate, nodeDate, perDay} from '@/type'
 
 export default {
-  name: "calendarHeatmap",
+  name: "CalendarHeatmap",
   data() {
     let columnArray: Array<columnDate>;
     return {
