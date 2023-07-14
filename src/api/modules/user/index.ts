@@ -1,9 +1,10 @@
 // src/api/modules/user/index.ts
 import service from '../../instance/index'
 import {loginType, registerType, resetPwdType} from '@/type'
+import {LoginResult, RegisterResetResult} from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
-    return service.post('/user/login' +
+    return service.post<LoginResult>('/user/login' +
         '?email=' + data.email +
         '&password=' + data.password, data)
 }
@@ -14,7 +15,7 @@ const sendRegisterCode = (data: any) => {
 }
 
 const register = (data: registerType) => {
-    return service.post('/user/register' +
+    return service.post<RegisterResetResult>('/user/register' +
         '?username=' + data.username +
         '&email=' + data.email +
         '&checkCode=' + data.checkCode +
@@ -23,7 +24,7 @@ const register = (data: registerType) => {
 }
 
 const resetPwd = (data: resetPwdType) => {
-    return service.post('/user/reset/password' +
+    return service.post<RegisterResetResult>('/user/reset/password' +
         '?email=' + data.email +
         '&checkCode=' + data.checkCode +
         '&password=' + data.password +
