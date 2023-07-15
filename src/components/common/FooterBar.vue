@@ -33,6 +33,7 @@ export default {
   span{
     margin: 0 20px 0 20px;
     font-size: larger;
+    color: #222222;
   }
 }
 </style>

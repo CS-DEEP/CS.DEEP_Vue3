@@ -7,9 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AvatarAndUsername: typeof import('./src/components/mini/AvatarAndUsername.vue')['default']
     CalendarHeatmap: typeof import('./src/components/common/CalendarHeatmap.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -37,9 +39,12 @@ declare module 'vue' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     NavTop: typeof import('./src/components/common/navTop.vue')['default']
+    RegisterAndLogin: typeof import('./src/components/mini/RegisterAndLogin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBox: typeof import('./src/components/mini/SearchBox.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    TopNavBar: typeof import('./src/components/common/TopNavBar.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }

@@ -56,7 +56,7 @@ export default {
         if (res.data.code === 200) {
           localStorage.setItem('token', res.data.data.token)
           this.$router.push('/')
-          this.$store.commit('updateUserId', res.data.data.user)
+          this.$store.commit('updateUserinfo', res.data.data.user)
           this.$store.commit('updateLoginState')
           alert(res.data.message)
         } else {
