@@ -3,6 +3,7 @@ import {userType} from '@/type'
 export type LoginData = {
     user: userType<any>;
     token: string;
+    expirationTime: string;
 }
 
 export type LoginResult = {

@@ -1,16 +1,15 @@
 <template>
-  <div class="perNav">
-    <router-link to="/login">登录</router-link>
-    |
-    <router-link to="/register">注册</router-link>
-    |
-    <router-link :to="{name: 'userInfo',params:{userId: this.$store.state.userinfo.id}}">个人中心</router-link>
-  </div>
+  <TopNavBar/>
+  <router-view/>
 </template>
 
 <script lang="ts">
+import TopNavBar from "@/components/common/TopNavBar.vue"
 export default {
   name: 'HomeView',
+  components:[
+      TopNavBar
+  ]
 }
 </script>
 
