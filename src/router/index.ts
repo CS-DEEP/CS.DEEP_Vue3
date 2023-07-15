@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory, RouterOptions} from 'vue-router'
-import HomeView from '../views/common/HomeView.vue'
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +34,11 @@ const router = createRouter({
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('../views/common/NotFoundView.vue')
+        },
+        {
+            path: '/userInfo',
+            name: 'userInfo',
+            component: ()=> import('../views/user/UserInfoView.vue')
         }
     ]
 } as RouterOptions)
