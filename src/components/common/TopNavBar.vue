@@ -21,14 +21,22 @@
 
         <el-sub-menu index="2" class="item2">
           <template #title><span>专业学习</span></template>
-          <el-menu-item index="2-1"><span>勋哥牛哇</span></el-menu-item>
-          <el-menu-item index="2-2"><span>标哥牛哇</span></el-menu-item>
+          <el-menu-item index="2-1">
+            <router-link :to="{name:'userInfo',params:{userId:$store.state.userinfo.id}}">勋哥牛哇</router-link>
+          </el-menu-item>
+          <el-menu-item index="2-2">
+            <router-link to="/">标哥牛哇</router-link>
+          </el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="4" class="item4">
           <template #title><span>关于本站</span></template>
-          <el-menu-item index="4-1"><span>勋哥牛哇</span></el-menu-item>
-          <el-menu-item index="4-2"><span>标哥牛哇</span></el-menu-item>
+          <el-menu-item index="4-1">
+            <router-link to="/">勋哥牛哇</router-link>
+          </el-menu-item>
+          <el-menu-item index="4-2">
+            <router-link to="/">标哥牛哇</router-link>
+          </el-menu-item>
         </el-sub-menu>
 
         <div class="search-box">
@@ -222,6 +230,7 @@ export default {
 
       .item2 {
         margin-left: 10px;
+
         span {
           font-family: '宋体', 'sans-serif';
           font-size: 15px;
