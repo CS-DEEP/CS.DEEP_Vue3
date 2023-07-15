@@ -4,6 +4,7 @@ import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import store, {key} from "@/store";
+import './assets/iconfont/iconfont.css'
 
 const app = createApp(App)
 

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {ResponseResult} from './type'
 import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults} from 'axios'
 
 
@@ -79,14 +80,14 @@ export class Request {
     // 定义请求方法
     public get<T = any>(
         url: string,
-    ): Promise<AxiosResponse<T>> {
+    ): Promise<AxiosResponse<ResponseResult<T>>> {
         return this.instance.get(url);
     }
 
     public post<T = any>(
         url: string,
         data?: any,
-    ): Promise<AxiosResponse<T>> {
+    ): Promise<AxiosResponse<ResponseResult<T>>> {
         return this.instance.post(url, data);
     }
 }

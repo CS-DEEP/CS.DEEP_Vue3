@@ -28,12 +28,10 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   font-family: "Times New Roman", "sans-serif";
-  text-decoration: none;
 
   span{
     margin: 0 20px 0 20px;
     font-size: larger;
-    color: #222222;
   }
 }
 </style>
