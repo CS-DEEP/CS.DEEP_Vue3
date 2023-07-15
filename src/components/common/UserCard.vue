@@ -20,6 +20,14 @@
     <!-- 个人自述 -->
     <div class="selfTalk">
       <span>It's too late to see you~</span>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+        
+  
+>>>>>>> ff4c2d534078d7377f2ca9b9293de92995e0cf55
+>>>>>>> fa247005fba4c398fa4f9141097975e61ad8e75a
     </div>
 
     <!-- 描述标志区域 -->
@@ -70,6 +78,13 @@ export default{
       userName,
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff4c2d534078d7377f2ca9b9293de92995e0cf55
+>>>>>>> fa247005fba4c398fa4f9141097975e61ad8e75a
       // 导出的字体图标
 
 
