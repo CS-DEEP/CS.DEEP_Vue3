@@ -2,20 +2,14 @@ import {createStore, Store,} from 'vuex'
 import StateTypes from "@/store/interface";
 import {InjectionKey} from "vue";
 import createPersistedState from 'vuex-persistedstate';
-import CONST from '../global/const/index'
-import {userType} from "@/type";
 
 export default createStore<StateTypes>({
     state: {
-        userinfo: CONST.DEFAULTUSERINFO,
-        haveLogin: false
+        userId: -1,
     },
     mutations: {
-        updateUserinfo(state, info: userType<any>) {
-            state.userinfo = info;
-        },
-        updateLoginState(state) {
-            state.haveLogin = !state.haveLogin;
+        updateUserId(state, id: number) {
+            state.userId = id;
         }
     },
     plugins: [createPersistedState()]
