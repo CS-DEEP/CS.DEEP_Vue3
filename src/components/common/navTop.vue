@@ -4,6 +4,7 @@
   时间：2023/7/12
  -->
  <template>
+  <el-affix :offset="0">
     <!-- 大盒子包住导航区域 -->
     <div class="topNav">
   
@@ -45,8 +46,8 @@
   
       <el-sub-menu index="6" class ="item6">
         <template #title v-bind="fontChoice">{{ fontChoice }}</template>
-        <el-menu-item index="6-1" @click="chooseFont1" ><el-icon :size="15" v-show=" showFont1 " ><Check/></el-icon>简体中文</el-menu-item>
-        <el-menu-item index="6-2" @click="chooseFont2" ><el-icon :size="15" v-show=" !showFont1 "><Check/></el-icon>English</el-menu-item>
+        <el-menu-item index="6-1" @click="chooseFont1" ><el-icon :size="15" ><Check/></el-icon>简体中文</el-menu-item>
+        <el-menu-item index="6-2" @click="chooseFont2" ><el-icon :size="15" ><Check/></el-icon>English</el-menu-item>
       </el-sub-menu>
   
       <el-menu-item index="7" class="item7">
@@ -72,10 +73,11 @@
   
     </el-menu>
     </div>
-  
-  
-  
+  </el-affix>
     
+  
+  
+
   </template>
    
   
@@ -95,7 +97,7 @@
   } from '@element-plus/icons-vue'
   
   export default {
-    name: "navTop",
+    name: "NavTop",
     components:{
       DCaret,
       Search,
@@ -106,7 +108,6 @@
     },
     setup(){
       // 数据
-      let showFont1 = true
       const fontChoice = ref('简体中文')
       const searchInput = ref('')
       const activeIndex = ref('1')
@@ -120,11 +121,11 @@
   
       const chooseFont1 = () =>{
         fontChoice.value = "简体中文"
-        showFont1 = true
+
       }
       const chooseFont2= ()=>{
         fontChoice.value = "English"
-        showFont1 = false
+
       }
   
       return{
@@ -141,9 +142,7 @@
         activeIndex,
         useName,
         fontChoice,
-        showFont1,
-  
-  
+
         //导出的函数
         handleSelect,
         chooseFont1,
@@ -207,7 +206,7 @@
           width: 32px;
           height: 32px;
           margin: 0;
-          padding-left: 5px;
+          padding-left: 13px;
           
         }
         }
@@ -229,8 +228,9 @@
         .el-button{
           width: 32px;
           height: 32px;
-          // padding: 0;
+          padding-left: 13px;
           margin: 0;
+
           
         }
         
