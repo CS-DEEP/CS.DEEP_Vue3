@@ -11,6 +11,7 @@ declare module 'vue' {
     CalendarHeatmap: typeof import('./src/components/common/CalendarHeatmap.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -45,6 +46,7 @@ declare module 'vue' {
     SearchBox: typeof import('./src/components/mini/SearchBox.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     TopNavBar: typeof import('./src/components/common/TopNavBar.vue')['default']
+    UserCard: typeof import('./src/components/common/UserCard.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }

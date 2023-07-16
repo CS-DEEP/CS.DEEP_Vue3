@@ -1,20 +1,17 @@
 <template>
   <div class="user-page">
-    <span>此用户userId为: {{ userId }}</span>
+    <div class="user-card">
+      <UserCard/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import UserCard from "@/components/common/UserCard.vue";
+
 export default {
   name: "UserInfoView",
-  created() {
-    this.userId = this.$route.params.userId;
-  },
-  data() {
-    return {
-      userId: null
-    }
-  }
+  components: {UserCard},
 }
 </script>
 

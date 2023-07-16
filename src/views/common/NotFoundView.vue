@@ -30,7 +30,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 8% auto;
-  min-width: 1500px;
+  min-width: 1400px;
 
   .words {
     margin: 0 auto;
