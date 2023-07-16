@@ -5,7 +5,7 @@ import {
     CommonResult,
     FollowerData,
     FollowingData,
-    FollowResult,
+    FollowResult, GetUserinfoResult,
     LoginResult,
     RegisterResetResult
 } from "@/api/modules/user/type";
@@ -53,12 +53,18 @@ const getFollowerNum = (data: number) => {
         '?userId=' + data)
 }
 
+const getUserinfoData = (data: number) => {
+    return service.get<GetUserinfoResult>('/user/get/info' +
+        '?userId' + data)
+}
+
 export default {
     login,               // 登录
     sendRegisterCode,    // 注册发送验证码
     register,            // 注册
     resetPwd,            // 重置密码
     sendResetCode,       // 重置密码发送验证码
-    getFollowingNum,     // 获取关注数量
-    getFollowerNum,      // 获取粉丝数量
+    getFollowingNum,     // 依据userId获取关注数量
+    getFollowerNum,      // 依据userId获取粉丝数量
+    getUserinfoData,     // 依据userId获取用户信息
 };
