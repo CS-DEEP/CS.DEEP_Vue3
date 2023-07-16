@@ -14,8 +14,7 @@ const DEFAULTUSERINFO = {
     age: 18,
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
     description: '',
-    version: 1,
-    following: []
+    version: 1
 }
 
 
