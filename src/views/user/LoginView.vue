@@ -80,7 +80,7 @@ export default {
 .login-page {
   width: 100%;
   height: 100%;
-  min-width: 1500px;
+  min-width: 1400px;
   position: absolute;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 

@@ -6,16 +6,15 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const COLORS = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
 const DEFAULTUSERINFO = {
     nodeId: -1,
-    id: -1,
-    username: 'winner',
+    id: 0,
+    username: 'WA_Automat',
     email: '',
     password: '',
     gender: 1,
     age: 18,
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
-    description: '',
-    version: 1,
-    following: []
+    description: "这个人很懒，什么都没写欸~",
+    version: 1
 }
 
 

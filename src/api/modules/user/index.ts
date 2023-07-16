@@ -1,7 +1,14 @@
 // src/api/modules/user/index.ts
 import service from '../../instance/index'
 import {loginType, registerType, resetPwdType} from '@/type'
-import {LoginResult, RegisterResetResult} from "@/api/modules/user/type";
+import {
+    CommonResult,
+    FollowerData,
+    FollowingData,
+    FollowResult,
+    LoginResult,
+    RegisterResetResult
+} from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
     return service.post<LoginResult>('/user/login' +
@@ -15,7 +22,7 @@ const sendRegisterCode = (data: any) => {
 }
 
 const register = (data: registerType) => {
-    return service.post<RegisterResetResult>('/user/register' +
+    return service.post<CommonResult>('/user/register' +
         '?username=' + data.username +
         '&email=' + data.email +
         '&checkCode=' + data.checkCode +
@@ -24,7 +31,7 @@ const register = (data: registerType) => {
 }
 
 const resetPwd = (data: resetPwdType) => {
-    return service.post<RegisterResetResult>('/user/reset/password' +
+    return service.post<CommonResult>('/user/reset/password' +
         '?email=' + data.email +
         '&checkCode=' + data.checkCode +
         '&password=' + data.password +
@@ -36,4 +43,22 @@ const sendResetCode = (data: any) => {
         '?email=' + data.email)
 }
 
-export default {login, sendRegisterCode, register, resetPwd, sendResetCode};
+const getFollowingNum = (data: number) => {
+    return service.get<FollowResult<FollowingData>>('/user/following/count' +
+        '?userId=' + data)
+}
+
+const getFollowerNum = (data: number) => {
+    return service.get<FollowResult<FollowerData>>('/user/follower/count' +
+        '?userId=' + data)
+}
+
+export default {
+    login,               // 登录
+    sendRegisterCode,    // 注册发送验证码
+    register,            // 注册
+    resetPwd,            // 重置密码
+    sendResetCode,       // 重置密码发送验证码
+    getFollowingNum,     // 获取关注数量
+    getFollowerNum,      // 获取粉丝数量
+};

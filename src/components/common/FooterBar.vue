@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss">
 .footer {
-  min-width: 1500px;
+  min-width: 1400px;
   width: 300px;
   padding: 20px;
   position: absolute;

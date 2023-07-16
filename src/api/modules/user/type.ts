@@ -1,9 +1,17 @@
 import {userType} from '@/type'
 
 export type LoginData = {
-    user: userType<any>;
+    user: userType;
     token: string;
     expirationTime: string;
+}
+
+export type FollowingData = {
+    followingCount: number;
+}
+
+export type FollowerData = {
+    followerCount: number;
 }
 
 export type LoginResult = {
@@ -12,11 +20,14 @@ export type LoginResult = {
     data: LoginData;
 }
 
-export type RegisterResetResult = {
+export type CommonResult = {
     code: number;
     message: string;
     data: any;
 }
 
-
-
+export type FollowResult<T> = {
+    code: number;
+    message: string;
+    data: T;
+}

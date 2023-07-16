@@ -19,17 +19,40 @@
           <router-link to="/" class="font-icon">CS.DEEP</router-link>
         </el-menu-item>
 
-        <el-sub-menu index="2" class="item2">
-          <template #title><span>专业学习</span></template>
-          <el-menu-item index="2-1"><span>勋哥牛哇</span></el-menu-item>
-          <el-menu-item index="2-2"><span>标哥牛哇</span></el-menu-item>
-        </el-sub-menu>
+        <div class="item-list">
+          <el-dropdown>
+            <el-button class="big-title">
+              <span>专业学习</span>
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item><router-link to="/login">专业知识</router-link></el-dropdown-item>
+                <el-dropdown-item>分享发现</el-dropdown-item>
+                <el-dropdown-item>吐槽讨论</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
 
-        <el-sub-menu index="4" class="item4">
-          <template #title><span>关于本站</span></template>
-          <el-menu-item index="4-1"><span>勋哥牛哇</span></el-menu-item>
-          <el-menu-item index="4-2"><span>标哥牛哇</span></el-menu-item>
-        </el-sub-menu>
+        <div class="item-list">
+          <el-dropdown>
+            <el-button class="big-title">
+              <span>关于本站</span>
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>本站介绍</el-dropdown-item>
+                <el-dropdown-item>入门指引</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
 
         <div class="search-box">
           <el-menu-item index="5" class="item5">
@@ -43,12 +66,12 @@
         </div>
 
         <el-menu-item index="7" class="item7">
-          <el-button :icon="Edit" circle plain/>
+          <el-button class="edit" :icon="Edit" circle plain/>
         </el-menu-item>
 
         <el-menu-item index="8" class="item8">
           <div class="bell">
-            <el-button type="plain" :icon="BellFilled" circle/>
+            <el-button class="bell" type="plain" :icon="BellFilled" circle/>
           </div>
         </el-menu-item>
 
@@ -66,7 +89,6 @@ import {
   Search,
   Edit,
   BellFilled,
-
 } from '@element-plus/icons-vue'
 import RegisterAndLogin from "@/components/mini/RegisterAndLogin.vue"
 import AvatarAndUsername from "@/components/mini/AvatarAndUsername.vue"
@@ -118,13 +140,34 @@ export default {
   border-bottom: 1px solid gainsboro;
 
   .content {
-    width: 1500px;
+    width: 1400px;
     margin: 0 auto;
     padding: 0;
     position: relative;
 
     .el-menu-demo {
       border: none;
+
+      .item-list {
+        margin-top: 15px;
+        margin-left: 10px;
+
+        .big-title {
+          border: none;
+          color: #222222;
+          transition: all 1s linear;
+          background-color: white;
+
+          span {
+            font-size: 15px;
+            font-family: '宋体', 'sans-serif';
+          }
+
+          &:hover {
+            background-color: transparent !important;
+          }
+        }
+      }
 
       .item8 {
         width: 10px;
@@ -135,11 +178,11 @@ export default {
           height: 32px;
           width: 32px;
 
-          .el-button:hover {
+          .bell:hover {
             background-color: #d7dfea;
           }
 
-          .el-button {
+          .bell {
             width: 32px;
             height: 32px;
             margin: 0;
@@ -161,11 +204,11 @@ export default {
         width: 10px;
         border-bottom: 0;
 
-        .el-button:hover {
+        .edit:hover {
           background-color: #d7dfea;
         }
 
-        .el-button {
+        .edit {
           width: 32px;
           height: 32px;
           padding-left: 13px;
@@ -212,23 +255,6 @@ export default {
         }
       }
 
-      .item4 {
-        span {
-          font-family: '宋体', 'sans-serif';
-          font-size: 15px;
-          color: #222222;
-        }
-      }
-
-      .item2 {
-        margin-left: 10px;
-        span {
-          font-family: '宋体', 'sans-serif';
-          font-size: 15px;
-          color: #222222;
-        }
-      }
-
       .item1:hover {
         background-color: #fff;
       }
@@ -236,7 +262,8 @@ export default {
       .item1 {
         border-bottom: 0;
         padding: 0;
-        margin-left: 300px;
+        margin-left: 240px;
+        margin-top: 2px;
 
         .font-icon {
           font-size: 25px;

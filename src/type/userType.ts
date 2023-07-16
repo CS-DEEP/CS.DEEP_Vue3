@@ -24,7 +24,7 @@ export type resetPwdType = {
     password: string;
     confirmPwd: string;
 }
-export type userType<T> = {
+export type userType = {
     nodeId: number;
     id: number;
     username: string;
@@ -35,5 +35,4 @@ export type userType<T> = {
     avatar: string;
     description: string;
     version: number;
-    following: T;
 }

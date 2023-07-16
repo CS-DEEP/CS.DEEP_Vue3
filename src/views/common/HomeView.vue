@@ -14,11 +14,5 @@ export default {
 </script>
 
 <style lang="scss">
-.perNav {
-  width: 200px;
-  display: flex;
-  margin: 10px auto;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
+
 </style>
