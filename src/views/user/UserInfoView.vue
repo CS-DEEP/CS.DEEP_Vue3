@@ -3,7 +3,7 @@
     <div class="main">
       <div class="left">
         <div class="user-card">
-          <UserCard/>
+          <UserCard :user="user"/>
         </div>
         <div class="behavior">
           <div class="edit-follow">
@@ -45,6 +45,11 @@ export default {
   components: {CalendarHeatmap, UserCard},
   mounted() {
     this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
+    api.userApi.getUserinfoData(this.$route.params.userId).then(res => {
+      this.user = res.data.data.user;
+    }).catch(err => {
+      console.log(err)
+    })
     api.userApi.getFollowingNum(this.$route.params.userId).then(res => {
       this.following_count = res.data.data.followingCount;
     }).catch(err => {
@@ -58,10 +63,11 @@ export default {
   },
   data() {
     return {
+      user: CONST.DEFAULTUSERINFO,
       following_count: 0,
       follower_count: 0,
       colors: CONST.COLORS,
-      isOwn: true
+      isOwn: true,
     }
   }
 }
@@ -118,7 +124,7 @@ export default {
             padding: 5px;
             color: #222222;
 
-            &:hover{
+            &:hover {
               border-bottom: 1px solid #e8ecf3;
             }
           }

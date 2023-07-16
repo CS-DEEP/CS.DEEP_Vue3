@@ -14,6 +14,10 @@ export type FollowerData = {
     followerCount: number;
 }
 
+export type UserinfoData = {
+    user: userType;
+}
+
 export type LoginResult = {
     code: number;
     message: string;
@@ -30,4 +34,10 @@ export type FollowResult<T> = {
     code: number;
     message: string;
     data: T;
+}
+
+export type GetUserinfoResult = {
+    code: number;
+    message: string;
+    data: UserinfoData;
 }
