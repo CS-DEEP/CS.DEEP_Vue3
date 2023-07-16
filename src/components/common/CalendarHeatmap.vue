@@ -145,8 +145,8 @@ body {
 
 
 .calendar-heatmap {
-  width: 820px;
-  height: 180px;
+  width: 800px;
+  height: 130px;
   background-color: #fff;
   margin-left: 16px;
   margin-right: 16px;
