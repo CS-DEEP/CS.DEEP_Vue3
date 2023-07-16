@@ -7,30 +7,35 @@
   <div class="userinfo">
     <!-- 头像区域 -->
     <div class="avatar">
-      <el-avatar :size="220" :src="$store.state.userinfo.avatar"/>
+      <el-avatar :size="220" :src="this.user.avatar"/>
     </div>
 
     <!-- 用户名称区域 -->
     <div class="user-name">
-      <span>{{ $store.state.userinfo.username }}</span>
+      <span>{{ this.user.username }}</span>
     </div>
 
     <!-- 个人自述 -->
     <div class="self-talk">
-      <span>{{ $store.state.userinfo.description }}</span>
+      <span>{{ this.user.description }}</span>
     </div>
 
   </div>
 </template>
 
 <script lang="ts">
-import {ref} from 'vue'
-
+import CONST from "@/global/const/index.ts"
 
 export default {
   name: "UserCard",
   component: {},
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      default: function () {
+        return CONST.DEFAULTUSERINFO;
+      }
+    }
   }
 
 }

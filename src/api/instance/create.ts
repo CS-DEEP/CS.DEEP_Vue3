@@ -1,4 +1,5 @@
 import axios from 'axios'
+import CONST from '@/global/const/index.ts'
 import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults} from 'axios'
 
 
@@ -22,6 +23,21 @@ export class Request {
 
         this.instance.interceptors.request.use(
             async (config: AxiosRequestConfig) => {
+                if (CONST.EXCLUDEURL.includes(config.url)) {
+                    return config;
+                }
+                const token = localStorage.getItem('token');
+                const expirationTime = localStorage.getItem('expirationTime');
+                config.headers.Authorization = `Bearer ${token}`;
+
+                // 判断token是否过期
+                const currentDate = new Date();
+                const expirationDate = new Date(expirationTime);
+
+                if (!token || expirationDate < currentDate) {
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
                 return config;
             },
             (err: any) => {
