@@ -1,7 +1,7 @@
 import {userType} from '@/type'
 
 export type LoginData = {
-    user: userType<any>;
+    user: userType;
     token: string;
     expirationTime: string;
 }
