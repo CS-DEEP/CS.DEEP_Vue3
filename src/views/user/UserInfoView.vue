@@ -52,7 +52,6 @@ export default {
       console.log(err)
     })
     api.userApi.getFollowingNum(this.$route.params.userId).then(res => {
-      console.log(res.data)
       this.following_count = res.data.data.followingCount;
     }).catch(err => {
       console.log(err)
@@ -81,9 +80,13 @@ export default {
   methods: {
     followHandle() {
       api.userApi.followHandle(this.$route.params.userId).then(res => {
-        if (res.data.data.code === 200) {
+        if (res.data.code === 200) {
           this.isFollow = true;
-          location.reload();
+          api.userApi.getFollowerNum(this.$route.params.userId).then(res => {
+            this.follower_count = res.data.data.followerCount;
+          }).catch(err => {
+            console.log(err)
+          })
         } else {
           console.log(res.data.message)
         }
@@ -93,9 +96,13 @@ export default {
     },
     cancelFollowHandle() {
       api.userApi.cancelFollowHandle(this.$route.params.userId).then(res => {
-        if (res.data.data.code === 200) {
+        if (res.data.code === 200) {
           this.isFollow = false;
-          location.reload();
+          api.userApi.getFollowerNum(this.$route.params.userId).then(res => {
+            this.follower_count = res.data.data.followerCount;
+          }).catch(err => {
+            console.log(err)
+          })
         } else {
           console.log(res.data.message)
         }
@@ -130,6 +137,7 @@ export default {
         margin-left: 3px;
 
         .edit-follow {
+          position: relative;
           width: 220px;
           border: 1px solid #e8ecf3;
           border-radius: 5px;
@@ -138,6 +146,9 @@ export default {
           background-color: #cbd3e1;
 
           .span {
+            display: block;
+            width: 100%;
+            height: 100%;
             color: #222222;
             font-size: 18px;
           }

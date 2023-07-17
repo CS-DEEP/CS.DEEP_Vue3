@@ -20,13 +20,16 @@
       </div>
       <div class="per">
         <img src="../../assets/image/logout.png" alt="choice">
-        <router-link class="user-link" to="#">退出登录</router-link>
+        <span class="user-link" @click="logoutHandle">退出登录</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api/modules/index.ts"
+import CONST from "@/global/const/index.ts"
+
 export default {
   name: "AvatarAndUsername",
   data() {
@@ -38,6 +41,17 @@ export default {
     showMenu() {
       this.isShow = !this.isShow;
     },
+    logoutHandle() {
+      api.userApi.logout().then(res => {
+        if (res.data.code === 200) {
+          localStorage.clear();
+          this.$store.commit('updateLoginState');
+          this.$store.commit('updateUserinfo', CONST.DEFAULTUSERINFO)
+          alert(res.data.message)
+          this.$emit('logout')
+        }
+      })
+    }
   }
 }
 </script>
