@@ -16,18 +16,10 @@ const DEFAULTUSERINFO = {
     description: "这个人很懒，什么都没写欸~",
     version: 1
 }
-const EXCLUDEURL=[
-    'http://localhost:3000/user/login',
-    'http://localhost:3000/user/register',
-    'http://localhost:3000/user/reset/password',
-    'http://localhost:3000/checkcode/register/code',
-    'http://localhost:3000/checkcode/reset/code'
-]
 
 
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
     DEFAULTUSERINFO, // 默认用户信息
-    EXCLUDEURL,      // 排除token的request_url
 }
