@@ -82,6 +82,7 @@ export default {
       api.userApi.followHandle(this.$route.params.userId).then(res => {
         if (res.data.data.code === 200) {
           this.isFollow = true;
+          location.reload();
         } else {
           console.log(res.data.message)
         }
@@ -93,6 +94,7 @@ export default {
       api.userApi.cancelFollowHandle(this.$route.params.userId).then(res => {
         if (res.data.data.code === 200) {
           this.isFollow = false;
+          location.reload();
         } else {
           console.log(res.data.message)
         }
