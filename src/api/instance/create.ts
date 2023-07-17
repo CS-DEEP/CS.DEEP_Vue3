@@ -10,25 +10,25 @@ export class Request {
     // 基础配置，url和超时时间（异步方法可能不只需要 1s 的调用时间，这里改成了 3min
     baseConfig: AxiosRequestConfig = {
         baseURL: 'http://localhost:3000',
-        timeout: 180000
+        timeout: 180000,
     }
 
     constructor(config: AxiosRequestConfig) {
         const mergedConfig = {
             ...(this.baseConfig as CreateAxiosDefaults),
-            ...config
+            ...config,
         };
         // 使用axios.create创建axios实例，配置为基础配置和我们传递进来的配置
         this.instance = axios.create(mergedConfig as CreateAxiosDefaults);
 
         this.instance.interceptors.request.use(
             async (config: AxiosRequestConfig) => {
-                if (CONST.EXCLUDEURL.includes(config.url)) {
+                if (config.url.includes('login') || config.url.includes('register') || config.url.includes('reset')) {
                     return config;
                 }
                 const token = localStorage.getItem('token');
                 const expirationTime = localStorage.getItem('expirationTime');
-                config.headers.Authorization = `Bearer ${token}`;
+                config.headers['token'] = token;
 
                 // 判断token是否过期
                 const currentDate = new Date();
