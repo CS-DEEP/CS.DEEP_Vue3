@@ -72,8 +72,13 @@ const cancelFollowHandle = (data: number) => {
         '?userId=' + data)
 }
 
+const logout = () => {
+    return service.post<ResponseResult<any>>('/user/logout')
+}
+
 export default {
     login,               // 登录
+    logout,              // 退出登录
     sendRegisterCode,    // 注册发送验证码
     register,            // 注册
     resetPwd,            // 重置密码

@@ -11,7 +11,7 @@ export default createStore<StateTypes>({
         haveLogin: false
     },
     mutations: {
-        updateUserinfo(state, info: userType<any>) {
+        updateUserinfo(state, info: userType) {
             state.userinfo = info;
         },
         updateLoginState(state) {
