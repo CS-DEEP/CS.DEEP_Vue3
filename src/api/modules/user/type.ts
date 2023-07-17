@@ -18,26 +18,12 @@ export type UserinfoData = {
     user: userType;
 }
 
-export type LoginResult = {
-    code: number;
-    message: string;
-    data: LoginData;
+export type IsFollowData = {
+    isFollow: boolean;
 }
 
-export type CommonResult = {
-    code: number;
-    message: string;
-    data: any;
-}
-
-export type FollowResult<T> = {
+export type ResponseResult<T> = {
     code: number;
     message: string;
     data: T;
-}
-
-export type GetUserinfoResult = {
-    code: number;
-    message: string;
-    data: UserinfoData;
 }
