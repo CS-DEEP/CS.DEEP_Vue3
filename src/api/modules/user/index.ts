@@ -54,7 +54,7 @@ const getFollowerNum = (data: number) => {
 
 const getUserinfoData = (data: number) => {
     return service.get<GetUserinfoResult>('/user/get/info' +
-        '?userId' + data)
+        '?userId=' + data)
 }
 
 export default {
