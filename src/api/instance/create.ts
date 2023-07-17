@@ -28,7 +28,7 @@ export class Request {
                 }
                 const token = localStorage.getItem('token');
                 const expirationTime = localStorage.getItem('expirationTime');
-                config.headers.Authorization = `Bearer ${token}`;
+                config.headers.Authorization = `${token}`;
 
                 // 判断token是否过期
                 const currentDate = new Date();
