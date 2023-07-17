@@ -8,7 +8,8 @@
         <div class="behavior">
           <div class="edit-follow">
             <router-link class="span" to="#" v-show="isOwn">编辑个人资料</router-link>
-            <span class="span" v-show="!isOwn">关注</span>
+            <span class="span" v-show="!isOwn&&!isFollow" @click="followHandle">关注</span>
+            <span class="span" v-show="!isOwn&&isFollow" @click="cancelFollowHandle">取消关注</span>
           </div>
           <div class="follow-fan">
             <router-link class="span" to="#">{{ following_count }}<span> 关注</span></router-link>
@@ -61,6 +62,11 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    api.userApi.getFollowState(this.$route.params.userId).then(res => {
+      this.isFollow = res.data.data.isFollow;
+    }).catch(err => {
+      console.log(err)
+    })
   },
   data() {
     return {
@@ -69,6 +75,31 @@ export default {
       follower_count: 0,
       colors: CONST.COLORS,
       isOwn: true,
+      isFollow: false,
+    }
+  },
+  methods: {
+    followHandle() {
+      api.userApi.followHandle(this.$route.params.userId).then(res => {
+        if (res.data.data.code === 200) {
+          this.isFollow = true;
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    cancelFollowHandle() {
+      api.userApi.cancelFollowHandle(this.$route.params.userId).then(res => {
+        if (res.data.data.code === 200) {
+          this.isFollow = false;
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
