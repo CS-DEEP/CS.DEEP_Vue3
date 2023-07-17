@@ -22,6 +22,14 @@ export type IsFollowData = {
     isFollow: boolean;
 }
 
+export type UserinfoEditRequest = {
+    username: string;
+    gender: number;
+    age: number;
+    avatar: FormData;
+    description: string;
+}
+
 export type ResponseResult<T> = {
     code: number;
     message: string;
