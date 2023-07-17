@@ -52,7 +52,6 @@ export default {
       console.log(err)
     })
     api.userApi.getFollowingNum(this.$route.params.userId).then(res => {
-      console.log(res.data)
       this.following_count = res.data.data.followingCount;
     }).catch(err => {
       console.log(err)
