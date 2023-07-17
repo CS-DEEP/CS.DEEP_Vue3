@@ -6,6 +6,7 @@ import FooterBar from './components/common/FooterBar.vue'
 <template>
   <router-view/>
   <FooterBar/>
+
 </template>
 
 <style lang="scss">
