@@ -17,11 +17,11 @@ const DEFAULTUSERINFO = {
     version: 1
 }
 const EXCLUDEURL=[
-    '/user/login',
-    '/user/register',
-    '/user/reset/password',
-    '/checkcode/register/code',
-    '/checkcode/reset/code'
+    'http://localhost:3000/user/login',
+    'http://localhost:3000/user/register',
+    'http://localhost:3000/user/reset/password',
+    'http://localhost:3000/checkcode/register/code',
+    'http://localhost:3000/checkcode/reset/code'
 ]
 
 
