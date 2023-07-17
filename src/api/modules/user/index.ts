@@ -7,7 +7,6 @@ import {
     FollowingData,
     FollowResult, GetUserinfoResult,
     LoginResult,
-    RegisterResetResult
 } from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
