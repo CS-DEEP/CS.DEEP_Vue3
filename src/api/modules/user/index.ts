@@ -81,8 +81,7 @@ const uploadInfo = (data: UserinfoEditRequest) => {
         '?username=' + data.username +
         '&gender=' + data.gender +
         '&age=' + data.age +
-        '&avatar=' + data.avatar +
-        '&description=' + data.description)
+        '&description=' + data.description, data.avatar)
 }
 
 export default {

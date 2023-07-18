@@ -46,19 +46,24 @@
 
 <script lang="ts">
 import api from '@/api/modules/index.ts'
+import {getImageFileFromUrl, fileToFormData} from '@/global/utils'
 
 export default {
   name: "UserinfoEditView",
   data() {
+    let avatar: Promise<File>
     return {
-      username: '',
-      description: '',
+      username: this.$store.state.userinfo.username,
+      description: this.$store.state.userinfo.description,
       age: this.$store.state.userinfo.age,
       gender: this.$store.state.userinfo.gender,
       defaultImageUrl: this.$store.state.userinfo.avatar,
-      userImageUrl: '',
-      avatar: null,
+      userImageUrl: this.$store.state.userinfo.avatar,
+      avatar,
     }
+  },
+  mounted() {
+    this.avatar = getImageFileFromUrl(this.$store.state.userinfo.avatar)
   },
   computed: {
     currentImageUrl() {
@@ -73,13 +78,13 @@ export default {
     handleFileUpload(event) {
       const file = event.target.files[0];
       this.avatar = file;
-      console.log(file)
       this.userImageUrl = URL.createObjectURL(file);
-      console.log(this.userImageUrl)
     },
     uploadInfoHandle() {
-      const formData = new FormData();
-      formData.append('avatar', this.avatar!);
+      let formData = new FormData();
+      fileToFormData(this.avatar).then(res => {
+        formData = res;
+      });
       api.userApi.uploadInfo({
         username: this.username,
         gender: this.gender,
