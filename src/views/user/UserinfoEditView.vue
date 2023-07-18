@@ -87,6 +87,7 @@ export default {
         description: this.description,
         avatar: formData
       }).then(res => {
+        console.log(res.data)
         if (res.data.code === 200) {
           alert(res.data.message);
           api.userApi.getUserinfoData(this.$store.state.userinfo.id).then(res => {
