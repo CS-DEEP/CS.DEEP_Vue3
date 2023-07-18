@@ -7,7 +7,7 @@
         </div>
         <div class="behavior">
           <div class="edit-follow">
-            <router-link class="span" to="#" v-show="isOwn">编辑个人资料</router-link>
+            <router-link class="span" to="/edit/userinfo" v-show="isOwn">编辑个人资料</router-link>
             <span class="span" v-show="!isOwn&&!isFollow" @click="followHandle">关注</span>
             <span class="span" v-show="!isOwn&&isFollow" @click="cancelFollowHandle">取消关注</span>
           </div>

@@ -46,12 +46,12 @@
 
 <script lang="ts">
 import api from '@/api/modules/index.ts'
-import {getImageFileFromUrl, fileToFormData} from '@/global/utils'
+import {getImageFileFromUrl} from '@/global/utils'
 
 export default {
   name: "UserinfoEditView",
   data() {
-    let avatar: Promise<File>
+    let avatar: File
     return {
       username: this.$store.state.userinfo.username,
       description: this.$store.state.userinfo.description,
@@ -63,7 +63,9 @@ export default {
     }
   },
   mounted() {
-    this.avatar = getImageFileFromUrl(this.$store.state.userinfo.avatar)
+    getImageFileFromUrl(this.$store.state.userinfo.avatar).then(res => {
+      this.avatar = res
+    })
   },
   computed: {
     currentImageUrl() {
@@ -82,9 +84,7 @@ export default {
     },
     uploadInfoHandle() {
       let formData = new FormData();
-      fileToFormData(this.avatar).then(res => {
-        formData = res;
-      });
+      formData.append('avatar', this.avatar);
       api.userApi.uploadInfo({
         username: this.username,
         gender: this.gender,
