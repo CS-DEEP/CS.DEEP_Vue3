@@ -38,6 +38,7 @@ body {
   .views {
     width: 100%;
     height: 100%;
+    flex: 1;
   }
 
   .footer-container {

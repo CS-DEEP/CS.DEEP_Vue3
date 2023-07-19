@@ -84,7 +84,8 @@ export default {
     },
     uploadInfoHandle() {
       let formData = new FormData();
-      formData.append('avatar', this.avatar);
+      formData.append('avatar', this.avatar)
+      console.log(formData)
       api.userApi.uploadInfo({
         username: this.username,
         gender: this.gender,
@@ -92,6 +93,7 @@ export default {
         description: this.description,
         avatar: formData
       }).then(res => {
+        console.log(res.data)
         if (res.data.code === 200) {
           alert(res.data.message);
           api.userApi.getUserinfoData(this.$store.state.userinfo.id).then(res => {
