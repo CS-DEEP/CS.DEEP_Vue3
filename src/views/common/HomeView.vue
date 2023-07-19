@@ -1,15 +1,10 @@
 <template>
-  <TopNavBar/>
-  <router-view/>
+  首页(内容撑开)
 </template>
 
 <script lang="ts">
-import TopNavBar from "@/components/common/TopNavBar.vue"
 export default {
   name: 'HomeView',
-  components:[
-      TopNavBar
-  ],
 }
 </script>
 
