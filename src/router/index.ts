@@ -8,19 +8,6 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
-            children: [
-                {
-                    // userId只匹配数字
-                    path: 'user/:userId(\\d+)',
-                    name: 'userInfo',
-                    component: () => import('../views/user/UserInfoView.vue')
-                },
-                {
-                    path: 'edit/userinfo',
-                    name: 'userinfoEdit',
-                    component: () => import('@/views/user/UserinfoEditView.vue')
-                }
-            ]
         },
         {
             path: '/login',
@@ -36,6 +23,17 @@ const router = createRouter({
             path: '/resetPwd',
             name: 'resetPwd',
             component: () => import('../views/user/ResetPwdView.vue')
+        },
+        {
+            // userId只匹配数字
+            path: '/user/:userId(\\d+)',
+            name: 'userInfo',
+            component: () => import('../views/user/UserInfoView.vue')
+        },
+        {
+            path: '/edit/userinfo',
+            name: 'userinfoEdit',
+            component: () => import('@/views/user/UserinfoEditView.vue')
         },
         {
             path: '/:pathMatch(.*)*',

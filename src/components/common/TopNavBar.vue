@@ -143,7 +143,7 @@ export default {
 .topNav {
   background-color: #fff;
   height: 60px;
-  min-width: 1500px;
+  min-width: 1400px;
   border-bottom: 1px solid gainsboro;
 
   .content {

@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import api from '@/api/modules/index.ts'
-import {getImageFileFromUrl, fileToFormData} from '@/global/utils'
+import {getImageFileFromUrl} from '@/global/utils'
 
 export default {
   name: "UserinfoEditView",
@@ -162,7 +162,7 @@ export default {
           width: 400px;
           max-width: 400px;
           min-width: 400px;
-          max-height: 150px;
+          max-height: 450px;
           word-break: break-all;
           font-family: "Times New Roman", "微软雅黑", "sans-serif";
           border-radius: 5px;

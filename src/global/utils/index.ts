@@ -25,11 +25,3 @@ export async function getImageFileFromUrl(imageUrl: string): Promise<File> {
     // 使用 File 构造函数创建一个新的文件对象
     return new File([blob], fileName, {type: blob.type});
 }
-
-// function:将Promise<File>对象转为Promise<FormData>对象
-export async function fileToFormData(filePromise: Promise<File>): Promise<FormData> {
-    const formData = new FormData();
-    const file = await filePromise;
-    formData.append('avatar', file);
-    return formData;
-}

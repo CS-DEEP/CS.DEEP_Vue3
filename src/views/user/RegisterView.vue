@@ -1,17 +1,13 @@
 <template>
-  <div class="login-page">
-    <div class="login-container">
+  <div class="register-page">
+    <div class="register-container">
       <div class="container-left">
-        <div>
+        <div class="logo">
           <img src="../../assets/image/forum.png" alt="logo">
         </div>
-        <div>
-          <h3>Welcome to CS.DEEP!</h3>
-          <p>
-            <strong style="font-family: 'Times New Roman','sans-serif'">CS.DEEP</strong>
-            <strong>是一个致力于服务每一位计算机人的论坛平台</strong>
-          </p>
-
+        <div class="word">
+          <p>Welcome to CS.DEEP!</p>
+          <p><strong>一个致力于服务每一位计算机人的论坛平台</strong></p>
         </div>
       </div>
       <div class="register-form">
@@ -119,54 +115,59 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-.login-page {
+.register-page {
   width: 100%;
   height: 100%;
-  min-width: 1400px;
-  position: absolute;
-  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 
-  .login-container {
-    height: 70%;
+  .register-container {
+    height: 480px;
     width: 55%;
-    margin: 8% auto;
+    margin: 5% auto;
     border-radius: 15px;
     background-color: white;
     display: flex;
+    flex-flow: row nowrap;
     align-items: flex-start;
-    flex-wrap: nowrap;
+    border: 1px solid #dcdcdc;
 
     .container-left {
       width: 50%;
       height: 100%;
+      display: flex;
+      flex-direction: column;
       border-radius: 10px;
       background-image: linear-gradient(0deg, #505285 0%, #585e92 12%, #65689f 25%);
 
-      div {
+      .logo {
         width: 100%;
-        height: 45%;
         text-align: center;
+        margin-top: 20px;
 
         img {
           width: 100px;
           height: auto;
-          margin-top: 10%;
+          margin-top: 15%;
         }
+      }
 
-        h3 {
-          font-size: 30px;
-          margin-top: 10px;
-          padding: 5px;
-          font-family: "Times New Roman", 'sans-serif';
-        }
+      .word {
+        width: 100%;
+        text-align: center;
 
         p {
-          font-size: 20px;
+          font-size: 18px;
           margin-top: 10px;
           padding: 5px;
-          font-family: '楷体', 'sans-serif';
+          font-family: '宋体', 'sans-serif';
+        }
+
+        p:first-child {
+          font-size: 25px;
+          margin-top: 30px;
+          font-family: "Times New Roman", 'sans-serif';
         }
       }
     }
