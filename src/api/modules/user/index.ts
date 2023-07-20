@@ -6,7 +6,11 @@ import {
     FollowerData,
     FollowingData,
     UserinfoData,
-    LoginData, IsFollowData, UserinfoEditRequest,
+    LoginData,
+    IsFollowData,
+    UserinfoEditRequest,
+    FollowingList,
+    FollowerList,
 } from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
@@ -84,6 +88,16 @@ const uploadInfo = (data: UserinfoEditRequest) => {
         '&description=' + data.description, data.avatar)
 }
 
+const getFollowingList = (data: number) => {
+    return service.get<ResponseResult<FollowingList>>('/user/following/list' +
+        '?userId=' + data)
+}
+
+const getFollowerList = (data: number) => {
+    return service.get<ResponseResult<FollowerList>>('/user/follower/list' +
+        '?userId=' + data)
+}
+
 export default {
     login,               // 登录
     logout,              // 退出登录
@@ -98,4 +112,6 @@ export default {
     followHandle,        // 关注用户
     cancelFollowHandle,  // 取消关注
     uploadInfo,          // 更新用户信息
+    getFollowingList,    // 获取关注列表
+    getFollowerList,     // 获取粉丝列表
 };

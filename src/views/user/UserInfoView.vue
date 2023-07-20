@@ -12,7 +12,8 @@
             <span class="span" v-show="!isOwn&&isFollow" @click="cancelFollowHandle">取消关注</span>
           </div>
           <div class="follow-fan">
-            <router-link class="span" to="#">{{ following_count }}<span> 关注</span></router-link>
+            <router-link class="span" :to="{name:'following',params:{userId:this.user.id}}">
+              {{ following_count }}<span> 关注</span></router-link>
             <router-link class="span" to="#">{{ follower_count }}<span> 粉丝</span></router-link>
           </div>
         </div>
