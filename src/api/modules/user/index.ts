@@ -6,7 +6,11 @@ import {
     FollowerData,
     FollowingData,
     UserinfoData,
-    LoginData, IsFollowData, UserinfoEditRequest, FollowList,
+    LoginData,
+    IsFollowData,
+    UserinfoEditRequest,
+    FollowingList,
+    FollowerList,
 } from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
@@ -85,12 +89,12 @@ const uploadInfo = (data: UserinfoEditRequest) => {
 }
 
 const getFollowingList = (data: number) => {
-    return service.get<ResponseResult<FollowList>>('/user/following/list' +
+    return service.get<ResponseResult<FollowingList>>('/user/following/list' +
         '?userId=' + data)
 }
 
 const getFollowerList = (data: number) => {
-    return service.get<ResponseResult<FollowList>>('/user/follower/list' +
+    return service.get<ResponseResult<FollowerList>>('/user/follower/list' +
         '?userId=' + data)
 }
 

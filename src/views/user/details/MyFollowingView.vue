@@ -51,8 +51,8 @@ export default {
   name: "MyFollowingView",
   mounted() {
     api.userApi.getFollowingList(this.$route.params.userId).then(res => {
-      this.followingList = res.data.data.followList;
-      this.numOfItem = res.data.data.followList.length;
+      this.followingList = res.data.data.following;
+      this.numOfItem = res.data.data.following.length;
       for (let i = 0; i < this.numOfItem && i < 6; ++i) {
         this.curList.push(this.followingList[i])
       }

@@ -31,8 +31,11 @@ export type UserinfoEditRequest = {
     description: string;
 }
 
-export type FollowList = {
-    followList: Array<userType>
+export type FollowingList = {
+    following: Array<userType>
+}
+export type FollowerList = {
+    follower: Array<userType>
 }
 
 export type ResponseResult<T> = {
