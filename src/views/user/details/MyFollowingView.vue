@@ -53,6 +53,7 @@ export default {
     api.userApi.getFollowingList(this.$route.params.userId).then(res => {
       this.followingList = res.data.data.following;
       this.numOfItem = res.data.data.following.length;
+      console.log(this.followingList)
       for (let i = 0; i < this.numOfItem && i < 6; ++i) {
         this.curList.push(this.followingList[i])
       }
@@ -64,7 +65,7 @@ export default {
     let target: number;
     let dialogVisible = false;
     let curPage = 1;
-    let curList: Array<userType>;
+    let curList: Array<userType> = [];
     let followingList: Array<userType>;
     let numOfItem: number = 0;
     return {
@@ -94,8 +95,8 @@ export default {
       api.userApi.cancelFollowHandle(this.curList[this.target].id).then(res => {
         if (res.data.code === 200) {
           api.userApi.getFollowingList(this.$route.params.userId).then(res => {
-            this.followingList = res.data.data.followList;
-            this.numOfItem = res.data.data.followList.length;
+            this.followingList = res.data.data.following;
+            this.numOfItem = res.data.data.following.length;
             this.pageChangeHandle(this.curPage)
           }).catch(err => {
             console.log(err)
