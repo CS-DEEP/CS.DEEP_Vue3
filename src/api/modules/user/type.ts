@@ -1,4 +1,5 @@
 import {userType} from '@/type'
+import user from "@/api/modules/user/index";
 
 export type LoginData = {
     user: userType;
@@ -28,6 +29,10 @@ export type UserinfoEditRequest = {
     age: number;
     avatar: FormData;
     description: string;
+}
+
+export type FollowList = {
+    followList: Array<userType>
 }
 
 export type ResponseResult<T> = {

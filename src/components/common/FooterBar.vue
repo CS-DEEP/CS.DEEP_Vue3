@@ -2,7 +2,9 @@
   <div class="footer">
     <div class="web-link">
       <div>
-        <router-link to="/"><span>个人中心</span></router-link>
+        <router-link :to="{name:'userInfo',params:{userId:this.$store.state.userinfo.id}}">
+          <span>个人中心</span>
+        </router-link>
       </div>
       <div>
         <router-link to='/'><span>友情链接</span></router-link>
@@ -45,7 +47,7 @@ export default {
     margin: 25px auto;
 
     span {
-      color: white;
+      color: #dcdcdc;
       font-size: large;
       font-family: '宋体', 'sans-serif';
       font-weight: bolder;
