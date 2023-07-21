@@ -64,7 +64,7 @@ export default {
       }
       for (let i = 0; i < this.numOfItem; ++i) {
         api.userApi.getFollowState(this.followerList[i].id).then(res => {
-          this.isFollow[i] = res.data.data.isFollow;
+          this.isFollow.push(res.data.data.isFollow);
         })
       }
     }).catch(err => {
@@ -76,9 +76,9 @@ export default {
     let target: number;
     let dialogVisible = false;
     let curPage = 1;
-    let isFollow: Array<boolean> = [false, true, false];
-    let curList: Array<userType> = [CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO,];
-    let followerList: Array<userType> = [CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO]
+    let isFollow: Array<boolean> = [];
+    let curList: Array<userType> = [];
+    let followerList: Array<userType> = [];
     let numOfItem: number = 3;
     return {
       dialogVisible,
