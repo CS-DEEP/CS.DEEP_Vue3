@@ -10,7 +10,7 @@
           <p @click="toUserCenter(index)">{{ item.username }}</p>
           <p>{{ item.description }}</p>
         </div>
-        <el-button class="btn" @click="dialogVisible=true,target=index">取消关注</el-button>
+        <el-button v-show="isOwn" class="btn" @click="dialogVisible=true, target=index">取消关注</el-button>
       </div>
     </div>
     <div class="pagination" v-show="numOfItem > 6">
@@ -50,6 +50,7 @@ import router from "@/router";
 export default {
   name: "MyFollowingView",
   mounted() {
+    this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
     api.userApi.getFollowingList(this.$route.params.userId).then(res => {
       this.followingList = res.data.data.following;
       this.numOfItem = res.data.data.following.length;
@@ -62,6 +63,7 @@ export default {
     })
   },
   data() {
+    let isOwn = false;
     let target: number;
     let dialogVisible = false;
     let curPage = 1;
@@ -74,7 +76,8 @@ export default {
       numOfItem,
       curList,
       curPage,
-      target
+      target,
+      isOwn
     }
   },
   methods: {
