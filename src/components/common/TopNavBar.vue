@@ -169,6 +169,7 @@ export default {
         }
       }
 
+      
       .item8 {
         width: 10px;
         margin-top: -9px;
@@ -264,6 +265,7 @@ export default {
         padding: 0;
         margin-left: 240px;
         margin-top: 2px;
+
 
         .font-icon {
           font-size: 25px;
