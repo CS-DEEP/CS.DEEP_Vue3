@@ -45,10 +45,10 @@ import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
 export default {
   name: "ArticleEditView",
   mounted() {
-    api.articleApi.getArticleInfo(this.$route.params.articleId).then(res=>{
-      this.article=res.data.data.article;
-      this.tagList=res.data.data.tag;
-    }).catch(err=>{
+    api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
+      this.article = res.data.data.article;
+      this.tagList = res.data.data.tag ? res.data.data.tag : [];
+    }).catch(err => {
       console.log(err)
     })
   },
@@ -57,7 +57,7 @@ export default {
     let article: articleType = CONST.DEFAULTARTICLE
     let category = CONST.CATEGORYLIST
     let tagTemp = ''
-    let tagList = []
+    let tagList: Array<string> = []
     return {
       article,
       category,

@@ -9,8 +9,8 @@ const createArticle = () => {
     return service.post<ResponseResult<createArticleRes>>('/article/create')
 }
 
-const getArticleInfo=(data:number)=>{
-    return service.get<ResponseResult<getArticleInfo>>('/article/get/info'+'?articleId='+data)
+const getArticleInfo = (data: number) => {
+    return service.get<ResponseResult<getArticleInfo>>('/article/get/info' + '?articleId=' + data)
 }
 
 export default {
