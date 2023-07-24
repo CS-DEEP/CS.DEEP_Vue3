@@ -76,9 +76,9 @@ export default {
     let target: number;
     let dialogVisible = false;
     let curPage = 1;
-    let isFollow: Array<boolean> = [false, true, false];
-    let curList: Array<userType> = [CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO,];
-    let followerList: Array<userType> = [CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO, CONST.DEFAULTUSERINFO]
+    let isFollow: Array<boolean> = [];
+    let curList: Array<userType> = [];
+    let followerList: Array<userType> = [];
     let numOfItem: number = 3;
     return {
       dialogVisible,
