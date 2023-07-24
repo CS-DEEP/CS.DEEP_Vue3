@@ -37,6 +37,7 @@
 
 <script lang="ts">
 import CONST from "@/global/const"
+import api from "@/api/modules"
 import {articleType} from "@/type"
 import Index from "../../../index.html";
 import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
@@ -44,7 +45,12 @@ import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
 export default {
   name: "ArticleEditView",
   mounted() {
-    this.article = JSON.parse(this.$route.params.article);
+    api.articleApi.getArticleInfo(this.$route.params.articleId).then(res=>{
+      this.article=res.data.data.article;
+      this.tagList=res.data.data.tag;
+    }).catch(err=>{
+      console.log(err)
+    })
   },
 
   data() {

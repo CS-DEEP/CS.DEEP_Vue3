@@ -26,10 +26,10 @@
   </div>
 </template>
 
-<script>
+
+<script lang="ts">
 import api from "@/api/modules/index.ts"
 import CONST from "@/global/const/index.ts"
-
 export default {
   name: "AvatarAndUsername",
   data() {
@@ -57,6 +57,11 @@ export default {
 </script>
 
 <style lang="scss">
+
+a{
+  text-decoration: none;
+}
+
 .avatar-username {
   display: flex;
   align-items: center;

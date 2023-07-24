@@ -9,3 +9,8 @@ export type ResponseResult<T> = {
 export type createArticleRes = {
     article: articleType
 }
+
+export type getArticleInfo={
+    article:articleType,
+    tag?:Array<string>
+}
