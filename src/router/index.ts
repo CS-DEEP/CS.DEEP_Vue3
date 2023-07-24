@@ -62,6 +62,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/edit/post/:postId',
+            name: 'articleEdit',
+            component: () => import('@/views/article/ArticleEditView.vue'),
+            meta: {
+                verifyLoginState: true
+            }
+        },
+        {
             path: '/show/:userId(\\d+)',
             name: 'show',
             component: () => import('@/views/user/UserDetailView.vue'),

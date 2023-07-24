@@ -64,7 +64,7 @@ export default {
       }
       for (let i = 0; i < this.numOfItem; ++i) {
         api.userApi.getFollowState(this.followerList[i].id).then(res => {
-          this.isFollow[i] = res.data.data.isFollow;
+          this.isFollow.push(res.data.data.isFollow);
         })
       }
     }).catch(err => {

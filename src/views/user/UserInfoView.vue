@@ -41,6 +41,7 @@ import UserCard from "@/components/common/UserCard.vue";
 import api from '@/api/modules/index.ts'
 import CalendarHeatmap from "@/components/common/CalendarHeatmap.vue";
 import CONST from "@/global/const/index.ts"
+import router from "@/router";
 
 export default {
   name: "UserInfoView",
@@ -48,7 +49,13 @@ export default {
   mounted() {
     this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
     api.userApi.getUserinfoData(this.$route.params.userId).then(res => {
-      this.user = res.data.data.user;
+      if (res.data.code === 200) {
+        this.user = res.data.data.user;
+      } else {
+        alert(res.data.message);
+        router.push({name: 'notFound'});
+      }
+
     }).catch(err => {
       console.log(err)
     })
