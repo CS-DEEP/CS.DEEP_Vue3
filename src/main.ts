@@ -5,6 +5,8 @@ import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import store, {key} from "@/store";
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 const app = createApp(App)
 
@@ -18,5 +20,7 @@ app.use(store, key)
 
 // noinspection TypeScriptValidateTypes
 app.use(ElementPlus)
+
+app.use(mavonEditor)
 
 app.mount('#app')

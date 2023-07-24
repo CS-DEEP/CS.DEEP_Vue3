@@ -16,10 +16,29 @@ const DEFAULTUSERINFO = {
     description: "这个人很懒，什么都没写欸~",
     version: 1
 }
+const DEFAULTARTICLE = {
+    nodeId: -1,
+    id: 0,
+    authorId: 0,
+    title: '草稿',
+    content: '',
+    categoryId: -1,
+    createTime: 1689949389,
+    updateTime: 1689949389,
+    version: 1,
+    draft: 1
+}
+const CATEGORYLIST = ['专业知识', '分享发现', '吐槽讨论']
+const TAGBACKCOLOR = ['#633b7a', '#f8f5e8', '#d6c78a']
+const TAGTEXTCOLOR = ['#f28487', '#28242a', '#b97d21']
 
 
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
     DEFAULTUSERINFO, // 默认用户信息
+    DEFAULTARTICLE,  // 默认文章信息
+    CATEGORYLIST,    // 文章分类
+    TAGBACKCOLOR,    // 标签背景颜色
+    TAGTEXTCOLOR,    // 标签文本颜色
 }
