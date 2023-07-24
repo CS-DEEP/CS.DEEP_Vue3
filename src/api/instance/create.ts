@@ -1,5 +1,4 @@
 import axios from 'axios'
-import CONST from '@/global/const/index.ts'
 import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults} from 'axios'
 
 
@@ -54,7 +53,7 @@ export class Request {
             },
             (err: any) => {
                 // 这里用来处理http常见错误，进行全局提示
-                let message = "";
+                let message: string;
                 switch (err.response.status) {
                     case 400:
                         message = "请求错误(400)";

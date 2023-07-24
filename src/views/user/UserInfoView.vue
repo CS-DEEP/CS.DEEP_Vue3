@@ -7,11 +7,13 @@
         </div>
         <div class="behavior">
           <div class="edit-follow">
-            <router-link class="span" to="#" v-show="isOwn">编辑个人资料</router-link>
-            <span class="span" v-show="!isOwn">关注</span>
+            <router-link class="span" to="/edit/userinfo" v-show="isOwn">编辑个人资料</router-link>
+            <span class="span" v-show="!isOwn&&!isFollow" @click="followHandle">关注</span>
+            <span class="span" v-show="!isOwn&&isFollow" @click="cancelFollowHandle">取消关注</span>
           </div>
           <div class="follow-fan">
-            <router-link class="span" to="#">{{ following_count }}<span> 关注</span></router-link>
+            <router-link class="span" :to="{name:'following',params:{userId:this.user.id}}">
+              {{ following_count }}<span> 关注</span></router-link>
             <router-link class="span" to="#">{{ follower_count }}<span> 粉丝</span></router-link>
           </div>
         </div>
@@ -51,13 +53,17 @@ export default {
       console.log(err)
     })
     api.userApi.getFollowingNum(this.$route.params.userId).then(res => {
-      console.log(res.data)
       this.following_count = res.data.data.followingCount;
     }).catch(err => {
       console.log(err)
     })
     api.userApi.getFollowerNum(this.$route.params.userId).then(res => {
       this.follower_count = res.data.data.followerCount;
+    }).catch(err => {
+      console.log(err)
+    })
+    api.userApi.getFollowState(this.$route.params.userId).then(res => {
+      this.isFollow = res.data.data.isFollow;
     }).catch(err => {
       console.log(err)
     })
@@ -69,6 +75,41 @@ export default {
       follower_count: 0,
       colors: CONST.COLORS,
       isOwn: true,
+      isFollow: false,
+    }
+  },
+  methods: {
+    followHandle() {
+      api.userApi.followHandle(this.$route.params.userId).then(res => {
+        if (res.data.code === 200) {
+          this.isFollow = true;
+          api.userApi.getFollowerNum(this.$route.params.userId).then(res => {
+            this.follower_count = res.data.data.followerCount;
+          }).catch(err => {
+            console.log(err)
+          })
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    cancelFollowHandle() {
+      api.userApi.cancelFollowHandle(this.$route.params.userId).then(res => {
+        if (res.data.code === 200) {
+          this.isFollow = false;
+          api.userApi.getFollowerNum(this.$route.params.userId).then(res => {
+            this.follower_count = res.data.data.followerCount;
+          }).catch(err => {
+            console.log(err)
+          })
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
@@ -97,6 +138,7 @@ export default {
         margin-left: 3px;
 
         .edit-follow {
+          position: relative;
           width: 220px;
           border: 1px solid #e8ecf3;
           border-radius: 5px;
@@ -105,6 +147,9 @@ export default {
           background-color: #cbd3e1;
 
           .span {
+            display: block;
+            width: 100%;
+            height: 100%;
             color: #222222;
             font-size: 18px;
           }

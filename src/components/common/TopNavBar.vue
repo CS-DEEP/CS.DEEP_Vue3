@@ -29,7 +29,9 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item><router-link to="/login">专业知识</router-link></el-dropdown-item>
+                <el-dropdown-item>
+                  <router-link to="/login">专业知识</router-link>
+                </el-dropdown-item>
                 <el-dropdown-item>分享发现</el-dropdown-item>
                 <el-dropdown-item>吐槽讨论</el-dropdown-item>
               </el-dropdown-menu>
@@ -75,7 +77,7 @@
           </div>
         </el-menu-item>
 
-        <AvatarAndUsername v-show="$store.state.haveLogin"/>
+        <AvatarAndUsername v-show="$store.state.haveLogin" @logout="logoutHandle"/>
         <RegisterAndLogin v-show="!$store.state.haveLogin"/>
       </el-menu>
     </div>
@@ -109,6 +111,10 @@ export default {
       console.log(key, keyPath)
     }
 
+    const logoutHandle = () => {
+      this.$router.push('/')
+    }
+
     return {
       // 导出的字体图标
       Search,
@@ -120,6 +126,7 @@ export default {
       activeIndex,
       //导出的函数
       handleSelect,
+      logoutHandle,
     }
   }
 }
@@ -136,7 +143,7 @@ export default {
 .topNav {
   background-color: #fff;
   height: 60px;
-  min-width: 1500px;
+  min-width: 1400px;
   border-bottom: 1px solid gainsboro;
 
   .content {

@@ -1,10 +1,24 @@
 <template>
   <div class="footer">
-    <router-link to="/"><span>HomePage</span></router-link>
-    |
-    <router-link to="#"><span>UsefulLinks</span></router-link>
-    |
-    <router-link to="#"><span>AboutUs</span></router-link>
+    <div class="web-link">
+      <div>
+        <router-link :to="{name:'userInfo',params:{userId:this.$store.state.userinfo.id}}">
+          <span>个人中心</span>
+        </router-link>
+      </div>
+      <div>
+        <router-link to='/'><span>友情链接</span></router-link>
+      </div>
+      <div>
+        <router-link to="/"><span>关于我们</span></router-link>
+      </div>
+    </div>
+    <div class="web-intro">
+      <p>CS.DEEP</p>
+      <p>一个致力于服务每一位计算机人的论坛平台</p>
+      <p>Github地址: <a href="https://github.com/CS-DEEP" target="_blank">https://github.com/CS-DEEP</a></p>
+      <p>商务邮箱: cs_deep@163.com</p>
+    </div>
   </div>
 </template>
 
@@ -14,26 +28,51 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .footer {
   min-width: 1400px;
-  width: 300px;
-  padding: 20px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  width: 100%;
+  height: 240px;
+  background-color: #333436;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  font-family: "Times New Roman", "sans-serif";
-  text-decoration: none;
+  flex-direction: column;
+  text-align: center;
 
-  span{
-    margin: 0 20px 0 20px;
-    font-size: larger;
-    color: #222222;
+  .web-link {
+    width: 1300px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 25px auto;
+
+    span {
+      color: #dcdcdc;
+      font-size: large;
+      font-family: '宋体', 'sans-serif';
+      font-weight: bolder;
+    }
+  }
+
+  .web-intro {
+    margin: 0 auto;
+    width: 1300px;
+    border-top: 2px solid #151517;
+
+    p {
+      color: #878989;
+      font-family: "Times New Roman", "宋体", "sans-serif";
+      padding-top: 10px;
+
+      a {
+        color: #878989;
+      }
+    }
+
+    p:first-child {
+      font-size: 30px;
+      padding-top: 20px;
+    }
   }
 }
 </style>
