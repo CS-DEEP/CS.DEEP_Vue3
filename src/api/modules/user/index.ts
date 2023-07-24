@@ -1,4 +1,3 @@
-// src/api/modules/user/index.ts
 import service from '../../instance/index'
 import {loginType, registerType, resetPwdType} from '@/type'
 import {
