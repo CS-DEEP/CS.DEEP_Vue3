@@ -140,8 +140,29 @@ export default {
     },
     updateImageHandle(pos: number, file: File) {
       let formData = new FormData();
-      formData.append('image', file);
-
+      formData.append('file', file);
+      api.articleApi.updateImageHandle(formData).then(res => {
+        this.article.content += `![](${res.data.data.url})`
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    updateArticleInfo() {
+      api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
+        if (res.data.code === 200) {
+          api.articleApi.updateArticleInfo({
+            article: this.article,
+            tag: this.tagList
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+          alert("已保存到草稿箱！")
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 

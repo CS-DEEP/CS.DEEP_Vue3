@@ -14,3 +14,7 @@ export type articleInfo = {
     article: articleType,
     tag?: Array<string>
 }
+
+export type imageBackRes = {
+    url: string
+}
