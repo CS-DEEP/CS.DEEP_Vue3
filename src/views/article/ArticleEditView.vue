@@ -29,8 +29,19 @@
         </div>
       </div>
     </div>
+    <div class="buttons">
+      <button class="del-btn">删除文章</button>
+      <button class="commit-btn">提交发布</button>
+    </div>
     <div class="post-main">
-
+      <mavon-editor
+          style="width: 100%; height: 100%"
+          v-model="article.content"
+          :codeStyle="codeStyle"
+          :xssOptions="xssOptions"
+          @imgAdd="updateImageHandle"
+          @save="updateArticleInfo"
+      ></mavon-editor>
     </div>
   </div>
 </template>
@@ -51,18 +62,39 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    this.interval = setInterval(() => {
+      api.articleApi.updateArticleInfo({
+        article: this.article,
+        tag: this.tagList
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    }, 10000)
   },
-
+  beforeUnmount() {
+    clearInterval(this.interval)
+  },
   data() {
     let article: articleType = CONST.DEFAULTARTICLE
     let category = CONST.CATEGORYLIST
     let tagTemp = ''
     let tagList: Array<string> = []
+    let codeStyle = 'github'
+    let interval: number
     return {
       article,
       category,
       tagTemp,
       tagList,
+      codeStyle,
+      interval,
+      xssOptions: {
+        whiteList: {
+          span: ['style']
+        }
+      }
     }
   },
   methods: {
@@ -106,6 +138,32 @@ export default {
         tagInput.value = ''
       }
     },
+    updateImageHandle(pos: number, file: File) {
+      let formData = new FormData();
+      formData.append('file', file);
+      api.articleApi.updateImageHandle(formData).then(res => {
+        this.article.content += `![](${res.data.data.url})`
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    updateArticleInfo() {
+      api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
+        if (res.data.code === 200) {
+          api.articleApi.updateArticleInfo({
+            article: this.article,
+            tag: this.tagList
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+          alert("已保存到草稿箱！")
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 
 }
@@ -129,13 +187,14 @@ export default {
 
   .post-top {
     margin-top: 10px;
-    height: 100px;
+    height: 70px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 
     .title, .cate, .tag {
       width: 400px;
+      padding-left: 10px;
 
       p {
         font-family: "宋体", "sans-serif";
@@ -179,6 +238,42 @@ export default {
 
       }
     }
+  }
+
+  .buttons {
+    width: 1150px;
+    display: flex;
+    flex-direction: row-reverse;
+
+    button {
+      width: 90px;
+      height: 40px;
+      font-family: "宋体", "sans-serif";
+      font-size: 15px;
+      background-color: #dcdcdc;
+      border: none;
+      border-radius: 5px;
+      margin-left: 10px;
+
+      &:hover {
+        background-color: #cbd3e1;
+      }
+
+    }
+
+    .commit-btn {
+      color: #009992;
+    }
+
+    .del-btn {
+      color: #ee4f4f;
+    }
+  }
+
+  .post-main {
+    margin-top: 15px;
+    height: 700px;
+    width: 1150px;
   }
 }
 </style>

@@ -10,7 +10,11 @@ export type createArticleRes = {
     article: articleType
 }
 
-export type getArticleInfo={
-    article:articleType,
-    tag?:Array<string>
+export type articleInfo = {
+    article: articleType,
+    tag?: Array<string>
+}
+
+export type imageBackRes = {
+    url: string
 }

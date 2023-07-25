@@ -33,6 +33,7 @@ export class Request {
                 const currentDate = new Date();
                 const expirationDate = new Date(expirationTime);
 
+                // TODO:token过期不会自动跳转到登录？
                 if (!token || expirationDate < currentDate) {
                     localStorage.clear();
                     window.location.href = '/login';
