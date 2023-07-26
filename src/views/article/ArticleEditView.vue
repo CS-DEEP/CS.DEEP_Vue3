@@ -35,6 +35,7 @@
     </div>
     <div class="post-main">
       <mavon-editor
+          ref="md"
           style="width: 100%; height: 100%"
           v-model="article.content"
           :codeStyle="codeStyle"
@@ -99,12 +100,15 @@ export default {
   },
   methods: {
     tagEnterHandle() {
-      if (getStringLengthOfChar(this.tagTemp) > 12) {
-        alert("每个标签的必须保证在12个字节内");
+      if (getStringLengthOfChar(this.tagTemp) > 12 || getStringLengthOfChar(this.tagTemp) <= 0) {
+        alert("每个标签的必须保证在1-12个字节内");
       } else if (this.tagList.length >= 3) {
+        let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
+        tagInput.value = '';
         alert("每篇文章限制标签数为3个以内");
       } else {
         this.tagList.push(this.tagTemp);
+        let listDiv = document.querySelector('.tag-show');
         let childDiv = document.createElement("div") as HTMLElement;
         childDiv.textContent = this.tagList[this.tagList.length - 1]
         childDiv.style.width = '80px'
@@ -124,24 +128,49 @@ export default {
           childDiv.style.filter = "brightness(100%)";
         })
         childDiv.addEventListener('dblclick', () => {
+          let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
+          let currentWidth = parseInt(window.getComputedStyle(tagInput).width);
+          tagInput.style.width = (currentWidth + 86) + 'px'
           for (let i = 0; i < this.tagList.length; ++i)
             if (this.tagList[i] === childDiv.textContent) {
               this.tagList.splice(i, 1)
             }
           childDiv.remove();
         })
-        let listDiv = document.querySelector('.tag-show');
         let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
         let currentWidth = parseInt(window.getComputedStyle(tagInput).width);
-        tagInput.style.width = (currentWidth - 60) + 'px';
+        tagInput.style.width = (currentWidth - 86) + 'px';
         listDiv.appendChild(childDiv)
         tagInput.value = ''
+        this.tagTemp = ''
       }
     },
     updateImageHandle(pos: number, file: File) {
+      let _this = this;
       let formData = new FormData();
-      formData.append('image', file);
-
+      formData.append('file', file);
+      api.articleApi.updateImageHandle(formData).then(res => {
+        _this.$refs.md.$img2Url(pos, res.data.data.url)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    updateArticleInfo() {
+      api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
+        if (res.data.code === 200) {
+          api.articleApi.updateArticleInfo({
+            article: this.article,
+            tag: this.tagList
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+          alert("已保存到草稿箱！")
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 
