@@ -36,8 +36,8 @@
         <div class="others">
           <router-link class="login" to="/login">前往登录</router-link>
         </div>
-        <button class="button">
-          <span class="button-content" @click="RegisterHandle">注册</span>
+        <button class="button" @click="RegisterHandle">
+          <span class="button-content">注册</span>
         </button>
       </div>
     </div>

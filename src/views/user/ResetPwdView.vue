@@ -32,8 +32,8 @@
         <div class="others">
           <router-link class="login" to="/login">前往登录</router-link>
         </div>
-        <button class="button">
-          <span class="button-content" @click="ResetPwdHandle">提交</span>
+        <button class="button" @click="ResetPwdHandle">
+          <span class="button-content">提交</span>
         </button>
       </div>
     </div>

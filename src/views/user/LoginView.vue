@@ -24,8 +24,8 @@
           <router-link class="register" to="/register">新用户？点我注册</router-link>
           <router-link class="resetPwd" to="/resetPwd">忘记密码</router-link>
         </div>
-        <button class="button">
-          <span class="button-content" @click="LoginHandle">登录</span>
+        <button class="button" @click="LoginHandle">
+          <span class="button-content">登录</span>
         </button>
       </div>
     </div>
