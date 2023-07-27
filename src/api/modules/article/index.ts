@@ -15,16 +15,9 @@ const getArticleInfo = (data: number) => {
 
 const updateArticleInfo = (data: articleInfo) => {
     return service.post<ResponseResult<articleInfo>>('/article/update' +
-        '?nodeId=' + data.article.nodeId +
-        '&id=' + data.article.id +
-        '&authorId=' + data.article.authorId +
         '&title=' + data.article.title +
         '&content=' + data.article.content +
         '&categoryId=' + data.article.categoryId +
-        '&createTime=' + data.article.createTime +
-        '&updateTime=' + data.article.updateTime +
-        '&version=' + data.article.version +
-        '&draft=' + data.article.draft +
         '&tag=' + data.tag)
 }
 
