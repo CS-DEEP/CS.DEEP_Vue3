@@ -15,10 +15,11 @@ const getArticleInfo = (data: number) => {
 
 const updateArticleInfo = (data: articleInfo) => {
     return service.post<ResponseResult<articleInfo>>('/article/update' +
+        '?articleId=' + data.article.id +
         '&title=' + data.article.title +
         '&content=' + data.article.content +
         '&categoryId=' + data.article.categoryId +
-        '&tag=' + data.tag)
+        '&tags=' + data.tag)
 }
 
 const updateImageHandle = (data: FormData) => {
