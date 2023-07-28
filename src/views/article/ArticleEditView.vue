@@ -64,6 +64,8 @@ export default {
       console.log(err)
     })
     this.interval = setInterval(() => {
+      console.log(this.article.content)
+      this.article.content = encodeURIComponent(this.article.content)
       api.articleApi.updateArticleInfo({
         article: this.article,
         tag: this.tagList
@@ -72,6 +74,7 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+      this.article.content = decodeURIComponent(this.article.content)
     }, 10000)
   },
   beforeUnmount() {
