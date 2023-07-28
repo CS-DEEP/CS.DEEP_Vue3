@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     AvatarAndUsername: typeof import('./src/components/mini/AvatarAndUsername.vue')['default']
     CalendarHeatmap: typeof import('./src/components/common/CalendarHeatmap.vue')['default']
-    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
@@ -19,7 +18,6 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FooterBar: typeof import('./src/components/common/FooterBar.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']

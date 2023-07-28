@@ -78,7 +78,12 @@ export default {
       this.mdValue = this.article.content
       this.tagList = res.data.data.tag ? res.data.data.tag : [];
       for (let i = 0; i < this.tagList.length; ++i) {
-        this.addTagDivHandle(this.tagList[i])
+        let childDiv = this.addTagDivHandle(this.tagList[i])
+        let listDiv = document.querySelector('.tag-show')
+        let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
+        let currentWidth = parseInt(window.getComputedStyle(tagInput).width);
+        tagInput.style.width = (currentWidth - 86) + 'px';
+        listDiv.appendChild(childDiv)
       }
     }).catch(err => {
       console.log(err)

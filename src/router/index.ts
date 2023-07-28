@@ -117,7 +117,10 @@ const router = createRouter({
                 verifyLoginState: false
             }
         }
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) { // 始终滚动到顶部
+        return {top: 0}
+    },
 } as RouterOptions)
 
 createRouteGuards(router, store)
