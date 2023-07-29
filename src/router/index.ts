@@ -70,6 +70,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/post/:postId',
+            name: 'articleDetails',
+            component: () => import('@/views/article/ArticleDetailsView.vue'),
+            meta: {
+                verifyLoginState: true
+            }
+        },
+        {
             path: '/show/:userId(\\d+)',
             name: 'show',
             component: () => import('@/views/user/UserDetailView.vue'),
@@ -118,10 +126,10 @@ const router = createRouter({
             }
         }
     ],
-    scrollBehavior(to, from, savedPosition) { // 始终滚动到顶部
+    scrollBehavior(to, from, savedPosition) {
         return {top: 0}
     },
 } as RouterOptions)
 
-createRouteGuards(router, store)
+// createRouteGuards(router, store)
 export default router
