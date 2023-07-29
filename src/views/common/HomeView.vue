@@ -6,7 +6,6 @@
 <script lang="ts">
 import router from "@/router";
 import api from "@/api/modules/index"
-import CONST from "@/global/const"
 
 export default {
   name: 'HomeView',
