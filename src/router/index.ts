@@ -29,14 +29,6 @@ const router = createRouter({
             }
         },
         {
-            path: '/articleDetail',
-            name: 'ArticleDetailsView',
-            component: () => import('../views/article/ArticleDetailsView.vue'),
-            meta: {
-                verifyLoginState: true
-            }
-        },
-        {
             path: '/register',
             name: 'register',
             component: () => import('../views/user/RegisterView.vue'),
@@ -70,17 +62,17 @@ const router = createRouter({
             }
         },
         {
-            path: '/edit/post/:postId',
-            name: 'articleEdit',
-            component: () => import('@/views/article/ArticleEditView.vue'),
+            path: '/post/:postId',
+            name: 'articleDetails',
+            component: () => import('@/views/article/ArticleDetailsView.vue'),
             meta: {
                 verifyLoginState: true
             }
         },
         {
-            path: '/post/:postId',
-            name: 'articleDetails',
-            component: () => import('@/views/article/ArticleDetailsView.vue'),
+            path: '/edit/post/:postId',
+            name: 'articleEdit',
+            component: () => import('@/views/article/ArticleEditView.vue'),
             meta: {
                 verifyLoginState: true
             }
@@ -139,5 +131,5 @@ const router = createRouter({
     },
 } as RouterOptions)
 
-// createRouteGuards(router, store)
+createRouteGuards(router, store)
 export default router

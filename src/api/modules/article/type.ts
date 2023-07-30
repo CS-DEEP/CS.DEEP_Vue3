@@ -10,11 +10,14 @@ export type createArticleRes = {
     article: articleType
 }
 
-export type articleInfo = {
-    article: articleType,
-    tag?: Array<string>
-}
-
 export type imageBackRes = {
     url: string
+}
+
+export type isLikeRes = {
+    isLike: number
+}
+
+export type isCollectRes = {
+    isCollect: number
 }
