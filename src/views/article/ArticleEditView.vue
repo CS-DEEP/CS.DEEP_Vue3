@@ -65,8 +65,7 @@
 <script lang="ts">
 import CONST from "@/global/const"
 import api from "@/api/modules"
-import {articleType} from "@/type"
-import Index from "../../../index.html";
+import {articleBaseInfo} from "@/type"
 import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
 import router from "@/router";
 
@@ -106,7 +105,7 @@ export default {
   },
   data() {
     let mdValue: string
-    let article: articleType = CONST.DEFAULTARTICLE
+    let article: articleBaseInfo = CONST.DEFAULTARTICLE
     let category = CONST.CATEGORYLIST
     let tagTemp = ''
     let tagList: Array<string> = []
