@@ -29,6 +29,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/articleDetail',
+            name: 'ArticleDetailsView',
+            component: () => import('../views/article/ArticleDetailsView.vue'),
+            meta: {
+                verifyLoginState: true
+            }
+        },
+        {
             path: '/register',
             name: 'register',
             component: () => import('../views/user/RegisterView.vue'),
@@ -131,5 +139,5 @@ const router = createRouter({
     },
 } as RouterOptions)
 
-createRouteGuards(router, store)
+// createRouteGuards(router, store)
 export default router

@@ -4,7 +4,8 @@
   时间：2023/7/12
  -->
 <template>
-  <div class="topNav">
+  <el-affix :offset="0">
+    <div class="topNav">
     <div class="content">
       <el-menu
           :default-active="activeIndex"
@@ -82,6 +83,8 @@
       </el-menu>
     </div>
   </div>
+  </el-affix>
+  
 </template>
 
 

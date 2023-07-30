@@ -47,5 +47,10 @@ body {
   }
 }
 
+.el-popover{
+  background-color: #959896 !important;
+  border-color: #959896 !important;
+}
+
 
 </style>
