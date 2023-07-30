@@ -10,4 +10,4 @@ export default {
 
 <style scoped>
 
-</style>
+</style>1
