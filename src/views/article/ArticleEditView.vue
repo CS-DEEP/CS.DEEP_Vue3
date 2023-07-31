@@ -205,9 +205,11 @@ export default {
         article: this.article,
         tag: this.tagList
       }).then(res => {
-        // TODO:页面跳转事宜
         if (res.data.code === 200) {
           alert(res.data.message)
+          router.push({name: 'articleDetails', params: {postId: this.$route.params.postId}})
+        } else {
+          console.log(res.data.message)
         }
       }).catch(err => {
         console.log(err)

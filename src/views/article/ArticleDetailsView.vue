@@ -127,6 +127,8 @@ import api from "@/api/modules"
 import CONST from "@/global/const"
 import {marked} from 'marked';
 import {articleBaseInfo, userType} from "@/type";
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css'
 import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
 
 export default {
@@ -157,6 +159,13 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    this.$nextTick(() => {
+      const codeBlocks = document.querySelectorAll('pre code');
+      codeBlocks.forEach((codeBlock) => {
+        // 报错但是可以高亮？
+        hljs.highlightElement(codeBlock);
+      });
+    });
   },
   setup() {
     let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE

@@ -21,7 +21,7 @@ const DEFAULTARTICLE = {
     id: 0,
     authorId: 0,
     title: '这是一篇测试文章',
-    content: '## 欢迎来到CS.DEEP论坛！',
+    content: '',
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,
