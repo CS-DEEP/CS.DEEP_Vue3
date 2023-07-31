@@ -167,16 +167,12 @@ export default {
       });
     });
   },
-  setup() {
+  data() {
     let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE
     let articleTags: Array<string> = []
     let authorInfo: userType = CONST.DEFAULTUSERINFO
     let articleCate: string = "专业知识"
     let markToHtml: string
-    let initPage = function () {
-      let domEle = document.querySelector('.header') as HTMLElement;
-      domEle.style.backgroundColor = generateDarkColor()
-    }
 
     return {
       articleInfo,
@@ -184,10 +180,14 @@ export default {
       articleTags,
       authorInfo,
       markToHtml,
-      initPage
     }
   },
-
+  methods: {
+    initPage() {
+      let domEle = document.querySelector('.header') as HTMLElement;
+      domEle.style.backgroundColor = generateDarkColor()
+    }
+  }
 }
 </script>
 
