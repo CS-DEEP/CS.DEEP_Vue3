@@ -142,6 +142,7 @@ export default {
       childDiv.style.marginRight = '2px'
       childDiv.style.backgroundColor = generateLightColor();
       childDiv.style.color = '#222222'
+      childDiv.style.zIndex='-1'
       childDiv.addEventListener('mouseover', () => {
         childDiv.style.filter = "brightness(80%)";
       })
