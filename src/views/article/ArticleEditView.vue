@@ -65,8 +65,7 @@
 <script lang="ts">
 import CONST from "@/global/const"
 import api from "@/api/modules"
-import {articleType} from "@/type"
-import Index from "../../../index.html";
+import {articleBaseInfo} from "@/type"
 import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
 import router from "@/router";
 
@@ -106,7 +105,7 @@ export default {
   },
   data() {
     let mdValue: string
-    let article: articleType = CONST.DEFAULTARTICLE
+    let article: articleBaseInfo = CONST.DEFAULTARTICLE
     let category = CONST.CATEGORYLIST
     let tagTemp = ''
     let tagList: Array<string> = []
@@ -207,9 +206,11 @@ export default {
         article: this.article,
         tag: this.tagList
       }).then(res => {
-        // TODO:页面跳转事宜
         if (res.data.code === 200) {
           alert(res.data.message)
+          router.push({name: 'articleDetails', params: {postId: this.$route.params.postId}})
+        } else {
+          console.log(res.data.message)
         }
       }).catch(err => {
         console.log(err)

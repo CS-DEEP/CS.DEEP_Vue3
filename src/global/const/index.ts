@@ -20,7 +20,7 @@ const DEFAULTARTICLE = {
     nodeId: -1,
     id: 0,
     authorId: 0,
-    title: '草稿',
+    title: '这是一篇测试文章',
     content: '',
     categoryId: -1,
     createTime: 1689949389,
