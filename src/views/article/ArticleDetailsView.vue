@@ -63,60 +63,21 @@
             </div>
             <div class="articleContent">
               <div v-html="markToHtml" id="content"
-                   style="color: #8d7e73;font-family: 'Times New Roman','宋体','sans-serif'"></div>
+                   style="color: #727070;font-family: 'Times New Roman','宋体','sans-serif'"></div>
             </div>
-            <!--            &lt;!&ndash; 评论区 &ndash;&gt;-->
-            <!--            <div class="criticalArea">-->
-            <!--              &lt;!&ndash; 右边的功能区 &ndash;&gt;-->
-            <!--              <div class="gongNeng">-->
-            <!--                <el-button style="border: none;-->
-            <!--              color: black;">-->
-            <!--                  回复-->
-            <!--                </el-button>-->
-            <!--                <el-button style="border: none;-->
-            <!--              color: black;-->
-            <!--              margin-left: 30px;-->
-            <!--              ">-->
-            <!--                  点赞-->
-            <!--                </el-button>-->
-            <!--                <el-dropdown style="margin-left: 30px;-->
-            <!--              margin-top: 7px;-->
-
-            <!--              ">-->
-            <!--                  <i class="iconfont icon-gongnengtubiao-46-copy"></i>-->
-            <!--                  <template #dropdown>-->
-            <!--                    <el-dropdown-menu>-->
-            <!--                      <el-dropdown-item>-->
-            <!--                        <i class="iconfont icon-fenxiang"></i>-->
-            <!--                        <span>分享</span>-->
-            <!--                      </el-dropdown-item>-->
-            <!--                      <el-dropdown-item>-->
-            <!--                        <i class="iconfont icon-icon_tip_off-->
-            <!--                      "></i>-->
-            <!--                        <span>举报</span>-->
-            <!--                      </el-dropdown-item>-->
-            <!--                    </el-dropdown-menu>-->
-            <!--                  </template>-->
-            <!--                </el-dropdown>-->
-            <!--              </div>-->
-            <!--            </div>-->
+          </div>
+          <div class="like-collect">
+            <div class="like" @click="likeHandle">
+              <img :src="isLike?haveLike:haveNotLike" alt="like">
+            </div>
+            <div class="collect" @click="collectHandle">
+              <img :src="isCollect?haveCollect:haveNotCollect" alt="collect">
+            </div>
+            <div class="toComment" @click="toEditCommentHandle">
+              <img src="../../assets/image/comment.png" alt="comment">
+            </div>
           </div>
         </div>
-        <!-- 编辑评论区域 -->
-        <!--        <div class="editComment">-->
-        <!--          <div class="avatar">-->
-        <!--            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="150"-->
-        <!--                       style="margin: 0px 10px 10px 10px;"/>-->
-        <!--          </div>-->
-
-        <!--          <div class="editArea">-->
-        <!--            <el-input v-model="input" placeholder="说点什么吧..."-->
-        <!--                      type="textarea"-->
-        <!--                      :rows="7"-->
-        <!--                      resize="none"-->
-        <!--            />-->
-        <!--          </div>-->
-        <!--        </div>-->
       </el-main>
     </el-container>
   </div>
@@ -130,16 +91,21 @@ import {articleBaseInfo, userType} from "@/type";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
+import haveLike from "@/assets/image/haveLike.png"
+import haveNotLike from "@/assets/image/haveNotLike.png"
+import haveCollect from "@/assets/image/haveCollect.png"
+import haveNotCollect from "@/assets/image/haveNotCollect.png"
 
 export default {
   name: "ArticleDetailsView",
   computed: {
     getUpdateData() {
       return timestampToDateTimeString(this.articleInfo.updateTime);
-    }
+    },
   },
   mounted() {
     this.initPage()
+    this.markToHtml = marked(this.articleInfo.content)
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.articleInfo = res.data.data.article;
@@ -152,6 +118,8 @@ export default {
           } else {
             console.log(res.data.message)
           }
+        }).catch(err => {
+          console.log(err)
         })
       } else {
         console.log(res.data.message)
@@ -166,6 +134,24 @@ export default {
         hljs.highlightElement(codeBlock);
       });
     });
+    api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.isLike = res.data.data.isLike
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    api.articleApi.getCollectStateOfArticle(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.isCollect = res.data.data.isCollect
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   },
   data() {
     let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE
@@ -173,6 +159,8 @@ export default {
     let authorInfo: userType = CONST.DEFAULTUSERINFO
     let articleCate: string = "专业知识"
     let markToHtml: string
+    let isLike: number = 0
+    let isCollect: number = 0
 
     return {
       articleInfo,
@@ -180,12 +168,71 @@ export default {
       articleTags,
       authorInfo,
       markToHtml,
+      isLike,
+      isCollect,
+      haveLike,
+      haveNotLike,
+      haveCollect,
+      haveNotCollect
     }
   },
   methods: {
+    // 初始化页面顶部背景颜色
     initPage() {
       let domEle = document.querySelector('.header') as HTMLElement;
       domEle.style.backgroundColor = generateDarkColor()
+    },
+    // 点赞Handle
+    likeHandle() {
+      if(this.isLike){
+        api.articleApi.cancelLikeArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isLike = this.isLike ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }else{
+        api.articleApi.likeArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isLike = this.isLike ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    // 收藏Handle
+    collectHandle() {
+      if(this.isCollect){
+        api.articleApi.cancelCollectArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isCollect = this.isCollect ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }else{
+        api.articleApi.collectArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isCollect = this.isCollect ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    // 点击评论按钮跳转到评论区域
+    toEditCommentHandle() {
+
     }
   }
 }
@@ -222,6 +269,7 @@ export default {
   .bodyContainer {
     margin: 35px 245px;
     display: flex;
+    position: relative;
 
     .avatar {
       width: 6.8%;
@@ -243,9 +291,8 @@ export default {
     }
 
     .paperMessage {
-      width: 93.3%;
+      width: 90%;
       position: relative;
-      border-bottom: 1px solid #e8ecf3;
       margin-left: 15px;
 
       .baseInfo {
@@ -279,30 +326,30 @@ export default {
       .articleContent {
         margin-top: 38px;
       }
+    }
 
-      .criticalArea {
-        padding: 18px 0 18px 0;
-        position: relative;
+    .like-collect {
+      display: flex;
+      flex-direction: column;
+      height: 180px;
+      justify-content: space-between;
+      position: fixed;
+      bottom: 270px;
+      right: 200px;
 
-        .dianZan {
-          margin-top: 5px;
+      div {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #dcdcdc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-          .userName {
-            margin: 0 10px 0 10px;
-          }
-        }
-
-        .huiFu {
-          .userName {
-            margin: 0 5px 0 5px;
-          }
-        }
-
-        .gongNeng {
-          position: absolute;
-          right: 0;
-          top: 18px;
-
+        img {
+          width: 25px;
+          height: auto;
         }
       }
     }
@@ -364,18 +411,4 @@ export default {
     }
   }
 }
-
-.demo-type {
-  display: flex;
-}
-
-.demo-type > div {
-  flex: 1;
-  text-align: center;
-}
-
-.demo-type > div:not(:last-child) {
-  border-right: 1px solid var(--el-border-color);
-}
-
 </style>1

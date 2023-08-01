@@ -12,7 +12,7 @@ export async function getImageFileFromUrl(imageUrl: string): Promise<File> {
 
 // function:时间戳转换
 export function timestampToDateTimeString(timestamp: number): string {
-    const date = new Date(timestamp * 1000); // 将时间戳转换为毫秒
+    const date = new Date(timestamp); // 将时间戳转换为毫秒
 
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
