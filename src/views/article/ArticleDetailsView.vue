@@ -146,6 +146,7 @@ export default {
         this.articleTags = res.data.data.tag ? res.data.data.tag : [];
         this.articleCate = CONST.CATEGORYLIST[res.data.data.article.categoryId - 1]
         this.markToHtml = marked(this.articleInfo.content)
+        console.log(this.markToHtml)
         api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
           if (res.data.code === 200) {
             this.authorInfo = res.data.data.user
