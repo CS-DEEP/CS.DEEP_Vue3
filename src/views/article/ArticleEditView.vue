@@ -197,7 +197,7 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-      alert("已保存到草稿箱！")
+      alert("已保存！")
     },
     publishArticleHandle() {
       this.article.content = encodeURIComponent(this.mdValue)

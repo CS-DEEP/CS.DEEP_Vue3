@@ -12,7 +12,7 @@
               </div>
             </div>
           </div>
-          <h1>{{ articleInfo.title }}</h1>
+          <p class="article-title">{{ articleInfo.title }}</p>
         </div>
       </el-header>
       <el-main>
@@ -62,8 +62,7 @@
             </span>
             </div>
             <div class="articleContent">
-              <div v-html="markToHtml" id="content"
-                   style="color: #727070;font-family: 'Times New Roman','宋体','sans-serif'"></div>
+              <ArticleHtml :content="markToHtml"/>
             </div>
           </div>
           <div class="like-collect">
@@ -95,9 +94,11 @@ import haveLike from "@/assets/image/haveLike.png"
 import haveNotLike from "@/assets/image/haveNotLike.png"
 import haveCollect from "@/assets/image/haveCollect.png"
 import haveNotCollect from "@/assets/image/haveNotCollect.png"
+import ArticleHtml from "@/components/common/ArticleHtml.vue";
 
 export default {
   name: "ArticleDetailsView",
+  components: {ArticleHtml},
   computed: {
     getUpdateData() {
       return timestampToDateTimeString(this.articleInfo.updateTime);
@@ -105,13 +106,29 @@ export default {
   },
   mounted() {
     this.initPage()
-    this.markToHtml = marked(this.articleInfo.content)
+    // 测试用
+    // this.markToHtml = marked(this.articleInfo.content)
+    // this.$nextTick(() => {
+    //   const codeBlocks = document.querySelectorAll('pre code');
+    //   codeBlocks.forEach((codeBlock) => {
+    //     // 报错但是可以高亮？
+    //     hljs.highlightElement(codeBlock);
+    //   });
+    // });
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.articleInfo = res.data.data.article;
         this.articleTags = res.data.data.tag ? res.data.data.tag : [];
         this.articleCate = CONST.CATEGORYLIST[res.data.data.article.categoryId - 1]
         this.markToHtml = marked(this.articleInfo.content)
+
+        this.$nextTick(() => {
+          const codeBlocks = document.querySelectorAll('pre code');
+          codeBlocks.forEach((codeBlock) => {
+            // 报错但是可以高亮？
+            hljs.highlightElement(codeBlock);
+          });
+        });
         api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
           if (res.data.code === 200) {
             this.authorInfo = res.data.data.user
@@ -127,13 +144,6 @@ export default {
     }).catch(err => {
       console.log(err)
     })
-    this.$nextTick(() => {
-      const codeBlocks = document.querySelectorAll('pre code');
-      codeBlocks.forEach((codeBlock) => {
-        // 报错但是可以高亮？
-        hljs.highlightElement(codeBlock);
-      });
-    });
     api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.isLike = res.data.data.isLike
@@ -184,7 +194,7 @@ export default {
     },
     // 点赞Handle
     likeHandle() {
-      if(this.isLike){
+      if (this.isLike) {
         api.articleApi.cancelLikeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
@@ -194,7 +204,7 @@ export default {
         }).catch(err => {
           console.log(err)
         })
-      }else{
+      } else {
         api.articleApi.likeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
@@ -208,7 +218,7 @@ export default {
     },
     // 收藏Handle
     collectHandle() {
-      if(this.isCollect){
+      if (this.isCollect) {
         api.articleApi.cancelCollectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
@@ -218,7 +228,7 @@ export default {
         }).catch(err => {
           console.log(err)
         })
-      }else{
+      } else {
         api.articleApi.collectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
@@ -369,7 +379,7 @@ export default {
     width: 100%;
     font-family: "Times New Roman", "宋体", "sans-serif";
 
-    h1 {
+    .article-title {
       text-align: center;
       margin-top: 5px;
       font-size: 28px;
