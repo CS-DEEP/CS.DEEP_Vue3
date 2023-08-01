@@ -112,7 +112,15 @@ export default {
         this.articleTags = res.data.data.tag ? res.data.data.tag : [];
         this.articleCate = CONST.CATEGORYLIST[res.data.data.article.categoryId - 1]
         this.markToHtml = marked(this.articleInfo.content)
-        console.log(this.markToHtml)
+
+        // 代码高亮
+        this.$nextTick(() => {
+          const codeBlocks = document.querySelectorAll('pre code');
+          codeBlocks.forEach((codeBlock) => {
+            // 报错但是可以高亮？
+            hljs.highlightElement(codeBlock);
+          });
+        });
         api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
           if (res.data.code === 200) {
             this.authorInfo = res.data.data.user
@@ -128,15 +136,9 @@ export default {
     }).catch(err => {
       console.log(err)
     })
-    this.$nextTick(() => {
-      const codeBlocks = document.querySelectorAll('pre code');
-      codeBlocks.forEach((codeBlock) => {
-        // 报错但是可以高亮？
-        hljs.highlightElement(codeBlock);
-      });
-    });
     api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
+        console.log(res.data.data)
         this.isLike = res.data.data.isLike
       } else {
         console.log(res.data.message)
@@ -146,6 +148,7 @@ export default {
     })
     api.articleApi.getCollectStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
+        console.log(res.data.data)
         this.isCollect = res.data.data.isCollect
       } else {
         console.log(res.data.message)
