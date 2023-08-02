@@ -20,8 +20,44 @@ const DEFAULTARTICLE = {
     nodeId: -1,
     id: 0,
     authorId: 0,
-    title: '草稿',
-    content: '',
+    title: '这是一篇测试文章',
+    content: `
+## 前言
+基于命令行界面的C++程序设计的小游戏——猜数字
+
+---
+## GitHub项目传送门
+[https://github.com/2aurora2/GuessNumGame](https://github.com/2aurora2/GuessNumGame)
+
+---
+## Gitee项目传送门
+[https://gitee.com/lin_aurora/GuessNumGame](https://gitee.com/lin_aurora/GuessNumGame)
+
+---
+## 部分代码
+#### 随机产生数
+
+\`\`\`cpp
+//随机生成的答案
+int AnswerNum1[10];
+//设置随机数种子
+srand((unsigned int)time(NULL));
+//产生当前level对应位数的数字
+for (int i = 0; i < level; ++i)
+{
+\tbool tempJudge = true;
+\ttemp = rand() % 10;
+\t//保证随机生成的每个数不一样
+\tfor (int j = 0; j < i; ++j)
+\t\tif (temp == AnswerNum1[j])
+\t\t{
+\t\t\ttempJudge = false;
+\t\t\t--i;
+\t\t\tbreak;
+\t\t}
+\tif (tempJudge)
+\t\tAnswerNum1[i] = temp;
+}`,
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,

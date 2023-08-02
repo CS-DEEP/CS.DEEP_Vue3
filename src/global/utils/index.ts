@@ -12,7 +12,7 @@ export async function getImageFileFromUrl(imageUrl: string): Promise<File> {
 
 // function:时间戳转换
 export function timestampToDateTimeString(timestamp: number): string {
-    const date = new Date(timestamp * 1000); // 将时间戳转换为毫秒
+    const date = new Date(timestamp); // 将时间戳转换为毫秒
 
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -44,6 +44,15 @@ export function generateLightColor(): string {
     const saturation = Math.floor(Math.random() * 40) + 60; // 随机选择饱和度（60-100）
     const lightness = Math.floor(Math.random() * 30) + 70; // 随机选择亮度（70-100）
 
-    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-    return color;
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
+
+// function:生成随机浅色系颜色
+export function generateDarkColor(): string {
+    const hue = Math.floor(Math.random() * 360); // 随机选择色相
+    const saturation = Math.floor(Math.random() * 40) + 30; // 随机选择饱和度（60-100）
+    const lightness = Math.floor(Math.random() * 30) + 10; // 随机选择亮度（70-100）
+
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+

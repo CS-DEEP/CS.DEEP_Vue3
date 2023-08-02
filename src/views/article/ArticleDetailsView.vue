@@ -1,28 +1,38 @@
 <template>
-  <div class="common-layout">
+  <div class="article-detail-page">
     <el-container>
-      <el-header>
+      <el-header class="header">
         <div class="headerContainer">
           <div class="headTop">
-            <el-tooltip class="box-item" effect="dark" content="置顶" placement="top">
-              <i class="iconfont icon-zhiding"></i>
-            </el-tooltip>
-            <el-button plain>博客区</el-button>
-            <router-link to="/login" class="nav">入门 & 通识</router-link>
+            <!--TODO:分类页跳转-->
+            <el-button plain>{{ articleCate }}</el-button>
+            <div class="tags">
+              <div v-for="(item,index) in articleTags" :key="index">
+                {{ item }} {{ index < articleTags.length - 1 ? '&' : '' }}
+              </div>
+            </div>
           </div>
-          <h1>计算机相关专业入门指引专题贴-开篇 & 索引</h1>
+          <p class="article-title">{{ articleInfo.title }}</p>
         </div>
       </el-header>
       <el-main>
+<<<<<<< HEAD
         
           <div class="bodyContainer">
           <div class="avatar">
             <el-popover show-after="1000" :width="500"
               popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+=======
+        <div class="bodyContainer">
+          <div class="avatar">
+            <el-popover show-after="500" :width="250"
+                        popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
               <template #reference>
-                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                <el-avatar :src="authorInfo.avatar"/>
               </template>
               <template #default>
+<<<<<<< HEAD
                 <div class="demo-rich-conent" style="display: flex; gap: 8px; flex-direction: row">
                   <el-avatar :size="120" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
                   <div style="margin: 5px 10px;
@@ -47,10 +57,24 @@
                       font-size: 16px;"></i><span style="color: white;margin-left: 5px;
                       font-weight: bold;">分享</span>
                       </el-button>
+=======
+                <div class="demo-rich-content"
+                     style="display: flex; gap: 8px; flex-direction: row;background-color: transparent">
+                  <el-avatar :size="80" :src="authorInfo.avatar"/>
+                  <div style="margin: 5px 10px;position:relative;flex-direction: column">
+                    <div style="font-size: 18px;font-family: 'Times New Roman','宋体','sans-serif'">
+                      {{ authorInfo.username }}
+                    </div>
+                    <div style="font-size: 10px;font-family: 'Times New Roman','宋体','sans-serif'">
+                      {{ authorInfo.age }}岁
+                    </div>
+                    <div style="">
+                      <!--TODO:用户关注Handle以及用户个人中心跳转-->
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
                       <el-button style="
-                      border: none;
                       background-color: #959896;
                       color: #fff;
+<<<<<<< HEAD
                       ">
                         <i class="iconfont icon-shoucang" style="color: #827779;
                         font-weight: bold;
@@ -152,11 +176,52 @@
           </div>
         </div>
         
+=======
+                      border: 2px solid #dcdcdc;
+                      width: 60px;
+                      height: 25px;
+                      margin-top: 5px;
+                      text-align: center;
+                      ">关注
+                      </el-button>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </el-popover>
+          </div>
+          <div class="paperMessage">
+            <div class="baseInfo">
+              <span class="avatarName" style="display: block">{{ authorInfo.username }}</span>
+              <span class="date">{{ getUpdateData }}</span>
+              <span class="state">
+              <i class="iconfont icon-shizhongclock74"></i>
+              <span>已编辑</span>
+            </span>
+            </div>
+            <div class="articleContent">
+              <ArticleHtml :content="markToHtml"/>
+            </div>
+          </div>
+          <div class="like-collect">
+            <div class="like" @click="likeHandle">
+              <img :src="isLike?haveLike:haveNotLike" alt="like">
+            </div>
+            <div class="collect" @click="collectHandle">
+              <img :src="isCollect?haveCollect:haveNotCollect" alt="collect">
+            </div>
+            <div class="toComment" @click="toEditCommentHandle">
+              <img src="../../assets/image/comment.png" alt="comment">
+            </div>
+          </div>
+        </div>
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
       </el-main>
     </el-container>
   </div>
 </template>
 
+<<<<<<< HEAD
 <script lang="ts" >
 import { SetUp } from '@element-plus/icons';
 import { ref } from 'vue'
@@ -170,6 +235,171 @@ export default {
     }
   }
 
+=======
+<script lang="ts">
+import api from "@/api/modules"
+import CONST from "@/global/const"
+import {marked} from 'marked';
+import {articleBaseInfo, userType} from "@/type";
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css'
+import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
+import haveLike from "@/assets/image/haveLike.png"
+import haveNotLike from "@/assets/image/haveNotLike.png"
+import haveCollect from "@/assets/image/haveCollect.png"
+import haveNotCollect from "@/assets/image/haveNotCollect.png"
+import ArticleHtml from "@/components/common/ArticleHtml.vue";
+
+export default {
+  name: "ArticleDetailsView",
+  components: {ArticleHtml},
+  computed: {
+    getUpdateData() {
+      return timestampToDateTimeString(this.articleInfo.updateTime);
+    },
+  },
+  mounted() {
+    this.initPage()
+    // 测试用
+    // this.markToHtml = marked(this.articleInfo.content)
+    // this.$nextTick(() => {
+    //   const codeBlocks = document.querySelectorAll('pre code');
+    //   codeBlocks.forEach((codeBlock) => {
+    //     // 报错但是可以高亮？
+    //     hljs.highlightElement(codeBlock);
+    //   });
+    // });
+    api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.articleInfo = res.data.data.article;
+        this.articleTags = res.data.data.tag ? res.data.data.tag : [];
+        this.articleCate = CONST.CATEGORYLIST[res.data.data.article.categoryId - 1]
+        this.markToHtml = marked(this.articleInfo.content)
+
+        this.$nextTick(() => {
+          const codeBlocks = document.querySelectorAll('pre code');
+          codeBlocks.forEach((codeBlock) => {
+            // 报错但是可以高亮？
+            hljs.highlightElement(codeBlock);
+          });
+        });
+        api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
+          if (res.data.code === 200) {
+            this.authorInfo = res.data.data.user
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.isLike = res.data.data.isLike
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    api.articleApi.getCollectStateOfArticle(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.isCollect = res.data.data.isCollect
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  data() {
+    let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE
+    let articleTags: Array<string> = []
+    let authorInfo: userType = CONST.DEFAULTUSERINFO
+    let articleCate: string = "专业知识"
+    let markToHtml: string
+    let isLike: number = 0
+    let isCollect: number = 0
+
+    return {
+      articleInfo,
+      articleCate,
+      articleTags,
+      authorInfo,
+      markToHtml,
+      isLike,
+      isCollect,
+      haveLike,
+      haveNotLike,
+      haveCollect,
+      haveNotCollect
+    }
+  },
+  methods: {
+    // 初始化页面顶部背景颜色
+    initPage() {
+      let domEle = document.querySelector('.header') as HTMLElement;
+      domEle.style.backgroundColor = generateDarkColor()
+    },
+    // 点赞Handle
+    likeHandle() {
+      if (this.isLike) {
+        api.articleApi.cancelLikeArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isLike = this.isLike ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        api.articleApi.likeArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isLike = this.isLike ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    // 收藏Handle
+    collectHandle() {
+      if (this.isCollect) {
+        api.articleApi.cancelCollectArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isCollect = this.isCollect ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        api.articleApi.collectArticle(this.$route.params.postId).then(res => {
+          if (res.data.code === 200) {
+            this.isCollect = this.isCollect ? 0 : 1
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    // 点击评论按钮跳转到评论区域
+    toEditCommentHandle() {
+
+    }
+  }
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
 }
 </script>
 
@@ -187,15 +417,24 @@ export default {
     border: #e8ecf3 dashed 2px;
     position: relative;
     display: flex;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
     .avatar {
       width: 20%;
       position: relative;
       left: 0;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
     .editArea {
       width: 80%;
       position: relative;
       right: 0;
+<<<<<<< HEAD
       padding-right: 5px;
       .postButton{
         margin-left: 655px;
@@ -207,8 +446,16 @@ export default {
 
  
       .bodyContainer {
+=======
+    }
+  }
+
+  .bodyContainer {
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
     margin: 35px 245px;
     display: flex;
+    position: relative;
+
     .avatar {
       width: 6.8%;
       position: relative;
@@ -227,10 +474,14 @@ export default {
     }
 
     .paperMessage {
+<<<<<<< HEAD
       width: 93.3%;
+=======
+      width: 90%;
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
       position: relative;
-      border-bottom: 1px solid #e8ecf3;
       margin-left: 15px;
+<<<<<<< HEAD
       .zhuangTai {
         .avatarName {
           font-weight: bold;
@@ -241,6 +492,22 @@ export default {
           font-size: 16px;
           margin-left: 10px;
         }
+=======
+
+      .baseInfo {
+        .avatarName {
+          font-weight: bold;
+          font-size: 25px;
+          font-family: "Times New Roman", "宋体", "sans-serif";
+          padding-bottom: 10px;
+        }
+
+        .date {
+          color: #667c99;
+          font-size: 16px;
+        }
+
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
         .state {
           margin-left: 10px;
 
@@ -255,6 +522,7 @@ export default {
           }
         }
       }
+<<<<<<< HEAD
       .articleContent {
         margin-top: 38px;
       }
@@ -281,14 +549,46 @@ export default {
       }
 
     }
+=======
+
+      .articleContent {
+        margin-top: 38px;
+      }
+    }
+
+    .like-collect {
+      display: flex;
+      flex-direction: column;
+      height: 180px;
+      justify-content: space-between;
+      position: fixed;
+      bottom: 270px;
+      right: 200px;
+
+      div {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #dcdcdc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          width: 25px;
+          height: auto;
+        }
+      }
+    }
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c
   }
   }
 
 
 
 .el-header {
-  background-color: #662c99;
-  height: 175px;
+  height: 160px;
   position: relative;
 
   .headerContainer {
@@ -296,39 +596,53 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
     color: #fff;
+    width: 100%;
+    font-family: "Times New Roman", "宋体", "sans-serif";
 
-    h1 {
-      font-size: 22px;
+    .article-title {
+      text-align: center;
+      margin-top: 5px;
+      font-size: 28px;
       font-weight: normal;
       line-height: 1.5em;
     }
 
     .headTop {
-      i {
-        font-size: 18px;
-      }
+      display: flex;
+      flex-flow: row nowrap;
+      width: 100%;
+      justify-content: center;
+      margin: 0 auto;
 
       .el-button {
-        margin-left: 15px;
-        padding: 0px 10px;
-        font-size: 14px;
+        background-color: #f1eaea;
+        padding: 0 10px;
+        font-size: 16px;
         border: none;
-        color: #662c99;
-        font-weight: 600;
-        height: 22px;
+        color: midnightblue;
+        font-weight: 900;
+        height: 25px;
       }
 
-      .nav {
-        color: #fff;
-        font-size: 14px;
-        font-weight: 600;
-        margin-left: 15px;
+      .tags {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-left: 5px;
+        height: 25px;
+
+        div {
+          height: 25px;
+          margin-left: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }
 }
+<<<<<<< HEAD
 .demo-type {
   display: flex;
 }
@@ -340,3 +654,6 @@ export default {
   border-right: 1px solid var(--el-border-color);
 }
 </style>
+=======
+</style>1
+>>>>>>> 663739bfe9c73d3a79363f22718b940b1741284c

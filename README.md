@@ -8,7 +8,7 @@
 2. vuex + vuex-persistedstate持久化插件
 3. vue-router
 4. axios网络请求库
-5. ECharts可视化图表库
+5. mavon-editor + marked + highlight.js实现markdown的编写与html解析
 
 ### 项目启动
 * cd CS.DEEP_Vue3 进入根目录

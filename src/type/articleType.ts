@@ -1,4 +1,4 @@
-export type articleType = {
+export type articleBaseInfo = {
     nodeId: number;
     id: number;
     authorId: number;
@@ -9,4 +9,9 @@ export type articleType = {
     updateTime: number;
     version: number;
     draft: number;
+}
+
+export type articleType = {
+    article: articleBaseInfo,
+    tag?: Array<string>
 }
