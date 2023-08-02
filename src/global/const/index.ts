@@ -33,31 +33,32 @@ const DEFAULTARTICLE = {
 ## Gitee项目传送门
 [https://gitee.com/lin_aurora/GuessNumGame](https://gitee.com/lin_aurora/GuessNumGame)
 
----
-## 部分代码
-#### 随机产生数
+### 8.2
 
-\`\`\`cpp
-//随机生成的答案
-int AnswerNum1[10];
-//设置随机数种子
-srand((unsigned int)time(NULL));
-//产生当前level对应位数的数字
-for (int i = 0; i < level; ++i)
-{
-\tbool tempJudge = true;
-\ttemp = rand() % 10;
-\t//保证随机生成的每个数不一样
-\tfor (int j = 0; j < i; ++j)
-\t\tif (temp == AnswerNum1[j])
-\t\t{
-\t\t\ttempJudge = false;
-\t\t\t--i;
-\t\t\tbreak;
-\t\t}
-\tif (tempJudge)
-\t\tAnswerNum1[i] = temp;
-}`,
+1. markdown渲染找好看的主题css
+2. markdown渲染数学公式
+3. markdown上传图片大小限制
+3. 点赞数+收藏数                                      √
+3. 发布评论
+
+>测试：
+>
+>* 点赞数和收藏数正常显示+超过1000数会不会转换为类似'1.2k'
+
+| 姓名 | 成绩 | 等级 |
+| ---- | ---- | ---- |
+| Alen | 60   | A    |
+| Mike | 52   | B    |
+| Jane | 22   | C    |
+
+\`\`\`C++
+#include<iostream>
+using namespace std;
+int main(void){
+    cout<<11<<endl;
+    return 0;
+}
+\`\`\``,
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,

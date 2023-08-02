@@ -68,9 +68,11 @@
           <div class="like-collect">
             <div class="like" @click="likeHandle">
               <img :src="isLike?haveLike:haveNotLike" alt="like">
+              <p>{{ numOfLike ? numOfLike : '' }}</p>
             </div>
             <div class="collect" @click="collectHandle">
               <img :src="isCollect?haveCollect:haveNotCollect" alt="collect">
+              <p>{{ numOfCollect ? numOfCollect : '' }}</p>
             </div>
             <div class="toComment" @click="toEditCommentHandle">
               <img src="../../assets/image/comment.png" alt="comment">
@@ -115,6 +117,7 @@ export default {
     //     hljs.highlightElement(codeBlock);
     //   });
     // });
+    // 获取文章信息
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.articleInfo = res.data.data.article;
@@ -129,6 +132,7 @@ export default {
             hljs.highlightElement(codeBlock);
           });
         });
+        // 获取作者信息
         api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
           if (res.data.code === 200) {
             this.authorInfo = res.data.data.user
@@ -144,6 +148,7 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    // 获取点赞状态
     api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.isLike = res.data.data.isLike
@@ -153,9 +158,30 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    // 获取收藏状态
     api.articleApi.getCollectStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.isCollect = res.data.data.isCollect
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    // 获取点赞数
+    api.articleApi.getLikeNumber(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.numOfLike = res.data.data.count >= 1000 ? (res.data.data.count / 1000).toFixed(1) + 'k' : res.data.data.count.toString()
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    // 获取收藏数
+    api.articleApi.getCollectNumber(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.numOfCollect = res.data.data.count >= 1000 ? (res.data.data.count / 1000).toFixed(1) + 'k' : res.data.data.count.toString()
       } else {
         console.log(res.data.message)
       }
@@ -171,6 +197,8 @@ export default {
     let markToHtml: string
     let isLike: number = 0
     let isCollect: number = 0
+    let numOfLike: string = ''
+    let numOfCollect: string = ''
 
     return {
       articleInfo,
@@ -183,7 +211,9 @@ export default {
       haveLike,
       haveNotLike,
       haveCollect,
-      haveNotCollect
+      haveNotCollect,
+      numOfLike,
+      numOfCollect
     }
   },
   methods: {
@@ -198,6 +228,7 @@ export default {
         api.articleApi.cancelLikeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
+            this.numOfLike -= 1
           } else {
             console.log(res.data.message)
           }
@@ -208,6 +239,7 @@ export default {
         api.articleApi.likeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
+            this.numOfLike += 1
           } else {
             console.log(res.data.message)
           }
@@ -222,6 +254,7 @@ export default {
         api.articleApi.cancelCollectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
+            this.numOfCollect -= 1
           } else {
             console.log(res.data.message)
           }
@@ -232,6 +265,7 @@ export default {
         api.articleApi.collectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
+            this.numOfCollect += 1
           } else {
             console.log(res.data.message)
           }
@@ -256,25 +290,6 @@ export default {
 }
 
 .el-main {
-  .editComment {
-    padding-top: 10px;
-    margin: 5px 245px;
-    border: #e8ecf3 dashed 2px;
-    position: relative;
-    display: flex;
-
-    .avatar {
-      width: 20%;
-      position: relative;
-      left: 0;
-    }
-
-    .editArea {
-      width: 80%;
-      position: relative;
-      right: 0;
-    }
-  }
 
   .bodyContainer {
     margin: 35px 245px;
@@ -351,15 +366,31 @@ export default {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        overflow: hidden;
         border: 2px solid #dcdcdc;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
 
         img {
           width: 25px;
           height: auto;
+        }
+
+        p {
+          position: absolute;
+          left: 33px;
+          bottom: 33px;
+          font-family: "Times New Roman", "sans-serif";
+          font-size: 12px;
+          color: #faf7f7;
+          background-color: #c2c8d1;
+          width: 38px;
+          height: 20px;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          text-align: center;
+          border-radius: 10px;
         }
       }
     }
