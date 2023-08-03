@@ -46,17 +46,25 @@
 import api from "@/api/modules";
 import {userType} from "@/type";
 import router from "@/router";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "MyFollowingView",
   mounted() {
     this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
     api.userApi.getFollowingList(this.$route.params.userId).then(res => {
-      this.followingList = res.data.data.following;
-      this.numOfItem = res.data.data.following.length;
-      console.log(this.followingList)
-      for (let i = 0; i < this.numOfItem && i < 6; ++i) {
-        this.curList.push(this.followingList[i])
+      if (res.data.code === 200) {
+        this.followingList = res.data.data.following;
+        this.numOfItem = res.data.data.following.length;
+        console.log(this.followingList)
+        for (let i = 0; i < this.numOfItem && i < 6; ++i) {
+          this.curList.push(this.followingList[i])
+        }
+      } else {
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -103,6 +111,11 @@ export default {
             this.pageChangeHandle(this.curPage)
           }).catch(err => {
             console.log(err)
+          })
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
           })
         }
       }).catch(err => {

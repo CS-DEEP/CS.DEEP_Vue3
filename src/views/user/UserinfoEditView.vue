@@ -47,6 +47,7 @@
 <script lang="ts">
 import api from '@/api/modules/index.ts'
 import {getImageFileFromUrl} from '@/global/utils'
+import {ElMessage} from "element-plus";
 
 export default {
   name: "UserinfoEditView",
@@ -93,15 +94,22 @@ export default {
         description: this.description,
         avatar: formData
       }).then(res => {
-        console.log(res.data)
         if (res.data.code === 200) {
-          alert(res.data.message);
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
           api.userApi.getUserinfoData(this.$store.state.userinfo.id).then(res => {
             this.$store.commit('updateUserinfo', res.data.data.user)
           }).catch(err => {
             console.log(err)
           })
           this.$router.push({name: 'userInfo', params: {userId: this.$store.state.userinfo.id}})
+        }else{
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)

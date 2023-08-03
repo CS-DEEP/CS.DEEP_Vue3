@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import api from "@/api/modules";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "LoginView",
@@ -50,14 +51,20 @@ export default {
         password: this.userPwd
       }).then(res => {
         if (res.data.code === 200) {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
           localStorage.setItem('token', res.data.data.token)
           localStorage.setItem('expirationTime', res.data.data.expirationTime)
-          this.$router.push('/')
           this.$store.commit('updateUserinfo', res.data.data.user)
           this.$store.commit('updateLoginState')
+          this.$router.push('/')
         } else {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)

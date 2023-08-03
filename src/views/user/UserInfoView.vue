@@ -42,6 +42,7 @@ import api from '@/api/modules/index.ts'
 import CalendarHeatmap from "@/components/common/CalendarHeatmap.vue";
 import CONST from "@/global/const/index.ts"
 import router from "@/router";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "UserInfoView",
@@ -52,10 +53,12 @@ export default {
       if (res.data.code === 200) {
         this.user = res.data.data.user;
       } else {
-        alert(res.data.message);
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
+        })
         router.push({name: 'notFound'});
       }
-
     }).catch(err => {
       console.log(err)
     })

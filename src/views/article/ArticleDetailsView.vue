@@ -127,6 +127,7 @@ import haveCollect from "@/assets/image/haveCollect.png"
 import haveNotCollect from "@/assets/image/haveNotCollect.png"
 import ArticleHtml from "@/components/common/ArticleHtml.vue";
 import faceData from "@/assets/emoji/emoji.json"
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ArticleDetailsView",
@@ -175,7 +176,10 @@ export default {
           console.log(err)
         })
       } else {
-        console.log(res.data.message)
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -280,7 +284,10 @@ export default {
             this.numOfLike -= 1
             this.strOfLike = this.numOfLike >= 1000 ? (this.numOfLike / 1000).toFixed(1) + 'k' : this.numOfLike.toString()
           } else {
-            console.log(res.data.message)
+            ElMessage({
+              message: res.data.message,
+              type: 'error'
+            })
           }
         }).catch(err => {
           console.log(err)
@@ -288,11 +295,18 @@ export default {
       } else {
         api.articleApi.likeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
+            ElMessage({
+              message: '爱点赞的颜值都很高~',
+              type: 'success'
+            })
             this.isLike = this.isLike ? 0 : 1
             this.numOfLike += 1
             this.strOfLike = this.numOfLike >= 1000 ? (this.numOfLike / 1000).toFixed(1) + 'k' : this.numOfLike.toString()
           } else {
-            console.log(res.data.message)
+            ElMessage({
+              message: res.data.message,
+              type: 'error'
+            })
           }
         }).catch(err => {
           console.log(err)
@@ -316,6 +330,10 @@ export default {
       } else {
         api.articleApi.collectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
+            ElMessage({
+              message: '不要放在收藏夹落灰咯~',
+              type: 'success'
+            })
             this.isCollect = this.isCollect ? 0 : 1
             this.numOfCollect += 1
             this.strOfCollect = this.numOfCollect >= 1000 ? (this.numOfCollect / 1000).toFixed(1) + 'k' : this.numOfCollect.toString()
@@ -341,7 +359,17 @@ export default {
         articleId: this.$route.params.postId,
         content: this.commentContent
       }).then(res => {
-        alert(res.data.message)
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       }).catch(err => {
         console.log(err)
       })
