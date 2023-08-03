@@ -68,21 +68,29 @@ import api from "@/api/modules"
 import {articleBaseInfo} from "@/type"
 import {generateLightColor, getStringLengthOfChar} from "@/global/utils";
 import router from "@/router";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ArticleEditView",
   mounted() {
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
-      this.article = res.data.data.article;
-      this.mdValue = this.article.content
-      this.tagList = res.data.data.tag ? res.data.data.tag : [];
-      for (let i = 0; i < this.tagList.length; ++i) {
-        let childDiv = this.addTagDivHandle(this.tagList[i])
-        let listDiv = document.querySelector('.tag-show')
-        let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
-        let currentWidth = parseInt(window.getComputedStyle(tagInput).width);
-        tagInput.style.width = (currentWidth - 86) + 'px';
-        listDiv.appendChild(childDiv)
+      if (res.data.code === 200) {
+        this.article = res.data.data.article;
+        this.mdValue = this.article.content
+        this.tagList = res.data.data.tag ? res.data.data.tag : [];
+        for (let i = 0; i < this.tagList.length; ++i) {
+          let childDiv = this.addTagDivHandle(this.tagList[i])
+          let listDiv = document.querySelector('.tag-show')
+          let tagInput = document.querySelector('.tag-enter') as HTMLInputElement;
+          let currentWidth = parseInt(window.getComputedStyle(tagInput).width);
+          tagInput.style.width = (currentWidth - 86) + 'px';
+          listDiv.appendChild(childDiv)
+        }
+      } else {
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -193,11 +201,20 @@ export default {
         article: this.article,
         tag: this.tagList
       }).then(res => {
-        console.log(res)
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       }).catch(err => {
         console.log(err)
       })
-      alert("已保存！")
     },
     publishArticleHandle() {
       this.article.content = encodeURIComponent(this.mdValue)
@@ -206,10 +223,16 @@ export default {
         tag: this.tagList
       }).then(res => {
         if (res.data.code === 200) {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
           router.push({name: 'articleDetails', params: {postId: this.$route.params.postId}})
         } else {
-          console.log(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)
@@ -218,8 +241,16 @@ export default {
     deleteArticleHandle() {
       api.articleApi.deleteArticle(this.article.id).then(res => {
         if (res.data.code === 200) {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
           router.push('/')
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)

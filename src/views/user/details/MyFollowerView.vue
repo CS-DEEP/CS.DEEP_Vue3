@@ -50,6 +50,7 @@ import api from "@/api/modules";
 import {userType} from "@/type";
 import router from "@/router";
 import CONST from "@/global/const"
+import {ElMessage} from "element-plus";
 
 export default {
   name: "MyFollowerView",
@@ -57,14 +58,21 @@ export default {
   mounted() {
     this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
     api.userApi.getFollowerList(this.$route.params.userId).then(res => {
-      this.followerList = res.data.data.follower;
-      this.numOfItem = res.data.data.follower.length;
-      for (let i = 0; i < this.numOfItem && i < 6; ++i) {
-        this.curList.push(this.followerList[i])
-      }
-      for (let i = 0; i < this.numOfItem; ++i) {
-        api.userApi.getFollowState(this.followerList[i].id).then(res => {
-          this.isFollow.push(res.data.data.isFollow);
+      if (res.data.code === 200) {
+        this.followerList = res.data.data.follower;
+        this.numOfItem = res.data.data.follower.length;
+        for (let i = 0; i < this.numOfItem && i < 6; ++i) {
+          this.curList.push(this.followerList[i])
+        }
+        for (let i = 0; i < this.numOfItem; ++i) {
+          api.userApi.getFollowState(this.followerList[i].id).then(res => {
+            this.isFollow.push(res.data.data.isFollow);
+          })
+        }
+      } else {
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
         })
       }
     }).catch(err => {
@@ -109,6 +117,11 @@ export default {
       api.userApi.cancelFollowHandle(this.curList[this.target].id).then(res => {
         if (res.data.code === 200) {
           this.isFollow[(this.curPage - 1) * 6 + this.target] = false;
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)
@@ -123,6 +136,11 @@ export default {
         api.userApi.followHandle(this.curList[index].id).then(res => {
           if (res.data.code === 200) {
             this.isFollow[(this.curPage - 1) * 6 + index] = true;
+          } else {
+            ElMessage({
+              message: res.data.message,
+              type: 'error'
+            })
           }
         }).catch(err => {
           console.log(err)

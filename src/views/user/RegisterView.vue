@@ -46,6 +46,7 @@
 
 <script lang="ts">
 import api from "@/api/modules";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "RegisterView",
@@ -69,20 +70,30 @@ export default {
     SendCodeHandle() {
       const sendBtn = this.$refs.sendCode as HTMLButtonElement;
       api.userApi.sendRegisterCode({email: this.userEmail}).then(res => {
-        console.log(res)
-        let timer = setInterval(() => {
-          // 判断剩余秒数
-          if (this.time == 0) {
-            // 清除定时器和复原按钮
-            clearInterval(timer);
-            this.haveSendCode = false;
-            sendBtn.textContent = '发送验证码';
-          } else {
-            this.haveSendCode = true;
-            sendBtn.textContent = `${this.time}秒后重新获取`;
-            this.time--;
-          }
-        }, 1000);
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          let timer = setInterval(() => {
+            // 判断剩余秒数
+            if (this.time == 0) {
+              // 清除定时器和复原按钮
+              clearInterval(timer);
+              this.haveSendCode = false;
+              sendBtn.textContent = '发送验证码';
+            } else {
+              this.haveSendCode = true;
+              sendBtn.textContent = `${this.time}秒后重新获取`;
+              this.time--;
+            }
+          }, 1000);
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -95,12 +106,17 @@ export default {
         password: this.pwd,
         confirmPwd: this.confirmPwd
       }).then(res => {
-        console.log(res)
         if (res.data.code === 200) {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
           this.$router.push('/login')
         } else {
-          alert(res.data.message)
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
         }
       }).catch(err => {
         console.log(err)

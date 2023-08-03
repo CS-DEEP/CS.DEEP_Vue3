@@ -19,7 +19,7 @@ const login = (data: loginType) => {
 }
 
 const sendRegisterCode = (data: any) => {
-    return service.get('/checkcode/register/code' +
+    return service.get<ResponseResult<any>>('/checkcode/register/code' +
         '?email=' + data.email)
 }
 
@@ -41,7 +41,7 @@ const resetPwd = (data: resetPwdType) => {
 }
 
 const sendResetCode = (data: any) => {
-    return service.get('/checkcode/reset/code' +
+    return service.get<ResponseResult<any>>('/checkcode/reset/code' +
         '?email=' + data.email)
 }
 

@@ -22,25 +22,25 @@
       <div class="show-detail">
         <div class="detail-sidebar">
           <div>
-            <router-link :to="{name:'following',params:{userId:user.id}}">
+            <router-link :to="{name:'following',params:{userId: user.id}}">
               <img src="../../assets/image/following.png" alt="following">
               <span>关注列表</span>
             </router-link>
           </div>
           <div>
-            <router-link :to="{name:'follower',params:{userId:user.id}}">
+            <router-link :to="{name:'follower',params:{userId: user.id}}">
               <img src="../../assets/image/follower.png" alt="follower">
               <span>粉丝列表</span>
             </router-link>
           </div>
           <div v-show="isOwn">
-            <router-link :to="{name:'message',params:{userId:user.id}}">
+            <router-link :to="{name:'message',params:{userId: user.id}}">
               <img src="../../assets/image/msg.png" alt="message">
               <span>我的消息</span>
             </router-link>
           </div>
           <div v-show="isOwn">
-            <router-link :to="{name:'draft',params:{userId:user.id}}">
+            <router-link :to="{name:'draft',params:{userId: user.id}}">
               <img src="../../assets/image/temp.png" alt="temp">
               <span>草稿箱</span>
             </router-link>
@@ -57,13 +57,21 @@
 <script lang="ts">
 import api from "../../api/modules";
 import CONST from "@/global/const"
+import {ElMessage} from "element-plus";
 
 export default {
   name: "UserDetailView",
   mounted() {
     this.isOwn = parseInt(this.$route.params.userId) === this.$store.state.userinfo.id;
     api.userApi.getUserinfoData(this.$route.params.userId).then(res => {
-      this.user = res.data.data.user;
+      if (res.data.code === 200) {
+        this.user = res.data.data.user;
+      } else {
+        ElMessage({
+          message: res.data.message,
+          type: 'error'
+        })
+      }
     }).catch(err => {
       console.log(err)
     })
@@ -72,11 +80,6 @@ export default {
     return {
       isOwn: false,
       user: CONST.DEFAULTUSERINFO
-    }
-  },
-  methods: {
-    isActive(route) {
-      return this.$route === route;
     }
   }
 }
