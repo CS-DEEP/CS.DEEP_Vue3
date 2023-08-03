@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ArticleHtml: typeof import('./src/components/common/ArticleHtml.vue')['default']
     AvatarAndUsername: typeof import('./src/components/mini/AvatarAndUsername.vue')['default']
     CalendarHeatmap: typeof import('./src/components/common/CalendarHeatmap.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']

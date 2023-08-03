@@ -183,7 +183,7 @@ export default {
       let formData = new FormData();
       formData.append('file', file);
       api.articleApi.updateImageHandle(formData).then(res => {
-        this.$refs.md.$img2Url(pos, res.data.data.url)
+        this.$refs.md.$img2Url(pos, res.data.data.url + '?w=200&h=200')
       }).catch(err => {
         console.log(err)
       })
