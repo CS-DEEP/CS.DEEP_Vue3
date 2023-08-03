@@ -17,8 +17,8 @@ export default {
 }
 </script>
 
-<style scoped>
 
+<style scoped>
 :root {
   --side-bar-bg-color: #fafafa;
   --control-text-color: #777;
@@ -196,6 +196,7 @@ export default {
 :deep(li > ol),
 :deep(li > ul) {
   margin: 0 0;
+  padding: 10px;
 }
 
 :deep(hr) {
@@ -238,8 +239,11 @@ export default {
 }
 
 :deep(table) {
+  width: 100%;
   padding: 0;
+  border-collapse: collapse;
   word-break: initial;
+  text-align: center;
 }
 
 :deep(table tr) {
@@ -295,7 +299,7 @@ export default {
   border-radius: 3px;
   padding: 0;
   padding: 2px 4px 0px 4px;
-  font-size: 0.9em;
+  font-size: 1.0em;
 }
 
 :deep(code) {
@@ -309,7 +313,6 @@ export default {
   padding-top: 8px;
   padding-bottom: 6px;
 }
-
 
 :deep(.md-task-list-item > input) {
   margin-left: -1.3em;
@@ -407,7 +410,6 @@ export default {
   border-width: 1px;
 }
 
-
 :deep(.on-focus-mode blockquote) {
   border-left-color: rgba(85, 85, 85, 0.12);
 }
@@ -455,5 +457,4 @@ export default {
   background-color: #f5f8fa;
   background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0));
 }
-
 </style>

@@ -3,7 +3,7 @@ import {
     createArticleRes,
     imageBackRes,
     isCollectRes,
-    isLikeRes,
+    isLikeRes, numberOfLikeAndCollect,
     ResponseResult,
 } from "@/api/modules/article/type";
 import {articleType} from "@/type";
@@ -74,6 +74,16 @@ const getCollectStateOfArticle = (data: number) => {
         '?articleId=' + data)
 }
 
+const getLikeNumber = (data: number) => {
+    return service.get<ResponseResult<numberOfLikeAndCollect>>('/like/count' +
+        '?articleId=' + data)
+}
+
+const getCollectNumber = (data: number) => {
+    return service.get<ResponseResult<numberOfLikeAndCollect>>('/collect/count' +
+        '?articleId=' + data)
+}
+
 export default {
     createArticle,           // 创建文章
     getArticleInfo,          // 获取文章信息
@@ -87,4 +97,6 @@ export default {
     cancelCollectArticle,    // 取消收藏文章
     getLikeStateOfArticle,   // 获取点赞状态
     getCollectStateOfArticle,// 获取收藏状态
+    getLikeNumber,           // 获取点赞数
+    getCollectNumber,        // 获取收藏数
 }

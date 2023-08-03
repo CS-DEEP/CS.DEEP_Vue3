@@ -68,13 +68,44 @@
           <div class="like-collect">
             <div class="like" @click="likeHandle">
               <img :src="isLike?haveLike:haveNotLike" alt="like">
+              <p v-show="numOfLike">{{ strOfLike }}</p>
             </div>
             <div class="collect" @click="collectHandle">
               <img :src="isCollect?haveCollect:haveNotCollect" alt="collect">
+              <p v-show="numOfCollect">{{ strOfCollect }}</p>
             </div>
             <div class="toComment" @click="toEditCommentHandle">
               <img src="../../assets/image/comment.png" alt="comment">
             </div>
+          </div>
+        </div>
+        <div class="comments">
+          <p id="comment-title">评论</p>
+          <div class="edit-comment">
+            <div class="editor">
+              <img :src="this.$store.state.userinfo.avatar" alt="avatar">
+            </div>
+            <div class="edit-container">
+              <div class="text-area">
+                <textarea placeholder="快来表达你的想法吧~" v-model="commentContent"/>
+              </div>
+              <div class="emoji send">
+                <div class="emoji-btn">
+                  <img src="../../assets/image/face.png" alt="face" @click="faceShow=!faceShow">
+                </div>
+                <div class="browBox" v-if="faceShow">
+                  <ul>
+                    <li v-for="(item,index) in faceList" :key="index" @click="addEmojiToText(index)">{{ item }}</li>
+                  </ul>
+                </div>
+                <div class="send-btn">
+                  <el-button @click="publishComment">发表评论</el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="show-comments">
+            展示评论
           </div>
         </div>
       </el-main>
@@ -95,6 +126,7 @@ import haveNotLike from "@/assets/image/haveNotLike.png"
 import haveCollect from "@/assets/image/haveCollect.png"
 import haveNotCollect from "@/assets/image/haveNotCollect.png"
 import ArticleHtml from "@/components/common/ArticleHtml.vue";
+import faceData from "@/assets/emoji/emoji.json"
 
 export default {
   name: "ArticleDetailsView",
@@ -108,6 +140,7 @@ export default {
     this.initPage()
     // 测试用
     // this.markToHtml = marked(this.articleInfo.content)
+    // console.log(this.markToHtml)
     // this.$nextTick(() => {
     //   const codeBlocks = document.querySelectorAll('pre code');
     //   codeBlocks.forEach((codeBlock) => {
@@ -115,6 +148,7 @@ export default {
     //     hljs.highlightElement(codeBlock);
     //   });
     // });
+    // 获取文章信息
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.articleInfo = res.data.data.article;
@@ -130,6 +164,7 @@ export default {
             hljs.highlightElement(codeBlock);
           });
         });
+        // 获取作者信息
         api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
           if (res.data.code === 200) {
             this.authorInfo = res.data.data.user
@@ -145,6 +180,7 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    // 获取点赞状态
     api.articleApi.getLikeStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         console.log(res.data.data)
@@ -155,10 +191,33 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    // 获取收藏状态
     api.articleApi.getCollectStateOfArticle(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         console.log(res.data.data)
         this.isCollect = res.data.data.isCollect
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    // 获取点赞数
+    api.articleApi.getLikeNumber(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.numOfLike = res.data.data.count
+        this.strOfLike = res.data.data.count >= 1000 ? (res.data.data.count / 1000).toFixed(1) + 'k' : res.data.data.count.toString()
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+    // 获取收藏数
+    api.articleApi.getCollectNumber(this.$route.params.postId).then(res => {
+      if (res.data.code === 200) {
+        this.numOfCollect = res.data.data.count
+        this.strOfCollect = res.data.data.count >= 1000 ? (res.data.data.count / 1000).toFixed(1) + 'k' : res.data.data.count.toString()
       } else {
         console.log(res.data.message)
       }
@@ -174,6 +233,13 @@ export default {
     let markToHtml: string
     let isLike: number = 0
     let isCollect: number = 0
+    let numOfLike: number = 0
+    let numOfCollect: number = 0
+    let strOfLike: string = ''
+    let strOfCollect: string = ''
+    let commentContent: string = ''
+    let faceList = []
+    let faceShow = false
 
     return {
       articleInfo,
@@ -186,14 +252,24 @@ export default {
       haveLike,
       haveNotLike,
       haveCollect,
-      haveNotCollect
+      haveNotCollect,
+      numOfLike,
+      numOfCollect,
+      strOfLike,
+      strOfCollect,
+      commentContent,
+      faceList,
+      faceShow,
     }
   },
   methods: {
     // 初始化页面顶部背景颜色
     initPage() {
       let domEle = document.querySelector('.header') as HTMLElement;
-      domEle.style.backgroundColor = generateDarkColor()
+      domEle.style.backgroundColor = generateDarkColor();
+      for (let i in faceData) {
+        this.faceList.push(faceData[i].char);
+      }
     },
     // 点赞Handle
     likeHandle() {
@@ -201,6 +277,8 @@ export default {
         api.articleApi.cancelLikeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
+            this.numOfLike -= 1
+            this.strOfLike = this.numOfLike >= 1000 ? (this.numOfLike / 1000).toFixed(1) + 'k' : this.numOfLike.toString()
           } else {
             console.log(res.data.message)
           }
@@ -211,6 +289,8 @@ export default {
         api.articleApi.likeArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isLike = this.isLike ? 0 : 1
+            this.numOfLike += 1
+            this.strOfLike = this.numOfLike >= 1000 ? (this.numOfLike / 1000).toFixed(1) + 'k' : this.numOfLike.toString()
           } else {
             console.log(res.data.message)
           }
@@ -225,6 +305,8 @@ export default {
         api.articleApi.cancelCollectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
+            this.numOfCollect -= 1
+            this.strOfCollect = this.numOfCollect >= 1000 ? (this.numOfCollect / 1000).toFixed(1) + 'k' : this.numOfCollect.toString()
           } else {
             console.log(res.data.message)
           }
@@ -235,6 +317,8 @@ export default {
         api.articleApi.collectArticle(this.$route.params.postId).then(res => {
           if (res.data.code === 200) {
             this.isCollect = this.isCollect ? 0 : 1
+            this.numOfCollect += 1
+            this.strOfCollect = this.numOfCollect >= 1000 ? (this.numOfCollect / 1000).toFixed(1) + 'k' : this.numOfCollect.toString()
           } else {
             console.log(res.data.message)
           }
@@ -245,7 +329,22 @@ export default {
     },
     // 点击评论按钮跳转到评论区域
     toEditCommentHandle() {
-
+      document.getElementById("comment-title").scrollIntoView({behavior: 'smooth'})
+    },
+    // 添加所选的表情到评论区域
+    addEmojiToText(idx: number) {
+      this.commentContent = this.commentContent + this.faceList[idx]
+    },
+    // 发布评论
+    publishComment() {
+      api.commentApi.publishComment({
+        articleId: this.$route.params.postId,
+        content: this.commentContent
+      }).then(res => {
+        alert(res.data.message)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
@@ -259,25 +358,7 @@ export default {
 }
 
 .el-main {
-  .editComment {
-    padding-top: 10px;
-    margin: 5px 245px;
-    border: #e8ecf3 dashed 2px;
-    position: relative;
-    display: flex;
-
-    .avatar {
-      width: 20%;
-      position: relative;
-      left: 0;
-    }
-
-    .editArea {
-      width: 80%;
-      position: relative;
-      right: 0;
-    }
-  }
+  width: 100%;
 
   .bodyContainer {
     margin: 35px 245px;
@@ -354,17 +435,145 @@ export default {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        overflow: hidden;
         border: 2px solid #dcdcdc;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
 
         img {
           width: 25px;
           height: auto;
         }
+
+        p {
+          position: absolute;
+          left: 33px;
+          bottom: 33px;
+          font-family: "Times New Roman", "sans-serif";
+          font-size: 12px;
+          color: #faf7f7;
+          background-color: #c2c8d1;
+          width: 38px;
+          height: 20px;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          text-align: center;
+          border-radius: 10px;
+        }
       }
+    }
+  }
+
+  .comments {
+    border-top: 1px solid #dcdcdc;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 35px 260px;
+
+    #comment-title {
+      margin-top: 30px;
+      padding-left: 5px;
+      font-size: 25px;
+      font-weight: 700;
+      border-left: 3px solid #7070ce;
+    }
+
+    .edit-comment {
+      margin-top: 20px;
+      display: flex;
+      flex-flow: row nowrap;
+
+      .editor {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 60px;
+          height: auto;
+          border-radius: 50%;
+        }
+      }
+
+      .edit-container {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+
+        .text-area {
+          textarea {
+            min-width: 930px;
+            max-width: 930px;
+            min-height: 60px;
+            max-height: 200px;
+            padding: 5px;
+            border: 2px solid #dcdcdc;
+            border-radius: 3px;
+            font-family: "Times New Roman", "sans-serif";
+          }
+        }
+
+        .emoji, .send {
+          position: relative;
+
+          .browBox {
+            width: 500px;
+            height: 135px;
+            background: #faf3f3;
+            position: absolute;
+            overflow: scroll;
+            top: 32px;
+
+            ul {
+              display: flex;
+              flex-wrap: wrap;
+              padding: 10px;
+
+              li {
+                width: 14%;
+                font-size: 26px;
+                list-style: none;
+                text-align: center;
+              }
+            }
+          }
+
+          .emoji-btn {
+            float: left;
+
+            img {
+              width: 30px;
+              height: auto;
+              border-radius: 50%;
+              overflow: hidden;
+            }
+
+            img:hover {
+              background-color: #dcdcdc;
+            }
+          }
+
+          .send-btn {
+            float: right;
+
+            .el-button {
+              width: 80px;
+              background-color: #adc9ef;
+
+              &:hover {
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .show-comments {
+      margin-top: 150px;
     }
   }
 }

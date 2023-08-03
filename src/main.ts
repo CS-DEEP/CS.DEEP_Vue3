@@ -7,6 +7,7 @@ import 'element-plus/dist/index.css'
 import store, {key} from "@/store";
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
 import '@/assets/iconfont.css';
 
 

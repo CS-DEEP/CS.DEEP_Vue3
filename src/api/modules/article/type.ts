@@ -21,3 +21,7 @@ export type isLikeRes = {
 export type isCollectRes = {
     isCollect: number
 }
+
+export type numberOfLikeAndCollect = {
+    count: number
+}
