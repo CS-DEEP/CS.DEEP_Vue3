@@ -15,3 +15,15 @@ export type articleType = {
     article: articleBaseInfo,
     tag?: Array<string>
 }
+
+export type commentType = {
+    id: number,
+    content: string,
+    authorId: number,
+    like: number,
+    articleId: number,
+    isReply: number,
+    replyId: number,
+    isNasty: number,
+    version?: any
+}

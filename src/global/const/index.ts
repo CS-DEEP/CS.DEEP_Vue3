@@ -25,22 +25,6 @@ const DEFAULTARTICLE = {
 ## 前言
 基于命令行界面的C++程序设计的小游戏——猜数字
 
----
-## GitHub项目传送门
-[https://github.com/2aurora2/GuessNumGame](https://github.com/2aurora2/GuessNumGame)
-
----
-## Gitee项目传送门
-[https://gitee.com/lin_aurora/GuessNumGame](https://gitee.com/lin_aurora/GuessNumGame)
-
-### 8.2
-
-1. markdown渲染找好看的主题css
-2. markdown渲染数学公式
-3. markdown上传图片大小限制
-3. 点赞数+收藏数                                      √
-3. 发布评论
-
 >测试：
 >
 >* 点赞数和收藏数正常显示+超过1000数会不会转换为类似'1.2k'
@@ -58,7 +42,10 @@ int main(void){
     cout<<11<<endl;
     return 0;
 }
-\`\`\``,
+\`\`\`
+$$
+x+y=z
+$$`,
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,
@@ -66,8 +53,16 @@ int main(void){
     draft: 1
 }
 const CATEGORYLIST = ['专业知识', '分享发现', '吐槽讨论']
-const TAGBACKCOLOR = ['#633b7a', '#f8f5e8', '#d6c78a']
-const TAGTEXTCOLOR = ['#f28487', '#28242a', '#b97d21']
+const DEFAULTCOMMENT = {
+    id: 1,
+    content: "这是一条测试评论",
+    authorId: 1,
+    createTime: 1690965366840,
+    isReply: 0,
+    replyId: 1,
+    isNasty: 0,
+    version: null
+}
 
 
 export default {
@@ -76,6 +71,5 @@ export default {
     DEFAULTUSERINFO, // 默认用户信息
     DEFAULTARTICLE,  // 默认文章信息
     CATEGORYLIST,    // 文章分类
-    TAGBACKCOLOR,    // 标签背景颜色
-    TAGTEXTCOLOR,    // 标签文本颜色
+    DEFAULTCOMMENT,  // 默认评论
 }
