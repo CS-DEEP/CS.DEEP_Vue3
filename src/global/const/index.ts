@@ -3,6 +3,8 @@
 *   创建时间: 2023-07-09
 * */
 
+import {commentType} from "@/type";
+
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const COLORS = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
 const DEFAULTUSERINFO = {
@@ -30,7 +32,7 @@ const DEFAULTARTICLE = {
     draft: 1
 }
 const CATEGORYLIST = ['专业知识', '分享发现', '吐槽讨论']
-const DEFAULTCOMMENT = {
+const DEFAULTCOMMENT: commentType = {
     id: 1,
     content: "这是一条测试评论😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀勋哥牛哇带带我；保佑明天10连抽不要歪！！！！",
     authorId: 1,

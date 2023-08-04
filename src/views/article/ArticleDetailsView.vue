@@ -276,24 +276,29 @@ export default {
     api.commentApi.getOneLevelComment({
       articleId: this.$route.params.postId,
       page: this.page
-    }).then(res => {
+    }).then(async res => {
       if (res.data.code === 200) {
+        console.log(res.data.data.commentList)
         // 重新生成一级评论新类型对象信息
         for (let i = 0; i < res.data.data.commentList.length; ++i) {
-          let tmp = CONST.DEFAULTONELEVELCOMMENT
+          console.log(res.data.data.commentList[i])
+          let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
+          tmp.content = res.data.data.commentList[i]
           tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
           tmp.numOfReply = res.data.data.replySize[i]
-          api.userApi.getUserinfoData(res.data.data.commentList[i].authorId).then(res => {
+          await api.userApi.getUserinfoData(res.data.data.commentList[i].authorId).then(res => {
             if (res.data.code === 200) {
               tmp.avatar = res.data.data.user.avatar;
               tmp.name = res.data.data.user.username;
             } else {
               console.log(res.data.message)
             }
+            console.log(tmp)
           }).catch(err => {
             console.log(err)
           })
           this.oneLevelCommentList.push(tmp)
+          console.log(this.oneLevelCommentList.length)
         }
       } else {
         console.log(res.data.message)
