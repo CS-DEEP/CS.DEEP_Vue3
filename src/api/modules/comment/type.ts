@@ -6,11 +6,24 @@ export type ResponseResult<T> = {
     data: T;
 }
 
-export type PublishCommentRequest = {
+export type PublishCommentReq = {
     articleId: number;
     content: string;
+    isReply?: number;
+    replyId?: number;
 }
 
 export type PublishCommentRes = {
     comment: commentType;
+}
+
+export type GetOneLevelCommentReq = {
+    articleId: number,
+    page: number,
+    pageSize?: number
+}
+
+export type GetOneLevelCommentRes = {
+    commentList: Array<commentType>
+    replySize: Array<number>
 }

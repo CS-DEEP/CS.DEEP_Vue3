@@ -149,6 +149,7 @@ export default {
       childDiv.style.marginRight = '2px'
       childDiv.style.backgroundColor = generateLightColor();
       childDiv.style.color = '#222222'
+      childDiv.style.zIndex='-1'
       childDiv.addEventListener('mouseover', () => {
         childDiv.style.filter = "brightness(80%)";
       })
@@ -190,7 +191,7 @@ export default {
       let formData = new FormData();
       formData.append('file', file);
       api.articleApi.updateImageHandle(formData).then(res => {
-        this.$refs.md.$img2Url(pos, res.data.data.url)
+        this.$refs.md.$img2Url(pos, res.data.data.url + '?w=200&h=200')
       }).catch(err => {
         console.log(err)
       })
