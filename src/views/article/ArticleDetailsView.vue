@@ -104,8 +104,58 @@
               </div>
             </div>
           </div>
-          <div class="show-comments">
-            展示评论
+          <p id="show-comment-title">全部评论</p>
+          <div class="empty-comment" v-if="this.oneLevelCommentList.length===0">
+            <img src="../../assets/image/empty.png" alt="emptyComment">
+          </div>
+          <div class="show-comments" v-else>
+            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index">
+              <div class="one-level-comment-avatar">
+                <img :src="item.avatar" alt="avatar">
+              </div>
+              <div class="comment-part">
+                <div class="name-time">
+                  <p class="one-level-name">{{ item.name }}</p>
+                  <p class="one-level-time">{{ item.publishTime }}</p>
+                </div>
+                <div class="comment-content">
+                  <p class="comment-main">{{ item.content.content }}</p>
+                </div>
+                <div class="comment-function">
+                  <div class="reply" @click="item.isShowTwoLevelComment=!item.isShowTwoLevelComment">
+                    <img src="../../assets/image/level_comment.png" alt="reply">
+                    <span>{{ item.numOfReply ? "展开评论" : "评论" }}</span>
+                  </div>
+                  <div class="show-two-level-comment" v-show="item.isShowTwoLevelComment">
+                    <div class="edit-two-level">
+                      <div class="text-area-two">
+                        <textarea placeholder="快来表达你的想法吧~" v-model="item.replyContent"/>
+                      </div>
+                      <div class="emoji send">
+                        <div class="emoji-btn-two">
+                          <img src="../../assets/image/face.png" alt="face"
+                               @click="item.isShowEmoji=!item.isShowEmoji">
+                        </div>
+                        <div class="browBox-two" v-if="item.isShowEmoji">
+                          <ul>
+                            <li v-for="(item_f,index_f) in faceList" :key="index_f"
+                                @click="addEmojiToTextOfTwo(index,index_f)">
+                              {{ item_f }}
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="send-btn">
+                          <el-button @click="replyComment(index)">发表评论</el-button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="show-two-level">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </el-main>
@@ -117,7 +167,7 @@
 import api from "@/api/modules"
 import CONST from "@/global/const"
 import {marked} from 'marked';
-import {articleBaseInfo, userType} from "@/type";
+import {articleBaseInfo, oneLevelCommentType, userType} from "@/type";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
@@ -137,18 +187,11 @@ export default {
       return timestampToDateTimeString(this.articleInfo.updateTime);
     },
   },
+  watch() {
+
+  },
   mounted() {
     this.initPage()
-    // 测试用
-    // this.markToHtml = marked(this.articleInfo.content)
-    // console.log(this.markToHtml)
-    // this.$nextTick(() => {
-    //   const codeBlocks = document.querySelectorAll('pre code');
-    //   codeBlocks.forEach((codeBlock) => {
-    //     // 报错但是可以高亮？
-    //     hljs.highlightElement(codeBlock);
-    //   });
-    // });
     // 获取文章信息
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
@@ -228,6 +271,36 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    // 获取一级评论
+    // TODO:懒加载
+    api.commentApi.getOneLevelComment({
+      articleId: this.$route.params.postId,
+      page: this.page
+    }).then(res => {
+      if (res.data.code === 200) {
+        // 重新生成一级评论新类型对象信息
+        for (let i = 0; i < res.data.data.commentList.length; ++i) {
+          let tmp = CONST.DEFAULTONELEVELCOMMENT
+          tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
+          tmp.numOfReply = res.data.data.replySize[i]
+          api.userApi.getUserinfoData(res.data.data.commentList[i].authorId).then(res => {
+            if (res.data.code === 200) {
+              tmp.avatar = res.data.data.user.avatar;
+              tmp.name = res.data.data.user.username;
+            } else {
+              console.log(res.data.message)
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+          this.oneLevelCommentList.push(tmp)
+        }
+      } else {
+        console.log(res.data.message)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   },
   data() {
     let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE
@@ -242,8 +315,11 @@ export default {
     let strOfLike: string = ''
     let strOfCollect: string = ''
     let commentContent: string = ''
+    let twoLevelComment: string = ''
     let faceList = []
     let faceShow = false
+    let page = 1
+    let oneLevelCommentList: Array<oneLevelCommentType> = []
 
     return {
       articleInfo,
@@ -262,8 +338,11 @@ export default {
       strOfLike,
       strOfCollect,
       commentContent,
+      twoLevelComment,
       faceList,
       faceShow,
+      page,
+      oneLevelCommentList,
     }
   },
   methods: {
@@ -353,6 +432,10 @@ export default {
     addEmojiToText(idx: number) {
       this.commentContent = this.commentContent + this.faceList[idx]
     },
+    // 添加所选的表情到二级评论回复区域
+    addEmojiToTextOfTwo(comment_idx: number, face_idx: number) {
+      this.oneLevelCommentList[comment_idx].replyContent = this.oneLevelCommentList[comment_idx].replyContent + this.faceList[face_idx]
+    },
     // 发布评论
     publishComment() {
       api.commentApi.publishComment({
@@ -364,6 +447,31 @@ export default {
             message: res.data.message,
             type: 'success'
           })
+          this.commentContent = ''
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 回复评论
+    replyComment(comment_idx: number) {
+      api.commentApi.publishComment({
+        articleId: this.$route.params.postId,
+        content: this.oneLevelCommentList[comment_idx].replyContent,
+        isReply: 1,
+        replyId: this.oneLevelCommentList[comment_idx].content.id
+      }).then(res => {
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          // TODO：添加到二级评论的列表
         } else {
           ElMessage({
             message: res.data.message,
@@ -508,6 +616,174 @@ export default {
       border-left: 3px solid #7070ce;
     }
 
+    #show-comment-title {
+      margin-top: 30px;
+      padding-left: 5px;
+      font-size: 25px;
+      font-weight: 700;
+      border-left: 3px solid #7070ce;
+    }
+
+    .empty-comment {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .show-comments {
+      display: flex;
+      margin-top: 20px;
+      flex-direction: column;
+      margin-bottom: 200px;
+
+      .one-level {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-top: 8px;
+
+        .one-level-comment-avatar {
+          width: 50px;
+
+          img {
+            width: 50px;
+            height: auto;
+            border-radius: 50%;
+          }
+        }
+
+        .comment-part {
+          display: flex;
+          flex-direction: column;
+          margin-left: 10px;
+
+          .name-time {
+            display: flex;
+            flex-direction: column;
+
+            .one-level-name {
+              font-family: "Times New Roman", "宋体", "sans-serif";
+              font-size: 18px;
+              padding-bottom: 5px;
+            }
+
+            .one-level-time {
+              font-family: "Times New Roman", "宋体", "sans-serif";
+              font-size: 15px;
+              color: #c4c3c3;
+              padding-bottom: 5px;
+            }
+          }
+
+          .comment-content {
+            margin-top: 5px;
+            font-family: "Times New Roman", "宋体", "sans-serif";
+            font-size: 16px;
+            color: #515767;
+            padding-top: 3px;
+          }
+
+          .comment-function {
+            margin-top: 5px;
+
+            .reply {
+              display: flex;
+              flex-flow: row nowrap;
+
+              img {
+                width: 20px;
+                height: auto;
+              }
+
+              span {
+                padding-left: 5px;
+                font-size: 15px;
+                color: #bfbfbf;
+              }
+            }
+
+            .show-two-level-comment {
+              display: flex;
+              flex-direction: column;
+
+              .edit-two-level {
+                margin-top: 3px;
+                display: flex;
+                flex-direction: column;
+
+                .text-area-two {
+                  textarea {
+                    min-width: 830px;
+                    max-width: 830px;
+                    min-height: 50px;
+                    max-height: 70px;
+                    padding: 5px;
+                    border: 2px solid #dcdcdc;
+                    border-radius: 3px;
+                    font-family: "Times New Roman", "sans-serif";
+                  }
+                }
+
+                .emoji, .send {
+                  width: 830px;
+                  position: relative;
+
+                  .browBox-two {
+                    width: 500px;
+                    height: 135px;
+                    background: #faf3f3;
+                    position: absolute;
+                    overflow: scroll;
+                    top: 32px;
+
+                    ul {
+                      display: flex;
+                      flex-wrap: wrap;
+                      padding: 10px;
+
+                      li {
+                        width: 14%;
+                        font-size: 26px;
+                        list-style: none;
+                        text-align: center;
+                      }
+                    }
+                  }
+
+                  .emoji-btn-two {
+                    float: left;
+
+                    img {
+                      width: 30px;
+                      height: auto;
+                      border-radius: 50%;
+                      overflow: hidden;
+                    }
+
+                    img:hover {
+                      background-color: #dcdcdc;
+                    }
+                  }
+
+                  .send-btn {
+                    float: right;
+
+                    .el-button {
+                      width: 80px;
+                      background-color: #adc9ef;
+
+                      &:hover {
+                        color: white;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     .edit-comment {
       margin-top: 20px;
       display: flex;
@@ -598,10 +874,6 @@ export default {
           }
         }
       }
-    }
-
-    .show-comments {
-      margin-top: 150px;
     }
   }
 }
