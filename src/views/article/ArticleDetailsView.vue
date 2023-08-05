@@ -109,7 +109,12 @@
             <img src="../../assets/image/empty.png" alt="emptyComment">
           </div>
           <div class="show-comments" v-else>
-            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index">
+            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index"
+                 @mouseenter="item.content.isNasty&&(item.isShowNastyMark=true)"
+                 @mouseleave="item.content.isNasty&&(item.isShowNastyMark=false)">
+              <div class="nasty-comment-show" v-show="item.isShowNastyMark">
+                <p>疑似恶评</p>
+              </div>
               <div class="one-level-comment-avatar">
                 <img :src="item.avatar" alt="avatar">
               </div>
@@ -123,9 +128,10 @@
                 </div>
                 <div class="comment-function">
                   <div class="reply-delete">
-                    <div class="reply" @click="item.isShowTwoLevelComment=!item.isShowTwoLevelComment">
+                    <div class="reply"
+                         @click="(!item.content.isNasty)&&(item.isShowTwoLevelComment=!item.isShowTwoLevelComment)">
                       <img src="../../assets/image/level_comment.png" alt="reply">
-                      <span>{{ item.numOfReply ? "展开评论" : "评论" }}</span>
+                      <span>{{ item.content.isNasty ? '不可评论' : (item.numOfReply ? "展开评论" : "评论") }}</span>
                     </div>
                     <div class="delete" v-show="item.isOwn" @click="deleteOwnComment(item.content.id,index)">
                       <img src="../../assets/image/delete_comment.png" alt="reply">
@@ -135,7 +141,7 @@
                   <div class="show-two-level-comment" v-show="item.isShowTwoLevelComment">
                     <div class="edit-two-level">
                       <div class="text-area-two">
-                        <textarea placeholder="快来表达你的想法吧~" v-model="item.replyContent"/>
+                        <textarea :placeholder="'@' + item.name" v-model="item.replyContent"/>
                       </div>
                       <div class="emoji send">
                         <div class="emoji-btn-two">
@@ -192,9 +198,6 @@ export default {
     getUpdateData() {
       return timestampToDateTimeString(this.articleInfo.updateTime);
     },
-  },
-  watch() {
-
   },
   mounted() {
     this.initPage()
@@ -671,6 +674,20 @@ export default {
         padding-top: 5px;
         padding-bottom: 5px;
         border-radius: 3px;
+        position: relative;
+
+        .nasty-comment-show {
+          position: absolute;
+          right: 50px;
+          top: 10px;
+
+          p {
+            padding: 8px;
+            border-style: dashed solid;
+            border-color: red;
+            color: orangered;
+          }
+        }
 
         .one-level-comment-avatar {
           width: 50px;
@@ -715,7 +732,7 @@ export default {
           }
 
           .comment-function {
-            margin-top: 5px;
+            margin-top: 10px;
 
             .reply-delete {
               display: flex;

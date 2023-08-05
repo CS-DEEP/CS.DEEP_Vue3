@@ -17,6 +17,7 @@ export type oneLevelCommentType = {
     publishTime: string,
     isShowTwoLevelComment: boolean,
     isShowEmoji: boolean,
+    isShowNastyMark: boolean,
     replyContent: string,
     numOfReply: number,
     isOwn: boolean,
