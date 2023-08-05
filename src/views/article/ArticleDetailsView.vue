@@ -109,7 +109,12 @@
             <img src="../../assets/image/empty.png" alt="emptyComment">
           </div>
           <div class="show-comments" v-else>
-            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index">
+            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index"
+                 @mouseenter="item.content.isNasty&&(item.isShowNastyMark=true)"
+                 @mouseleave="item.content.isNasty&&(item.isShowNastyMark=false)">
+              <div class="nasty-comment-show" v-show="item.isShowNastyMark">
+                <p>疑似恶评</p>
+              </div>
               <div class="one-level-comment-avatar">
                 <img :src="item.avatar" alt="avatar">
               </div>
@@ -122,14 +127,21 @@
                   <p class="comment-main">{{ item.content.content }}</p>
                 </div>
                 <div class="comment-function">
-                  <div class="reply" @click="item.isShowTwoLevelComment=!item.isShowTwoLevelComment">
-                    <img src="../../assets/image/level_comment.png" alt="reply">
-                    <span>{{ item.numOfReply ? "展开评论" : "评论" }}</span>
+                  <div class="reply-delete">
+                    <div class="reply"
+                         @click="(!item.content.isNasty)&&(item.isShowTwoLevelComment=!item.isShowTwoLevelComment)">
+                      <img src="../../assets/image/level_comment.png" alt="reply">
+                      <span>{{ item.content.isNasty ? '不可评论' : (item.numOfReply ? "展开评论" : "评论") }}</span>
+                    </div>
+                    <div class="delete" v-show="item.isOwn" @click="deleteOwnComment(item.content.id,index)">
+                      <img src="../../assets/image/delete_comment.png" alt="reply">
+                      <span>删除</span>
+                    </div>
                   </div>
                   <div class="show-two-level-comment" v-show="item.isShowTwoLevelComment">
                     <div class="edit-two-level">
                       <div class="text-area-two">
-                        <textarea placeholder="快来表达你的想法吧~" v-model="item.replyContent"/>
+                        <textarea :placeholder="'@' + item.name" v-model="item.replyContent"/>
                       </div>
                       <div class="emoji send">
                         <div class="emoji-btn-two">
@@ -186,9 +198,6 @@ export default {
     getUpdateData() {
       return timestampToDateTimeString(this.articleInfo.updateTime);
     },
-  },
-  watch() {
-
   },
   mounted() {
     this.initPage()
@@ -290,15 +299,14 @@ export default {
             if (res.data.code === 200) {
               tmp.avatar = res.data.data.user.avatar;
               tmp.name = res.data.data.user.username;
+              tmp.isOwn = res.data.data.user.id === this.$store.state.userinfo.id
             } else {
               console.log(res.data.message)
             }
-            console.log(tmp)
           }).catch(err => {
             console.log(err)
           })
           this.oneLevelCommentList.push(tmp)
-          console.log(this.oneLevelCommentList.length)
         }
       } else {
         console.log(res.data.message)
@@ -464,12 +472,12 @@ export default {
       })
     },
     // 回复评论
-    replyComment(comment_idx: number) {
+    replyComment(commentIdx: number) {
       api.commentApi.publishComment({
         articleId: this.$route.params.postId,
-        content: this.oneLevelCommentList[comment_idx].replyContent,
+        content: this.oneLevelCommentList[commentIdx].replyContent,
         isReply: 1,
-        replyId: this.oneLevelCommentList[comment_idx].content.id
+        replyId: this.oneLevelCommentList[commentIdx].content.id
       }).then(res => {
         if (res.data.code === 200) {
           ElMessage({
@@ -485,6 +493,23 @@ export default {
         }
       }).catch(err => {
         console.log(err)
+      })
+    },
+    // 删除评论
+    deleteOwnComment(commentId: number, commentIdx: number) {
+      api.commentApi.deleteComment(commentId).then(res => {
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.oneLevelCommentList.splice(commentIdx, 1)
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       })
     }
   }
@@ -645,6 +670,24 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         margin-top: 8px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 3px;
+        position: relative;
+
+        .nasty-comment-show {
+          position: absolute;
+          right: 50px;
+          top: 10px;
+
+          p {
+            padding: 8px;
+            border-style: dashed solid;
+            border-color: red;
+            color: orangered;
+          }
+        }
 
         .one-level-comment-avatar {
           width: 50px;
@@ -664,6 +707,7 @@ export default {
           .name-time {
             display: flex;
             flex-direction: column;
+            padding-top: 5px;
 
             .one-level-name {
               font-family: "Times New Roman", "宋体", "sans-serif";
@@ -688,21 +732,30 @@ export default {
           }
 
           .comment-function {
-            margin-top: 5px;
+            margin-top: 10px;
 
-            .reply {
+            .reply-delete {
               display: flex;
               flex-flow: row nowrap;
 
-              img {
-                width: 20px;
-                height: auto;
+              div {
+                display: flex;
+                flex-flow: row nowrap;
+
+                img {
+                  width: 20px;
+                  height: auto;
+                }
+
+                span {
+                  padding-left: 5px;
+                  font-size: 15px;
+                  color: #bfbfbf;
+                }
               }
 
-              span {
-                padding-left: 5px;
-                font-size: 15px;
-                color: #bfbfbf;
+              .delete {
+                margin-left: 8px;
               }
             }
 
@@ -785,6 +838,10 @@ export default {
               }
             }
           }
+        }
+
+        &:hover {
+          background-color: #dcdcdc;
         }
       }
     }
