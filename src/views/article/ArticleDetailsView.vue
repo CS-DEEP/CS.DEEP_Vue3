@@ -329,7 +329,7 @@ export default {
     let faceList = []
     let faceShow = false
     let page = 1
-    let oneLevelCommentList: Array<oneLevelCommentType> = [CONST.DEFAULTONELEVELCOMMENT, CONST.DEFAULTONELEVELCOMMENTPLUS]
+    let oneLevelCommentList: Array<oneLevelCommentType> = []
 
     return {
       articleInfo,
