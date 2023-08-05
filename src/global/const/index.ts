@@ -51,7 +51,19 @@ const DEFAULTONELEVELCOMMENT = {
     isShowEmoji: false,
     replyContent: '',
     publishTime: '2023-8-4 22:20:20',
-    numOfReply: 0
+    numOfReply: 0,
+    isOwn: false
+}
+const DEFAULTONELEVELCOMMENTPLUS = {
+    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
+    name: '叽里咕噜',
+    content: DEFAULTCOMMENT,
+    isShowTwoLevelComment: false,
+    isShowEmoji: false,
+    replyContent: '',
+    publishTime: '2023-8-4 22:20:20',
+    numOfReply: 2,
+    isOwn: true
 }
 
 export default {
@@ -62,4 +74,5 @@ export default {
     CATEGORYLIST,    // 文章分类
     DEFAULTCOMMENT,  // 默认评论
     DEFAULTONELEVELCOMMENT, // 默认一级评论
+    DEFAULTONELEVELCOMMENTPLUS, // 默认一级评论
 }

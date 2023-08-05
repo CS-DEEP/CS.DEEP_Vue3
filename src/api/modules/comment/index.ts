@@ -19,7 +19,13 @@ const getOneLevelComment = (data: GetOneLevelCommentReq) => {
         '&page=' + data.page)
 }
 
+const deleteComment = (data: number) => {
+    return service.post<ResponseResult<any>>('/comment/delete' +
+        '?commentId=' + data)
+}
+
 export default {
     publishComment,    // 发布评论
     getOneLevelComment,// 获取文章一级评论
+    deleteComment,     // 删除评论
 }

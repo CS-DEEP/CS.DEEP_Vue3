@@ -122,9 +122,15 @@
                   <p class="comment-main">{{ item.content.content }}</p>
                 </div>
                 <div class="comment-function">
-                  <div class="reply" @click="item.isShowTwoLevelComment=!item.isShowTwoLevelComment">
-                    <img src="../../assets/image/level_comment.png" alt="reply">
-                    <span>{{ item.numOfReply ? "展开评论" : "评论" }}</span>
+                  <div class="reply-delete">
+                    <div class="reply" @click="item.isShowTwoLevelComment=!item.isShowTwoLevelComment">
+                      <img src="../../assets/image/level_comment.png" alt="reply">
+                      <span>{{ item.numOfReply ? "展开评论" : "评论" }}</span>
+                    </div>
+                    <div class="delete" v-show="item.isOwn" @click="deleteOwnComment(item.content.id,index)">
+                      <img src="../../assets/image/delete_comment.png" alt="reply">
+                      <span>删除</span>
+                    </div>
                   </div>
                   <div class="show-two-level-comment" v-show="item.isShowTwoLevelComment">
                     <div class="edit-two-level">
@@ -290,15 +296,14 @@ export default {
             if (res.data.code === 200) {
               tmp.avatar = res.data.data.user.avatar;
               tmp.name = res.data.data.user.username;
+              tmp.isOwn = res.data.data.user.id === this.$store.state.userinfo.id
             } else {
               console.log(res.data.message)
             }
-            console.log(tmp)
           }).catch(err => {
             console.log(err)
           })
           this.oneLevelCommentList.push(tmp)
-          console.log(this.oneLevelCommentList.length)
         }
       } else {
         console.log(res.data.message)
@@ -324,7 +329,7 @@ export default {
     let faceList = []
     let faceShow = false
     let page = 1
-    let oneLevelCommentList: Array<oneLevelCommentType> = []
+    let oneLevelCommentList: Array<oneLevelCommentType> = [CONST.DEFAULTONELEVELCOMMENT, CONST.DEFAULTONELEVELCOMMENTPLUS]
 
     return {
       articleInfo,
@@ -464,12 +469,12 @@ export default {
       })
     },
     // 回复评论
-    replyComment(comment_idx: number) {
+    replyComment(commentIdx: number) {
       api.commentApi.publishComment({
         articleId: this.$route.params.postId,
-        content: this.oneLevelCommentList[comment_idx].replyContent,
+        content: this.oneLevelCommentList[commentIdx].replyContent,
         isReply: 1,
-        replyId: this.oneLevelCommentList[comment_idx].content.id
+        replyId: this.oneLevelCommentList[commentIdx].content.id
       }).then(res => {
         if (res.data.code === 200) {
           ElMessage({
@@ -485,6 +490,23 @@ export default {
         }
       }).catch(err => {
         console.log(err)
+      })
+    },
+    // 删除评论
+    deleteOwnComment(commentId: number, commentIdx: number) {
+      api.commentApi.deleteComment(commentId).then(res => {
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.oneLevelCommentList.splice(commentIdx, 1)
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       })
     }
   }
@@ -645,6 +667,10 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         margin-top: 8px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 3px;
 
         .one-level-comment-avatar {
           width: 50px;
@@ -664,6 +690,7 @@ export default {
           .name-time {
             display: flex;
             flex-direction: column;
+            padding-top: 5px;
 
             .one-level-name {
               font-family: "Times New Roman", "宋体", "sans-serif";
@@ -690,19 +717,28 @@ export default {
           .comment-function {
             margin-top: 5px;
 
-            .reply {
+            .reply-delete {
               display: flex;
               flex-flow: row nowrap;
 
-              img {
-                width: 20px;
-                height: auto;
+              div {
+                display: flex;
+                flex-flow: row nowrap;
+
+                img {
+                  width: 20px;
+                  height: auto;
+                }
+
+                span {
+                  padding-left: 5px;
+                  font-size: 15px;
+                  color: #bfbfbf;
+                }
               }
 
-              span {
-                padding-left: 5px;
-                font-size: 15px;
-                color: #bfbfbf;
+              .delete {
+                margin-left: 8px;
               }
             }
 
@@ -785,6 +821,10 @@ export default {
               }
             }
           }
+        }
+
+        &:hover {
+          background-color: #dcdcdc;
         }
       }
     }

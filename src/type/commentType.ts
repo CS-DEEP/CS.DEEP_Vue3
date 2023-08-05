@@ -19,4 +19,5 @@ export type oneLevelCommentType = {
     isShowEmoji: boolean,
     replyContent: string,
     numOfReply: number,
+    isOwn: boolean,
 }
