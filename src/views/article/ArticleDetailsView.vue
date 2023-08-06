@@ -237,8 +237,8 @@ export default {
     },
   },
   mounted() {
-    this.initPage()
-    this.markToHtml = this.markedMarkToHtml(this.articleInfo.content)
+    this.initPage();
+    window.addEventListener('scroll', this.handleScroll);
     // 获取文章信息
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
@@ -361,7 +361,7 @@ export default {
     let faceList = []
     let faceShow = false
     let page = 1
-    let oneLevelCommentList: Array<oneLevelCommentType> = []
+    let oneLevelCommentList: Array<oneLevelCommentType> = [CONST.DEFAULTONELEVELCOMMENT]
 
     return {
       articleInfo,
@@ -398,9 +398,9 @@ export default {
     },
     // marked解析为html
     markedMarkToHtml(mark) {
-      const renderer={
-        text(text){
-          const inlineMathRegex = /\$([^\$]*)\$/g;
+      const renderer = {
+        text(text) {
+          const inlineMathRegex = /\$([^$]*)\$/g;
           const blockMathRegex = /\$\$([\s\S]*?)\$\$/g;
 
           if (inlineMathRegex.test(text)) {
@@ -655,6 +655,55 @@ export default {
       document.getElementsByClassName("one-level")[oneCommentIdx].scrollIntoView({behavior: 'smooth'})
       this.oneLevelCommentList[oneCommentIdx].replyEditComment.replyName = replyName
       this.oneLevelCommentList[oneCommentIdx].replyEditComment.replyId = replyId
+    },
+    // 触底加载更多一级评论(懒加载)
+    loadMoreOneLevelComment() {
+      // TODO：这种形式的加载中仅用作测试，后续更改
+      ElMessage('加载评论中……')
+      this.page += 1
+      api.commentApi.getOneLevelComment({
+        articleId: this.$route.params.postId,
+        page: this.page
+      }).then(async res => {
+        if (res.data.code === 200) {
+          console.log(res.data.data)
+          // 重新生成一级评论新类型对象信息
+          for (let i = 0; i < res.data.data.commentList.length; ++i) {
+            let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
+            tmp.content = res.data.data.commentList[i]
+            tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
+            tmp.numOfReply = res.data.data.replySize[i]
+            await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId).then(user => {
+              tmp.avatar = user.avatar;
+              tmp.name = user.username;
+              tmp.isOwn = user.id === this.$store.state.userinfo.id
+              tmp.replyEditComment.replyName = user.username
+            });
+            tmp.replyEditComment.replyId = res.data.data.commentList[i].id
+            tmp.replyEditComment.content = ''
+            tmp.replyEditComment.articleId = this.$route.params.postId
+            this.oneLevelCommentList.push(tmp)
+          }
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 滚动触底事件
+    handleScroll() {
+      // 获取滚动条当前位置
+      const scrollPosition = document.documentElement.scrollTop;
+
+      // 获取目标元素的位置
+      const targetElement = document.querySelector('.footer-container') as HTMLElement;
+      const targetElementPosition = targetElement.offsetTop;
+
+      // 判断是否滚动到目标元素，可以根据具体情况进行微调
+      if (scrollPosition >= targetElementPosition - 900) {
+        this.loadMoreOneLevelComment();
+      }
     }
   }
 }
