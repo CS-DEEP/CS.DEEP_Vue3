@@ -227,6 +227,7 @@ import haveNotCollect from "@/assets/image/haveNotCollect.png"
 import ArticleHtml from "@/components/common/ArticleHtml.vue";
 import faceData from "@/assets/emoji/emoji.json"
 import {ElMessage} from "element-plus";
+import comment from "@/api/modules/comment";
 
 export default {
   name: "ArticleDetailsView",
@@ -255,7 +256,9 @@ export default {
           });
         });
         // 获取作者信息
-        this.authorInfo = this.getUserinfoByAuthorId(res.data.data.article.authorId)
+        this.getUserinfoByAuthorId(res.data.data.article.authorId).then(user => {
+          this.authorInfo = user
+        })
       } else {
         ElMessage({
           message: res.data.message,
@@ -316,18 +319,21 @@ export default {
       page: this.page
     }).then(async res => {
       if (res.data.code === 200) {
+        console.log(res.data.data)
         // 重新生成一级评论新类型对象信息
         for (let i = 0; i < res.data.data.commentList.length; ++i) {
           let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
           tmp.content = res.data.data.commentList[i]
           tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
           tmp.numOfReply = res.data.data.replySize[i]
-          let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
-          tmp.avatar = user.avatar;
-          tmp.name = user.username;
-          tmp.isOwn = user.id === this.$store.state.userinfo.id
+          await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId).then(user => {
+            console.log(user)
+            tmp.avatar = user.avatar;
+            tmp.name = user.username;
+            tmp.isOwn = user.id === this.$store.state.userinfo.id
+            tmp.replyEditComment.replyName = user.username
+          });
           tmp.replyEditComment.replyId = res.data.data.commentList[i].id
-          tmp.replyEditComment.replyName = user.username
           tmp.replyEditComment.content = ''
           tmp.replyEditComment.articleId = this.$route.params.postId
           this.oneLevelCommentList.push(tmp)
@@ -392,29 +398,33 @@ export default {
       }
     },
     // 依据authorId获取评论用户信息
-    getUserinfoByAuthorId(id: number): userType {
-      api.userApi.getUserinfoData(id).then(res => {
+    async getUserinfoByAuthorId(id: number): Promise<userType> {
+      try {
+        const res = await api.userApi.getUserinfoData(id);
         if (res.data.code === 200) {
           return res.data.data.user;
         } else {
-          console.log(res.data.message)
-          return {};
+          console.log(res.data.message);
+          return CONST.DEFAULTUSERINFO;
         }
-      }).catch(err => {
-        console.log(err)
-      })
+      } catch (err) {
+        console.log(err);
+        return CONST.DEFAULTUSERINFO;
+      }
     },
     // 依据commentId获取评论信息
-    getCommentInfoByCommentId(id: number): commentType {
-      api.commentApi.getCommentInfo(id).then(res => {
+    async getCommentInfoByCommentId(id: number): Promise<commentType> {
+      try {
+        const res = await api.commentApi.getCommentInfo(id);
         if (res.data.code === 200) {
-          return res.data.data.comment
+          return res.data.data.comment;
         } else {
-          return {}
+          return CONST.DEFAULTCOMMENT;
         }
-      }).catch(err => {
-        console.log(err)
-      })
+      } catch (err) {
+        console.log(err);
+        return CONST.DEFAULTCOMMENT;
+      }
     },
     // 点赞Handle
     likeHandle() {
@@ -545,8 +555,9 @@ export default {
           tmp.name = user.username;
           tmp.avatar = user.avatar;
           // 获取用户回复的评论内容
-          let comment = await this.getCommentInfoByCommentId(res.data.data.comment.replyId!)
-          tmp.quoteContent = comment.content;
+          await this.getCommentInfoByCommentId(res.data.data.comment.replyId!).then(comment => {
+            tmp.quoteContent = comment.content;
+          })
           this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
         } else {
           ElMessage({
@@ -586,12 +597,14 @@ export default {
             tmp.isOwn = res.data.data.commentList[i].authorId === this.$store.state.userinfo.id;
             tmp.isNasty = res.data.data.commentList[i].isNasty;
             // 获取用户信息
-            let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
-            tmp.name = user.username;
-            tmp.avatar = user.avatar;
+            await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId).then(user => {
+              tmp.name = user.username;
+              tmp.avatar = user.avatar;
+            });
             // 获取用户回复的评论内容
-            let comment = await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId)
-            tmp.quoteContent = comment.content
+            await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId).then(comment => {
+              tmp.quoteContent = comment.content
+            })
             this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
           }
         } else {

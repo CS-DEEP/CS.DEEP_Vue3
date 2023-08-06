@@ -12,7 +12,7 @@ const publishComment = (data: PublishCommentReq) => {
     return service.post<ResponseResult<PublishCommentRes>>('/comment/add' +
         '?articleId=' + data.articleId +
         '&content=' + data.content +
-        'isReply=' + data.isReply)
+        '&isReply=' + data.isReply)
 }
 
 const replyComment = (data: PublishCommentReq) => {
