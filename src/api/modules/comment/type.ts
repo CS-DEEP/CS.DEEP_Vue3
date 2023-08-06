@@ -27,3 +27,11 @@ export type GetOneLevelCommentRes = {
     commentList: Array<commentType>
     replySize: Array<number>
 }
+
+export type GetTwoLevelCommentRes = {
+    commentList: Array<commentType>
+}
+
+export type GetCommentInfoRes = {
+    comment: commentType
+}

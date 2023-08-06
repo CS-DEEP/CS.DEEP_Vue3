@@ -3,7 +3,7 @@
 *   创建时间: 2023-07-09
 * */
 
-import {commentType} from "@/type";
+import {commentType, twoLevelCommentType} from "@/type";
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const COLORS = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
@@ -34,8 +34,8 @@ const DEFAULTARTICLE = {
 const CATEGORYLIST = ['专业知识', '分享发现', '吐槽讨论']
 const DEFAULTCOMMENT: commentType = {
     id: 1,
-    content: "这是一条测试评论😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀勋哥牛哇带带我；保佑明天10连抽不要歪！！！！",
-    authorId: 1,
+    content: "啊啊啊啊今天10连没出金QWQ，和散兵无缘了QWQ，巴拉巴拉巴拉巴拉巴拉；啊啊啊啊今天10连没出金QWQ，和散兵是不是无缘了QWQ，巴拉巴拉巴拉巴拉巴拉",
+    authorId: 0,
     articleId: 1,
     createTime: 1690965366840,
     isReply: 0,
@@ -43,6 +43,46 @@ const DEFAULTCOMMENT: commentType = {
     isNasty: 0,
     version: null
 }
+const DEFAULTREPLYCOMMENT: commentType = {
+    id: 1,
+    content: "呦呦呦~不会有人抽不到吧",
+    authorId: 1,
+    articleId: 1,
+    createTime: 1690965366840,
+    isReply: 0,
+    replyId: 1,
+    isNasty: 1,
+    version: null
+}
+
+const DEFAULTREPLYCOMMENTPLUS = {
+    id: 1,
+    content: "没事没事，说不定下一发就出了呢",
+    authorId: 0,
+    articleId: 1,
+    createTime: 1690965366840,
+    isReply: 0,
+    replyId: 1,
+    isNasty: 0,
+    version: null
+}
+
+const DEFAULTREPLYCOMMENTREQ = {
+    articleId: 0,
+    content: '',
+    replyId: 0,
+    replyName: '布林布林的',
+    isReply: 1
+}
+
+const DEFAULTREPLYCOMMENTREQPLUS = {
+    articleId: 0,
+    content: '',
+    replyId: 0,
+    replyName: '叽里咕噜',
+    isReply: 1
+}
+
 const DEFAULTONELEVELCOMMENT = {
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
     name: '布林布林的',
@@ -50,11 +90,34 @@ const DEFAULTONELEVELCOMMENT = {
     isShowTwoLevelComment: false,
     isShowEmoji: false,
     isShowNastyMark: false,
-    replyContent: '',
     publishTime: '2023-8-4 22:20:20',
     numOfReply: 0,
-    isOwn: false
+    isOwn: false,
+    twoLevelCommentList: [],
+    replyEditComment: DEFAULTREPLYCOMMENTREQ
 }
+
+const DEFAULTTWOLEVELCOMMENT = {
+    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
+    name: '布林布林的',
+    publishTime: '2023-08-05 17:30:30',
+    ownReplyContent: DEFAULTREPLYCOMMENT,
+    quoteContent: '啊啊啊啊今天10连没出金QWQ，和散兵无缘了QWQ，巴拉巴拉巴拉巴拉巴拉；啊啊啊啊今天10连没出金QWQ，和散兵是不是无缘了QWQ，巴拉巴拉巴拉巴拉巴拉',
+    isOwn: false,
+    isNasty: 1,
+    isShowNastyMark: false
+}
+const DEFAULTTWOLEVELCOMMENTPLUS = {
+    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
+    name: 'GGBond',
+    publishTime: '2023-08-05 17:30:30',
+    ownReplyContent: DEFAULTREPLYCOMMENTPLUS,
+    quoteContent: '啊啊啊啊今天10连没出金QWQ，和散兵无缘了QWQ，巴拉巴拉巴拉巴拉巴拉；啊啊啊啊今天10连没出金QWQ，和散兵是不是无缘了QWQ，巴拉巴拉巴拉巴拉巴拉',
+    isOwn: true,
+    isNasty: 0,
+    isShowNastyMark: false
+}
+
 const DEFAULTONELEVELCOMMENTPLUS = {
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
     name: '叽里咕噜',
@@ -62,12 +125,12 @@ const DEFAULTONELEVELCOMMENTPLUS = {
     isShowTwoLevelComment: false,
     isShowEmoji: false,
     isShowNastyMark: false,
-    replyContent: '',
     publishTime: '2023-8-4 22:20:20',
     numOfReply: 2,
-    isOwn: true
+    isOwn: false,
+    twoLevelCommentList: [DEFAULTTWOLEVELCOMMENT, DEFAULTTWOLEVELCOMMENTPLUS],
+    replyEditComment: DEFAULTREPLYCOMMENTREQPLUS
 }
-
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -77,4 +140,7 @@ export default {
     DEFAULTCOMMENT,  // 默认评论
     DEFAULTONELEVELCOMMENT, // 默认一级评论
     DEFAULTONELEVELCOMMENTPLUS, // 默认一级评论
+    DEFAULTTWOLEVELCOMMENT, // 默认二级评论
+    DEFAULTTWOLEVELCOMMENTPLUS,// 默认二级评论
+    DEFAULTREPLYCOMMENTREQ,// 默认回复请求
 }

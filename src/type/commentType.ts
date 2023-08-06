@@ -10,6 +10,14 @@ export type commentType = {
     version?: any
 }
 
+export type replyCommentReqType = {
+    articleId: number,
+    content: string,
+    replyId: number,
+    replyName: string,
+    isReply: number
+}
+
 export type oneLevelCommentType = {
     avatar: string,
     name: string,
@@ -18,7 +26,20 @@ export type oneLevelCommentType = {
     isShowTwoLevelComment: boolean,
     isShowEmoji: boolean,
     isShowNastyMark: boolean,
-    replyContent: string,
     numOfReply: number,
     isOwn: boolean,
+    twoLevelCommentList: Array<twoLevelCommentType>
+    replyEditComment: replyCommentReqType
 }
+
+export type twoLevelCommentType = {
+    avatar: string,
+    name: string,
+    publishTime: string,
+    ownReplyContent: commentType,
+    quoteContent: string,
+    isOwn: boolean,
+    isNasty: number,
+    isShowNastyMark: boolean,
+}
+
