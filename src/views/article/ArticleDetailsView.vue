@@ -322,7 +322,7 @@ export default {
           tmp.content = res.data.data.commentList[i]
           tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
           tmp.numOfReply = res.data.data.replySize[i]
-          let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
+          let user = this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
           tmp.avatar = user.avatar;
           tmp.name = user.username;
           tmp.isOwn = user.id === this.$store.state.userinfo.id
@@ -590,6 +590,7 @@ export default {
             tmp.name = user.username;
             tmp.avatar = user.avatar;
             // 获取用户回复的评论内容
+
             let comment = await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId)
             tmp.quoteContent = comment.content
             this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
