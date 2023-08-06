@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+
 export default {
   name: "ArticleHtml",
   props: {
@@ -12,7 +13,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.content)
   }
 }
 </script>

@@ -216,7 +216,7 @@
 import api from "@/api/modules"
 import CONST from "@/global/const"
 import {marked} from 'marked';
-import {articleBaseInfo, commentType, oneLevelCommentType, replyCommentReqType, userType} from "@/type";
+import {articleBaseInfo, commentType, oneLevelCommentType, userType} from "@/type";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
@@ -238,13 +238,14 @@ export default {
   },
   mounted() {
     this.initPage()
+    this.markToHtml = this.markedMarkToHtml(this.articleInfo.content)
     // 获取文章信息
     api.articleApi.getArticleInfo(this.$route.params.postId).then(res => {
       if (res.data.code === 200) {
         this.articleInfo = res.data.data.article;
         this.articleTags = res.data.data.tag ? res.data.data.tag : [];
         this.articleCate = CONST.CATEGORYLIST[res.data.data.article.categoryId - 1]
-        this.markToHtml = marked(this.articleInfo.content)
+        this.markToHtml = this.markedMarkToHtml(this.articleInfo.content)
 
         // 代码高亮
         this.$nextTick(() => {
@@ -255,7 +256,9 @@ export default {
           });
         });
         // 获取作者信息
-        this.authorInfo = this.getUserinfoByAuthorId(res.data.data.article.authorId)
+        this.getUserinfoByAuthorId(res.data.data.article.authorId).then(user => {
+          this.authorInfo = user
+        })
       } else {
         ElMessage({
           message: res.data.message,
@@ -316,18 +319,20 @@ export default {
       page: this.page
     }).then(async res => {
       if (res.data.code === 200) {
+        console.log(res.data.data)
         // 重新生成一级评论新类型对象信息
         for (let i = 0; i < res.data.data.commentList.length; ++i) {
           let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
           tmp.content = res.data.data.commentList[i]
           tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
           tmp.numOfReply = res.data.data.replySize[i]
-          let user = this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
-          tmp.avatar = user.avatar;
-          tmp.name = user.username;
-          tmp.isOwn = user.id === this.$store.state.userinfo.id
+          await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId).then(user => {
+            tmp.avatar = user.avatar;
+            tmp.name = user.username;
+            tmp.isOwn = user.id === this.$store.state.userinfo.id
+            tmp.replyEditComment.replyName = user.username
+          });
           tmp.replyEditComment.replyId = res.data.data.commentList[i].id
-          tmp.replyEditComment.replyName = user.username
           tmp.replyEditComment.content = ''
           tmp.replyEditComment.articleId = this.$route.params.postId
           this.oneLevelCommentList.push(tmp)
@@ -391,30 +396,55 @@ export default {
         this.faceList.push(faceData[i].char);
       }
     },
+    // marked解析为html
+    markedMarkToHtml(mark) {
+      const renderer={
+        text(text){
+          const inlineMathRegex = /\$([^\$]*)\$/g;
+          const blockMathRegex = /\$\$([\s\S]*?)\$\$/g;
+
+          if (inlineMathRegex.test(text)) {
+            text = text.replace(inlineMathRegex, "<span class='math'>$1</span>");
+          }
+
+          if (blockMathRegex.test(text)) {
+            text = text.replace(blockMathRegex, "<p class='math'>$1</p>");
+          }
+
+          return text;
+        }
+      }
+      marked.use({renderer})
+      return marked.parse(mark)
+    },
     // 依据authorId获取评论用户信息
-    getUserinfoByAuthorId(id: number): userType {
-      api.userApi.getUserinfoData(id).then(res => {
+    async getUserinfoByAuthorId(id: number): Promise<userType> {
+      try {
+        const res = await api.userApi.getUserinfoData(id);
         if (res.data.code === 200) {
           return res.data.data.user;
         } else {
-          console.log(res.data.message)
-          return {};
+          console.log(res.data.message);
+          return CONST.DEFAULTUSERINFO;
         }
-      }).catch(err => {
-        console.log(err)
-      })
+      } catch (err) {
+        console.log(err);
+        return CONST.DEFAULTUSERINFO;
+      }
     },
     // 依据commentId获取评论信息
-    getCommentInfoByCommentId(id: number): commentType {
-      api.commentApi.getCommentInfo(id).then(res => {
+    async getCommentInfoByCommentId(id: number): Promise<commentType> {
+      try {
+        const res = await api.commentApi.getCommentInfo(id);
         if (res.data.code === 200) {
-          return res.data.data.comment
+          return res.data.data.comment;
         } else {
-          return {}
+          return CONST.DEFAULTCOMMENT;
         }
-      }).catch(err => {
-        console.log(err)
-      })
+      } catch (err) {
+        console.log(err);
+        return CONST.DEFAULTCOMMENT;
+      }
     },
     // 点赞Handle
     likeHandle() {
@@ -503,7 +533,6 @@ export default {
       api.commentApi.publishComment({
         articleId: this.$route.params.postId,
         content: this.commentContent,
-        isReply: 0
       }).then(res => {
         if (res.data.code === 200) {
           ElMessage({
@@ -545,8 +574,9 @@ export default {
           tmp.name = user.username;
           tmp.avatar = user.avatar;
           // 获取用户回复的评论内容
-          let comment = await this.getCommentInfoByCommentId(res.data.data.comment.replyId!)
-          tmp.quoteContent = comment.content;
+          await this.getCommentInfoByCommentId(res.data.data.comment.replyId!).then(comment => {
+            tmp.quoteContent = comment.content;
+          })
           this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
         } else {
           ElMessage({
@@ -586,13 +616,14 @@ export default {
             tmp.isOwn = res.data.data.commentList[i].authorId === this.$store.state.userinfo.id;
             tmp.isNasty = res.data.data.commentList[i].isNasty;
             // 获取用户信息
-            let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
-            tmp.name = user.username;
-            tmp.avatar = user.avatar;
+            await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId).then(user => {
+              tmp.name = user.username;
+              tmp.avatar = user.avatar;
+            });
             // 获取用户回复的评论内容
-
-            let comment = await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId)
-            tmp.quoteContent = comment.content
+            await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId).then(comment => {
+              tmp.quoteContent = comment.content
+            })
             this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
           }
         } else {

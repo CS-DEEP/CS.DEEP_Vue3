@@ -78,13 +78,13 @@
           </div>
         </el-menu-item>
 
-        <AvatarAndUsername v-show="$store.state.haveLogin" @logout="logoutHandle"/>
+        <AvatarAndUsername v-show="$store.state.haveLogin"/>
         <RegisterAndLogin v-show="!$store.state.haveLogin"/>
       </el-menu>
     </div>
   </div>
   </el-affix>
-  
+
 </template>
 
 
@@ -114,10 +114,6 @@ export default {
       console.log(key, keyPath)
     }
 
-    const logoutHandle = () => {
-      this.$router.push('/')
-    }
-
     return {
       // 导出的字体图标
       Search,
@@ -129,7 +125,6 @@ export default {
       activeIndex,
       //导出的函数
       handleSelect,
-      logoutHandle,
     }
   }
 }
@@ -179,7 +174,7 @@ export default {
         }
       }
 
-      
+
       .item8 {
         width: 10px;
         margin-top: -9px;

@@ -30,6 +30,8 @@
 <script lang="ts">
 import api from "@/api/modules/index.ts"
 import CONST from "@/global/const/index.ts"
+import {ElMessage} from "element-plus";
+
 export default {
   name: "AvatarAndUsername",
   data() {
@@ -47,9 +49,16 @@ export default {
           localStorage.clear();
           this.$store.commit('updateLoginState');
           this.$store.commit('updateUserinfo', CONST.DEFAULTUSERINFO)
-          alert(res.data.message)
-          this.$emit('logout')
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.$router.push('/')
+        } else {
+          console.log(res.data.message)
         }
+      }).catch(err => {
+        console.log(err)
       })
     }
   }
@@ -58,7 +67,7 @@ export default {
 
 <style lang="scss">
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -108,6 +117,7 @@ a{
   }
 
   .menu {
+    z-index: 100;
     width: 130px;
     height: max-content;
     display: flex;

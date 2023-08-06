@@ -24,7 +24,11 @@ const DEFAULTARTICLE = {
     id: 0,
     authorId: 0,
     title: '这是一篇测试文章',
-    content: ``,
+    content: `$$
+x_1+y_1=z_1
+$$
+
+这个公式$x+y=z$怎么样`,
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,
