@@ -129,7 +129,10 @@
                 <div class="comment-function">
                   <div class="reply-delete">
                     <div class="reply"
-                         @click="(!item.content.isNasty)&&(item.isShowTwoLevelComment=!item.isShowTwoLevelComment)">
+                         @click="(!item.content.isNasty)&&
+                         (item.isShowTwoLevelComment=!item.isShowTwoLevelComment)&&
+                         (item.isShowEmoji=false)&&
+                         getTwoLevelComment(index,item.content.id)">
                       <img src="../../assets/image/level_comment.png" alt="reply">
                       <span>{{ item.content.isNasty ? '不可评论' : (item.numOfReply ? "展开评论" : "评论") }}</span>
                     </div>
@@ -141,7 +144,8 @@
                   <div class="show-two-level-comment" v-show="item.isShowTwoLevelComment">
                     <div class="edit-two-level">
                       <div class="text-area-two">
-                        <textarea :placeholder="'@' + item.name" v-model="item.replyContent"/>
+                        <textarea :placeholder="'@' + item.replyEditComment.replyName"
+                                  v-model="item.replyEditComment.content"/>
                       </div>
                       <div class="emoji send">
                         <div class="emoji-btn-two">
@@ -162,7 +166,40 @@
                       </div>
                     </div>
                     <div class="show-two-level">
-
+                      <div class="two-level" v-for="(item_t,index_t) in item.twoLevelCommentList" :key=index_t
+                           @mouseenter="item_t.isNasty&&(item_t.isShowNastyMark=true)"
+                           @mouseleave="item_t.isNasty&&(item_t.isShowNastyMark=false)">
+                        <div class="two-nasty-comment-show" v-show="item_t.isShowNastyMark">
+                          <p>疑似恶评</p>
+                        </div>
+                        <div class="two-level-comment-avatar">
+                          <img :src="item_t.avatar" alt="avatar">
+                        </div>
+                        <div class="two-comment-part">
+                          <div class="name-time">
+                            <p class="two-level-name">{{ item_t.name }}</p>
+                            <p class="two-level-time">{{ item_t.publishTime }}</p>
+                          </div>
+                          <div class="two-comment-content">
+                            <p class="two-comment-main">{{ item_t.ownReplyContent.content }}</p>
+                            <p class="two-quote-comment"><span>> " </span>{{ item_t.quoteContent }}<span> "</span></p>
+                          </div>
+                          <div class="comment-function">
+                            <div class="reply-delete">
+                              <div class="reply"
+                                   @click="(!item_t.isNasty)&&replyTwoLevelComment(index,item_t.name,item_t.ownReplyContent.id)">
+                                <img src="../../assets/image/level_comment.png" alt="reply">
+                                <span>{{ item_t.isNasty ? '不可回复' : '回复' }}</span>
+                              </div>
+                              <div class="delete" v-show="item_t.isOwn"
+                                   @click="deleteOwnTwoLevelComment(item_t.ownReplyContent.id,index,index_t)">
+                                <img src="../../assets/image/delete_comment.png" alt="reply">
+                                <span>删除</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -179,7 +216,7 @@
 import api from "@/api/modules"
 import CONST from "@/global/const"
 import {marked} from 'marked';
-import {articleBaseInfo, oneLevelCommentType, userType} from "@/type";
+import {articleBaseInfo, commentType, oneLevelCommentType, replyCommentReqType, userType} from "@/type";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import {generateDarkColor, timestampToDateTimeString} from "@/global/utils";
@@ -218,15 +255,7 @@ export default {
           });
         });
         // 获取作者信息
-        api.userApi.getUserinfoData(res.data.data.article.authorId).then(res => {
-          if (res.data.code === 200) {
-            this.authorInfo = res.data.data.user
-          } else {
-            console.log(res.data.message)
-          }
-        }).catch(err => {
-          console.log(err)
-        })
+        this.authorInfo = this.getUserinfoByAuthorId(res.data.data.article.authorId)
       } else {
         ElMessage({
           message: res.data.message,
@@ -287,25 +316,20 @@ export default {
       page: this.page
     }).then(async res => {
       if (res.data.code === 200) {
-        console.log(res.data.data.commentList)
         // 重新生成一级评论新类型对象信息
         for (let i = 0; i < res.data.data.commentList.length; ++i) {
-          console.log(res.data.data.commentList[i])
           let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
           tmp.content = res.data.data.commentList[i]
           tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime)
           tmp.numOfReply = res.data.data.replySize[i]
-          await api.userApi.getUserinfoData(res.data.data.commentList[i].authorId).then(res => {
-            if (res.data.code === 200) {
-              tmp.avatar = res.data.data.user.avatar;
-              tmp.name = res.data.data.user.username;
-              tmp.isOwn = res.data.data.user.id === this.$store.state.userinfo.id
-            } else {
-              console.log(res.data.message)
-            }
-          }).catch(err => {
-            console.log(err)
-          })
+          let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
+          tmp.avatar = user.avatar;
+          tmp.name = user.username;
+          tmp.isOwn = user.id === this.$store.state.userinfo.id
+          tmp.replyEditComment.replyId = res.data.data.commentList[i].id
+          tmp.replyEditComment.replyName = user.username
+          tmp.replyEditComment.content = ''
+          tmp.replyEditComment.articleId = this.$route.params.postId
           this.oneLevelCommentList.push(tmp)
         }
       } else {
@@ -366,6 +390,31 @@ export default {
       for (let i in faceData) {
         this.faceList.push(faceData[i].char);
       }
+    },
+    // 依据authorId获取评论用户信息
+    getUserinfoByAuthorId(id: number): userType {
+      api.userApi.getUserinfoData(id).then(res => {
+        if (res.data.code === 200) {
+          return res.data.data.user;
+        } else {
+          console.log(res.data.message)
+          return {};
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 依据commentId获取评论信息
+    getCommentInfoByCommentId(id: number): commentType {
+      api.commentApi.getCommentInfo(id).then(res => {
+        if (res.data.code === 200) {
+          return res.data.data.comment
+        } else {
+          return {}
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     },
     // 点赞Handle
     likeHandle() {
@@ -447,13 +496,14 @@ export default {
     },
     // 添加所选的表情到二级评论回复区域
     addEmojiToTextOfTwo(comment_idx: number, face_idx: number) {
-      this.oneLevelCommentList[comment_idx].replyContent = this.oneLevelCommentList[comment_idx].replyContent + this.faceList[face_idx]
+      this.oneLevelCommentList[comment_idx].replyEditComment.content = this.oneLevelCommentList[comment_idx].replyEditComment.content + this.faceList[face_idx]
     },
     // 发布评论
     publishComment() {
       api.commentApi.publishComment({
         articleId: this.$route.params.postId,
-        content: this.commentContent
+        content: this.commentContent,
+        isReply: 0
       }).then(res => {
         if (res.data.code === 200) {
           ElMessage({
@@ -473,18 +523,31 @@ export default {
     },
     // 回复评论
     replyComment(commentIdx: number) {
-      api.commentApi.publishComment({
+      api.commentApi.replyComment({
         articleId: this.$route.params.postId,
-        content: this.oneLevelCommentList[commentIdx].replyContent,
+        content: this.oneLevelCommentList[commentIdx].replyEditComment.content,
         isReply: 1,
-        replyId: this.oneLevelCommentList[commentIdx].content.id
-      }).then(res => {
+        replyId: this.oneLevelCommentList[commentIdx].replyEditComment.replyId
+      }).then(async res => {
         if (res.data.code === 200) {
           ElMessage({
             message: res.data.message,
             type: 'success'
           })
-          // TODO：添加到二级评论的列表
+          // 插入对应一级评论的二级评论列表
+          let tmp = CONST.DEFAULTTWOLEVELCOMMENT;
+          tmp.ownReplyContent = res.data.data.comment;
+          tmp.publishTime = timestampToDateTimeString(res.data.data.comment.createTime);
+          tmp.isOwn = res.data.data.comment.authorId === this.$store.state.userinfo.id;
+          tmp.isNasty = res.data.data.comment.isNasty;
+          // 获取用户信息
+          let user = await this.getUserinfoByAuthorId(res.data.data.comment.authorId);
+          tmp.name = user.username;
+          tmp.avatar = user.avatar;
+          // 获取用户回复的评论内容
+          let comment = await this.getCommentInfoByCommentId(res.data.data.comment.replyId!)
+          tmp.quoteContent = comment.content;
+          this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
         } else {
           ElMessage({
             message: res.data.message,
@@ -511,6 +574,55 @@ export default {
           })
         }
       })
+    },
+    // 获取二级评论
+    getTwoLevelComment(commentIdx: number, id: number) {
+      api.commentApi.getTwoLevelComment(id).then(async res => {
+        if (res.data.code === 200) {
+          for (let i = 0; i < res.data.data.commentList.length; ++i) {
+            let tmp = {...CONST.DEFAULTTWOLEVELCOMMENT};
+            tmp.ownReplyContent = res.data.data.commentList[i];
+            tmp.publishTime = timestampToDateTimeString(res.data.data.commentList[i].createTime);
+            tmp.isOwn = res.data.data.commentList[i].authorId === this.$store.state.userinfo.id;
+            tmp.isNasty = res.data.data.commentList[i].isNasty;
+            // 获取用户信息
+            let user = await this.getUserinfoByAuthorId(res.data.data.commentList[i].authorId);
+            tmp.name = user.username;
+            tmp.avatar = user.avatar;
+            // 获取用户回复的评论内容
+            let comment = await this.getCommentInfoByCommentId(res.data.data.commentList[i].replyId)
+            tmp.quoteContent = comment.content
+            this.oneLevelCommentList[commentIdx].twoLevelCommentList.push(tmp)
+          }
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 在二级评论删除自己的回复
+    deleteOwnTwoLevelComment(commentId: number, oneLevelIdx: number, twoLevelIdx: number) {
+      api.commentApi.deleteComment(commentId).then(res => {
+        if (res.data.code === 200) {
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.oneLevelCommentList[oneLevelIdx].twoLevelCommentList.splice(twoLevelIdx, 1)
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
+      })
+    },
+    // 想要回复二级评论
+    replyTwoLevelComment(oneCommentIdx: number, replyName: string, replyId: number) {
+      document.getElementsByClassName("one-level")[oneCommentIdx].scrollIntoView({behavior: 'smooth'})
+      this.oneLevelCommentList[oneCommentIdx].replyEditComment.replyName = replyName
+      this.oneLevelCommentList[oneCommentIdx].replyEditComment.replyId = replyId
     }
   }
 }
@@ -786,6 +898,7 @@ export default {
                   position: relative;
 
                   .browBox-two {
+                    z-index: 100;
                     width: 500px;
                     height: 135px;
                     background: #faf3f3;
@@ -836,12 +949,120 @@ export default {
                   }
                 }
               }
+
+              .two-level {
+                display: flex;
+                flex-flow: row nowrap;
+                padding-left: 5px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                border-radius: 3px;
+                position: relative;
+                background-color: #efecec;
+
+                .two-nasty-comment-show {
+                  position: absolute;
+                  right: 30px;
+                  top: 10px;
+
+                  p {
+                    padding: 8px;
+                    border-style: dashed solid;
+                    border-color: red;
+                    color: orangered;
+                  }
+                }
+
+                .two-level-comment-avatar {
+                  width: 50px;
+
+                  img {
+                    width: 50px;
+                    height: auto;
+                    border-radius: 50%;
+                  }
+                }
+
+                .two-comment-part {
+                  display: flex;
+                  flex-direction: column;
+                  margin-left: 10px;
+
+                  .name-time {
+                    display: flex;
+                    flex-direction: column;
+                    padding-top: 5px;
+
+                    .two-level-name {
+                      font-family: "Times New Roman", "宋体", "sans-serif";
+                      font-size: 18px;
+                      padding-bottom: 5px;
+                    }
+
+                    .two-level-time {
+                      font-family: "Times New Roman", "宋体", "sans-serif";
+                      font-size: 15px;
+                      color: #c4c3c3;
+                      padding-bottom: 5px;
+                    }
+                  }
+
+                  .two-comment-content {
+                    margin-top: 5px;
+                    font-family: "Times New Roman", "宋体", "sans-serif";
+
+                    .two-comment-main {
+                      font-size: 16px;
+                      color: #515767;
+                      padding-top: 3px;
+                    }
+
+                    .two-quote-comment {
+                      width: 800px;
+                      margin-top: 5px;
+                      font-size: 15px;
+                      background-color: #ded7d7;
+                      border-radius: 3px;
+                      padding-top: 5px;
+                      padding-bottom: 5px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                    }
+                  }
+
+                  .comment-function {
+                    margin-top: 10px;
+
+                    .reply-delete {
+                      display: flex;
+                      flex-flow: row nowrap;
+
+                      div {
+                        display: flex;
+                        flex-flow: row nowrap;
+
+                        img {
+                          width: 20px;
+                          height: auto;
+                        }
+
+                        span {
+                          padding-left: 5px;
+                          font-size: 15px;
+                          color: #bfbfbf;
+                        }
+                      }
+
+                      .delete {
+                        margin-left: 8px;
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
-        }
-
-        &:hover {
-          background-color: #dcdcdc;
         }
       }
     }
