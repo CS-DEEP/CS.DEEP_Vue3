@@ -109,7 +109,7 @@
             <img src="../../assets/image/empty.png" alt="emptyComment">
           </div>
           <div class="show-comments" v-else>
-            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="index"
+            <div class="one-level" v-for="(item,index) in oneLevelCommentList" :key="item"
                  @mouseenter="item.content.isNasty&&(item.isShowNastyMark=true)"
                  @mouseleave="item.content.isNasty&&(item.isShowNastyMark=false)">
               <div class="nasty-comment-show" v-show="item.isShowNastyMark">
@@ -129,10 +129,7 @@
                 <div class="comment-function">
                   <div class="reply-delete">
                     <div class="reply"
-                         @click="(!item.content.isNasty)&&
-                         (item.isShowTwoLevelComment=!item.isShowTwoLevelComment)&&
-                         (item.isShowEmoji=false)&&
-                         getTwoLevelComment(index,item.content.id)">
+                         @click="expandTwoLevelCommentHandle(index,item)">
                       <img src="../../assets/image/level_comment.png" alt="reply">
                       <span>{{ item.content.isNasty ? '不可评论' : (item.numOfReply ? "展开评论" : "评论") }}</span>
                     </div>
@@ -361,7 +358,7 @@ export default {
     let faceList = []
     let faceShow = false
     let page = 1
-    let oneLevelCommentList: Array<oneLevelCommentType> = [CONST.DEFAULTONELEVELCOMMENT]
+    let oneLevelCommentList: Array<oneLevelCommentType> = []
 
     return {
       articleInfo,
@@ -552,6 +549,8 @@ export default {
     },
     // 回复评论
     replyComment(commentIdx: number) {
+      console.log(commentIdx)
+      console.log(this.oneLevelCommentList[commentIdx].replyEditComment.replyId)
       api.commentApi.replyComment({
         articleId: this.$route.params.postId,
         content: this.oneLevelCommentList[commentIdx].replyEditComment.content,
@@ -607,7 +606,9 @@ export default {
     },
     // 获取二级评论
     getTwoLevelComment(commentIdx: number, id: number) {
+      console.log(111)
       api.commentApi.getTwoLevelComment(id).then(async res => {
+        console.log(res.data)
         if (res.data.code === 200) {
           for (let i = 0; i < res.data.data.commentList.length; ++i) {
             let tmp = {...CONST.DEFAULTTWOLEVELCOMMENT};
@@ -632,6 +633,14 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    // 展开二级评论
+    expandTwoLevelCommentHandle(index: number, item: oneLevelCommentType) {
+      if (!item.content.isNasty) {
+        item.isShowTwoLevelComment = !item.isShowTwoLevelComment;
+        item.isShowEmoji = false;
+        this.getTwoLevelComment(index, item.content.id);
+      }
     },
     // 在二级评论删除自己的回复
     deleteOwnTwoLevelComment(commentId: number, oneLevelIdx: number, twoLevelIdx: number) {
