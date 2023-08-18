@@ -15,11 +15,12 @@
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^2.1.0",
+    "@types/marked": "^5.0.1",
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "element-plus": "^2.3.7",
     "highlight.js": "^11.8.0",
-    "marked": "^5.1.2",
+    "marked": "^6.0.0",
     "mavon-editor": "^3.0.1",
     "moment": "^2.29.4",
     "node-sass": "^8.0.0",

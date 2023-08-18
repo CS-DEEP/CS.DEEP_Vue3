@@ -11,8 +11,7 @@ import service from "@/api/instance";
 const publishComment = (data: PublishCommentReq) => {
     return service.post<ResponseResult<PublishCommentRes>>('/comment/add' +
         '?articleId=' + data.articleId +
-        '&content=' + data.content +
-        'isReply=' + data.isReply)
+        '&content=' + data.content)
 }
 
 const replyComment = (data: PublishCommentReq) => {
