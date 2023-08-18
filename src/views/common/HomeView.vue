@@ -24,25 +24,27 @@
           
         </el-aside>
         <el-main>
-          <el-dropdown class="test" trigger="click">
-            <span class="choice">{{order}}<i class="iconfont icon-xiala"></i></span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="changeOrder('按时间排序')"><i class="iconfont icon-shizhongclock74"></i>按时间排序</el-dropdown-item>
-                <el-dropdown-item @click="changeOrder('按推荐排序')"><i class="iconfont icon-dianzan"></i>按推荐排序</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <el-switch 
+            class="test"
+            v-model="value1"
+            inline-prompt
+            active-text="时间&nbsp"
+            inactive-text="&nbsp推荐 "
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #409eff;"
+            
+          />
+
+          
           <div class="boKe">
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -54,13 +56,31 @@
             </el-row>
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
+                  <p >{{ topic }}</p>
+                  <span  class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
+                </div>
+                
+              </el-col>
+              <el-col :span="2" class="third" >
+                <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
+              </el-col>
+            </el-row>
+            <el-row >
+              <el-col :span="2" class="first" >
+                <el-tooltip placement="left-end">
+                <template #content>{{ userName }}</template>
+                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+                </el-tooltip>
+              </el-col>
+              <el-col :span="20" class="second" >
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -72,13 +92,13 @@
             </el-row>
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -90,13 +110,13 @@
             </el-row>
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -108,13 +128,13 @@
             </el-row>
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -126,31 +146,13 @@
             </el-row>
             <el-row >
               <el-col :span="2" class="first" >
-                <el-tooltip>
+                <el-tooltip  placement="left-end">
                 <template #content>{{ userName }}</template>
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 </el-tooltip>
               </el-col>
               <el-col :span="20" class="second" >
-                <div class="detail">
-                  <p>{{ topic }}</p>
-                  <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
-                </div>
-                
-              </el-col>
-              <el-col :span="2" class="third" >
-                <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
-              </el-col>
-            </el-row>
-            <el-row >
-              <el-col :span="2" class="first" >
-                <el-tooltip>
-                <template #content>{{ userName }}</template>
-                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
-                </el-tooltip>
-              </el-col>
-              <el-col :span="20" class="second" >
-                <div class="detail">
+                <div class="detail" @click="goToArticle">
                   <p>{{ topic }}</p>
                   <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
                 </div>
@@ -232,25 +234,25 @@
         
       }
       .el-main{
-        margin-right: 300px;
+        margin-right: 100px;
         background-color: #fff;
         position: relative;
         .test{
           position: absolute;
+          height: 30px;
           top: 20px;
-          right: 20px;
-          .choice{
+          right: 70px;
+          .el-switch__core{
+            height: 30px;
+          }
+          span{
             font-size: 18px;
-            i{
-              margin-left: 5px;
-            }
+
           }
-          .el-dropdown-menu{
-            background-color: #f2f3f5;
-          }
+          
         }
         .boKe{
-          margin-top: 25px;
+          margin-top: 40px;
           
           .el-row{
             background-color: #fff;
@@ -300,6 +302,7 @@
             }
             .second{
               background-color: #f3f6f9;
+              cursor: pointer;
             }
             .third{
               background-color: #f3f6f9;
@@ -319,7 +322,8 @@
 <script lang="ts">
 import router from "@/router";
 import api from "@/api/modules/index"
-
+import VueRouter from 'vue-router'
+import { ref } from 'vue'
 export default {
   name: 'HomeView',
   methods: {
@@ -334,9 +338,10 @@ export default {
     //     console.log(err)
     //   })
     // }
-    changeOrder(newChoice){
-      this.order = newChoice;
+    goToArticle(){
+      this.$router.push('/login');
     }
+    
   },
   data(){
     return{
@@ -346,7 +351,8 @@ export default {
       topic:'为什么我要用vue?',
       userName:'yuzhiying',
       timeLenth:20,
-      pingLunShu:3
+      pingLunShu:3,
+      value1: ref(true)
     }
   }
 }
