@@ -24,15 +24,16 @@
           
         </el-aside>
         <el-main>
-          <el-switch 
-            class="test"
-            v-model="value1"
-            inline-prompt
-            active-text="时间&nbsp"
-            inactive-text="&nbsp推荐 "
-            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #409eff;"
-            
-          />
+          <el-dropdown class="test" trigger="click">
+            <span class="choice">{{order}}<i class="iconfont icon-xiala"></i></span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="changeOrder('按时间排序')"><i class="iconfont icon-shizhongclock74"></i>按时间排序</el-dropdown-item>
+                <el-dropdown-item @click="changeOrder('按热度排序')"><i class="iconfont icon-icon-test"></i>按热度排序</el-dropdown-item>
+                <el-dropdown-item @click="changeOrder('按推荐排序')"><i class="iconfont icon-dianzan"></i>按推荐排序</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
 
           
           <div class="boKe">
@@ -239,20 +240,20 @@
         position: relative;
         .test{
           position: absolute;
-          height: 30px;
           top: 20px;
           right: 70px;
-          .el-switch__core{
-            height: 30px;
-          }
-          span{
+          .choice{
             font-size: 18px;
-
+            i{
+            margin-left: 5px;
+            }
           }
-          
+          .el-dropdown-menu{
+            background-color: #f2f3f5;
+          }
         }
         .boKe{
-          margin-top: 40px;
+          margin-top: 25px;
           
           .el-row{
             background-color: #fff;
@@ -338,6 +339,9 @@ export default {
     //     console.log(err)
     //   })
     // }
+    changeOrder(newChoice){
+      this.order = newChoice;
+    },
     goToArticle(){
       this.$router.push('/login');
     }
