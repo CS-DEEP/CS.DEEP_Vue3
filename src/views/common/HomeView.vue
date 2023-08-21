@@ -24,15 +24,16 @@
 
         </el-aside>
         <el-main>
-          <el-switch
-              class="test"
-              v-model="value1"
-              inline-prompt
-              active-text="时间&nbsp"
-              inactive-text="&nbsp推荐 "
-              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #409eff;"
-
-          />
+          <el-dropdown class="test" trigger="click">
+            <span class="choice">{{order}}<i class="iconfont icon-xiala"></i></span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="changeOrder('按时间排序')"><i class="iconfont icon-shizhongclock74"></i>按时间排序</el-dropdown-item>
+                <el-dropdown-item @click="changeOrder('按热度排序')"><i class="iconfont icon-icon-test"></i>按热度排序</el-dropdown-item>
+                <el-dropdown-item @click="changeOrder('按推荐排序')"><i class="iconfont icon-dianzan"></i>按推荐排序</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
 
 
           <div class="boKe">
@@ -144,6 +145,7 @@
                 <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
               </el-col>
             </el-row>
+<<<<<<< HEAD
             <el-row>
               <el-col :span="2" class="first">
                 <el-tooltip placement="left-end">
@@ -162,6 +164,9 @@
                 <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
               </el-col>
             </el-row>
+=======
+
+>>>>>>> bba8e796450c9cde704462b3a2ddd137393cf244
           </div>
         </el-main>
       </el-container>
@@ -225,6 +230,7 @@
           }
         }
       }
+<<<<<<< HEAD
 
       .ground {
         padding-top: 10px;
@@ -239,6 +245,82 @@
 
           span {
             margin-right: 5px;
+=======
+      .el-main{
+        margin-right: 100px;
+        background-color: #fff;
+        position: relative;
+        .test{
+          position: absolute;
+          top: 20px;
+          right: 70px;
+          .choice{
+            font-size: 18px;
+            i{
+            margin-left: 5px;
+            }
+          }
+          .el-dropdown-menu{
+            background-color: #f2f3f5;
+          }
+        }
+        .boKe{
+          margin-top: 25px;
+
+          .el-row{
+            background-color: #fff;
+            transition: background-color 0.5s;
+            .first{
+              background-color: #fff;
+              transition: background-color #f3f6f9 0.8s;
+              border-radius: 10% 0 0 10%;
+              .el-avatar{
+                margin: 10px 10px 10px 10px;
+              }
+            }
+            .second{
+              padding: 10px 0px 10px 0px;
+              background-color: #fff;
+              transition: background-color #f3f6f9 0.8s;
+              .detail{
+                margin-left: 15px;
+                p{
+                  font-size: 16px;
+                  font-weight: 600;
+                }
+                .userName{
+                  font-size: 11px;
+                  font-weight: 600;
+                  color: #aaa;
+                }
+                .detail{
+                  color:#b2aabd;
+                  font-size: 10px;
+                }
+
+              }
+
+            }
+            .third{
+              background-color: #fff;
+              transition: background-color #f3f6f9 0.8s;
+              padding: 10px;
+              border-radius: 0 10% 10% 0;
+
+            }
+          }
+          .el-row:hover{
+            .first{
+              background-color: #f3f6f9;
+            }
+            .second{
+              background-color: #f3f6f9;
+              cursor: pointer;
+            }
+            .third{
+              background-color: #f3f6f9;
+            }
+>>>>>>> bba8e796450c9cde704462b3a2ddd137393cf244
           }
         }
       }
@@ -364,7 +446,14 @@ export default {
     //     console.log(err)
     //   })
     // }
+<<<<<<< HEAD
     goToArticle() {
+=======
+    changeOrder(newChoice){
+      this.order = newChoice;
+    },
+    goToArticle(){
+>>>>>>> bba8e796450c9cde704462b3a2ddd137393cf244
       this.$router.push('/login');
     }
 
