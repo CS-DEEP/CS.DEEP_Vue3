@@ -145,24 +145,7 @@
                 <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
               </el-col>
             </el-row>
-            <el-row >
-              <el-col :span="2" class="first" >
-                <el-tooltip  placement="left-end">
-                <template #content>{{ userName }}</template>
-                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
-                </el-tooltip>
-              </el-col>
-              <el-col :span="20" class="second" >
-                <div class="detail" @click="goToArticle">
-                  <p>{{ topic }}</p>
-                  <span class="userName">{{ userName }}</span><span class="detail">发布于 {{timeLenth}} 天前</span>
-                </div>
-                
-              </el-col>
-              <el-col :span="2" class="third" >
-                <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
-              </el-col>
-            </el-row>
+            
           </div>
         </el-main>
       </el-container>
