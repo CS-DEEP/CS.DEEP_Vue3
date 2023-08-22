@@ -15,3 +15,13 @@ export type articleType = {
     article: articleBaseInfo,
     tag?: Array<string>
 }
+
+export type articleItemType = {
+    id: number,
+    authorId: number,
+    authorName: string,
+    avatar: string,
+    title: string,
+    elapsed: string,
+    likeCount: number
+}
