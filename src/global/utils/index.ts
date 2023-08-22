@@ -47,7 +47,7 @@ export function generateLightColor(): string {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-// function:生成随机浅色系颜色
+// function:生成随机深色色系颜色
 export function generateDarkColor(): string {
     const hue = Math.floor(Math.random() * 360); // 随机选择色相
     const saturation = Math.floor(Math.random() * 40) + 30; // 随机选择饱和度（60-100）

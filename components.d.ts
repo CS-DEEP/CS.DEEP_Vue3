@@ -41,5 +41,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TopNavBar: typeof import('./src/components/common/TopNavBar.vue')['default']
     UserCard: typeof import('./src/components/common/UserCard.vue')['default']
+    WordCloud: typeof import('./src/components/mini/WordCloud.vue')['default']
   }
 }
