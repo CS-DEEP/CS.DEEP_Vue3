@@ -19,10 +19,7 @@ export default {
     tagList: {
       type: Array,
       default: () => {
-        return [
-          'vue', 'typescript', 'python', 'Java', 'algorithm',
-          '机器学习', '唠唠嗑', 'CS.DEEP', '论坛指南', 'crypto'
-        ]
+        return []
       }
     },
     maxSize: {

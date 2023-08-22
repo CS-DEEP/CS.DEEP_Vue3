@@ -143,6 +143,7 @@ export default {
       console.log(err)
     })
     api.commonApi.getRandomTagList().then(res => {
+      console.log(res.data.data.tagList)
       this.tagList = res.data.data.tagList
     }).catch(err => {
       console.log(err)
