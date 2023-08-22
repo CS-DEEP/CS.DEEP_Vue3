@@ -9,7 +9,6 @@ import service from "@/api/instance";
 const getParticularArticleList = (data: getParticularArticleListReq) => {
     return service.get<ResponseResult<getParticularArticleListRes>>('/article/get/all' +
         '?page=' + data.page +
-        '&pageSize=' + data.pageSize +
         '&sortBy=' + data.sortBy)
 }
 
