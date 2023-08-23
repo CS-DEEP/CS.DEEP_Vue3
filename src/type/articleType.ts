@@ -23,5 +23,5 @@ export type articleItemType = {
     avatar: string,
     title: string,
     elapsed: string,
-    likeCount: number
+    category: string
 }

@@ -1,4 +1,4 @@
-import {articleType} from "@/type";
+import {articleBaseInfo, articleType} from "@/type";
 
 export type ResponseResult<T> = {
     code: number;
@@ -7,7 +7,7 @@ export type ResponseResult<T> = {
 }
 
 export type createArticleRes = {
-    article: articleType
+    article: articleBaseInfo
 }
 
 export type imageBackRes = {

@@ -135,6 +135,17 @@ const DEFAULTONELEVELCOMMENTPLUS = {
     twoLevelCommentList: [DEFAULTTWOLEVELCOMMENT, DEFAULTTWOLEVELCOMMENTPLUS],
     replyEditComment: DEFAULTREPLYCOMMENTREQPLUS
 }
+
+const DEFAULTARTICLEITEM = {
+    id: 1,
+    authorId: 1,
+    authorName: '长耳朵提提',
+    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
+    title: '【论坛指引】新用户必看！',
+    elapsed: '刚刚',
+    category: '专业知识'
+}
+
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -147,4 +158,5 @@ export default {
     DEFAULTTWOLEVELCOMMENT, // 默认二级评论
     DEFAULTTWOLEVELCOMMENTPLUS,// 默认二级评论
     DEFAULTREPLYCOMMENTREQ,// 默认回复请求
+    DEFAULTARTICLEITEM,    // 默认文章列表Item
 }
