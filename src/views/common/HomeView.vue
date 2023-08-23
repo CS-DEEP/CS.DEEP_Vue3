@@ -26,39 +26,52 @@
           </div>
         </el-aside>
         <el-main>
-          <el-dropdown class="sort-method" @command="chooseSortMethod" trigger="click">
-            <span class="choice">{{ sortBy }}<i class="iconfont icon-xiala"></i></span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item command="time"><i class="iconfont icon-shizhongclock74"></i>最新
-                </el-dropdown-item>
-                <el-dropdown-item command="popularity"><i class="iconfont icon-icon-test"></i>最热
-                </el-dropdown-item>
-                <el-dropdown-item command="recommend"><i class="iconfont icon-dianzan"></i>推荐
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-
-          <div class="boKe">
-            <el-row>
-              <el-col :span="2" class="first">
-                <el-tooltip placement="left-end">
-                  <template #content>{{ userName }}</template>
-                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
-                </el-tooltip>
-              </el-col>
-              <el-col :span="20" class="second">
-                <div class="detail" @click="goToArticle">
-                  <p>{{ topic }}</p>
-                  <span class="userName">{{ userName }}</span><span class="detail">发布于 {{ timeLenth }} 天前</span>
+          <div class="main-top">
+            <div class="main-title">
+              <span>博客区</span>
+            </div>
+            <el-dropdown class="sort-method" @command="chooseSortMethod" trigger="click">
+              <span class="choice">{{ sortBy }}<i class="iconfont icon-xiala"></i></span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="time"><i class="iconfont icon-shizhongclock74"></i>最新
+                  </el-dropdown-item>
+                  <el-dropdown-item command="popularity"><i class="iconfont icon-icon-test"></i>最热
+                  </el-dropdown-item>
+                  <el-dropdown-item command="recommend" v-if="haveLogin">
+                    <i class="iconfont icon-dianzan"></i>推荐
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+          <div class="article-list">
+            <div class="article-item" v-for="(item,index) in articleList" :key="index">
+              <div class="avatar">
+                <img :src="item.avatar" alt="avatar">
+              </div>
+              <div class="simple-info">
+                <div class="title">{{ item.title }}</div>
+                <div class="name-and-time">
+                  <div class="name">{{ item.authorName }}</div>
+                  <div class="time"> 发布于 {{ item.elapsed }}</div>
                 </div>
-
-              </el-col>
-              <el-col :span="2" class="third">
-                <span><i class="iconfont icon-pinglun"></i>{{ pingLunShu }}</span>
-              </el-col>
-            </el-row>
+              </div>
+              <div class="cate">
+                <span>{{ item.category }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="pagination">
+            <el-pagination
+                layout="prev, pager, next"
+                :total="this.blogCount"
+                :page-size="12"
+                :pager-count="5"
+                :hide-on-single-page="true"
+                background
+                @current-change="getArticleListPage"
+            />
           </div>
         </el-main>
       </el-container>
@@ -70,35 +83,33 @@
 <script lang="ts">
 import router from "@/router";
 import api from "@/api/modules/index"
-import VueRouter from 'vue-router'
-import {ref} from 'vue'
 import WordCloud from "@/components/mini/WordCloud.vue";
-import {articleItemType} from "@/type";
+import {articleItemType, userType} from "@/type";
+import CONST from "@/global/const"
+import {debounce, getElapsedTime} from "@/global/utils";
+import {ElMessage} from "element-plus";
 
 export default {
   name: 'HomeView',
   components: {WordCloud},
   data() {
-    let userCount: number = 100
-    let blogCount: number = 100
+    let userCount: number = 0
+    let blogCount: number = 0
     let articlePage: number = 1
     let sortBy: string = '最新'
-    let allArticleList: Array<articleItemType>
-    let curArticleList: Array<articleItemType>
+    let articleList: Array<articleItemType> = []
     let tagList: Array<string>
+    let haveLogin: boolean = this.$store.state.haveLogin
+    let cateList: Array<string> = ['专业知识', '分享发现', '吐槽讨论']
     return {
       userCount,
       blogCount,
       articlePage,
       sortBy,
-      allArticleList,
-      curArticleList,
+      articleList,
       tagList,
-      topic: '为什么我要用vue?',
-      userName: 'yuzhiying',
-      timeLenth: 20,
-      pingLunShu: 3,
-      value1: ref(true)
+      haveLogin,
+      cateList
     }
   },
   methods: {
@@ -121,18 +132,81 @@ export default {
       } else {
         this.sortBy = '推荐'
       }
+      this.articleList = []
       api.commonApi.getParticularArticleList({
-        page: 1,
+        page: this.articlePage,
         sortBy: command
-      }).then(res => {
+      }).then(async res => {
         if (res.data.code === 200) {
           this.blogCount = res.data.data.articleCount
-          // TODO:文章类型处理
+          let originListData = res.data.data.articleList;
+          for (let i = 0; i < originListData.length; ++i) {
+            let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+            temp.title = originListData[i].title;
+            temp.id = originListData[i].id;
+            temp.authorId = originListData[i].authorId;
+            temp.elapsed = getElapsedTime(originListData[i].updateTime);
+            temp.category = this.cateList[originListData[i].categoryId - 1];
+            await this.getUserinfoByUserId(originListData[i].authorId).then(res => {
+              temp.avatar = res.avatar;
+              temp.authorName = res.username;
+            })
+            this.articleList.push(temp)
+          }
         } else {
           console.log(res.data.message)
         }
       }).catch(err => {
         console.log(err)
+      })
+    },
+    // 根据用户id获取用户头像和用户名
+    async getUserinfoByUserId(id: number) {
+      let user: userType;
+      await api.userApi.getUserinfoData(id).then(res => {
+        user = res.data.data.user
+      }).catch(err => {
+        console.log(err)
+      })
+      return user;
+    },
+    // 防抖函数
+    debouncedFetchData: debounce(function () {
+      this.fetchData(this.articlePage);
+    }, 300),
+    getArticleListPage(val: number) {
+      this.articlePage = val;
+      this.articleList = []
+      this.debouncedFetchData();
+    },
+    // 请求文章列表数据
+    fetchData(page: number) {
+      let sortMethod = this.sortBy === '最新' ? 'time' : (this.sortBy === '最热' ? 'popularity' : 'recommend')
+      api.commonApi.getParticularArticleList({
+        page: page,
+        sortBy: sortMethod
+      }).then(async res => {
+        if (res.data.code === 200) {
+          let originListData = res.data.data.articleList;
+          for (let i = 0; i < originListData.length; ++i) {
+            let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+            temp.title = originListData[i].title;
+            temp.id = originListData[i].id;
+            temp.authorId = originListData[i].authorId;
+            temp.elapsed = getElapsedTime(originListData[i].updateTime);
+            temp.category = this.cateList[originListData[i].categoryId - 1];
+            await this.getUserinfoByUserId(originListData[i].authorId).then(res => {
+              temp.avatar = res.avatar;
+              temp.authorName = res.username;
+            })
+            this.articleList.push(temp)
+          }
+        } else {
+          ElMessage({
+            message: res.data.message,
+            type: 'error'
+          })
+        }
       })
     }
   },
@@ -149,12 +223,25 @@ export default {
       console.log(err)
     })
     api.commonApi.getParticularArticleList({
-      page: 1,
+      page: this.articlePage,
       sortBy: 'time'
-    }).then(res => {
+    }).then(async res => {
       if (res.data.code === 200) {
         this.blogCount = res.data.data.articleCount
-        // TODO:文章类型处理
+        let originListData = res.data.data.articleList;
+        for (let i = 0; i < originListData.length; ++i) {
+          let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+          temp.title = originListData[i].title;
+          temp.id = originListData[i].id;
+          temp.authorId = originListData[i].authorId;
+          temp.elapsed = getElapsedTime(originListData[i].updateTime);
+          temp.category = this.cateList[originListData[i].categoryId - 1];
+          await this.getUserinfoByUserId(originListData[i].authorId).then(res => {
+            temp.avatar = res.avatar;
+            temp.authorName = res.username;
+          })
+          this.articleList.push(temp)
+        }
       } else {
         console.log(res.data.message)
       }
@@ -210,8 +297,6 @@ export default {
 
     .el-aside {
       display: flex;
-      justify-content: center;
-      align-items: center;
       width: 250px;
       padding: 0;
       margin: 0;
@@ -220,7 +305,6 @@ export default {
       .aside-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
 
         .el-button {
@@ -283,194 +367,137 @@ export default {
 
     .el-main {
       background-color: #fff;
-      position: relative;
       width: 850px;
-      margin-left: 5px;
+      margin-left: 10px;
+      margin-top: 20px;
+      position: relative;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
 
-      .sort-method {
-        position: absolute;
-        top: 20px;
-        right: 70px;
+      .main-top {
+        width: 850px;
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
 
-        .choice {
-          font-size: 18px;
+        .main-title {
+          padding: 3px;
 
-          i {
-            margin-left: 5px;
+          span {
+            font-size: 25px;
+            font-weight: 600;
           }
         }
 
-        .el-dropdown-menu {
-          background-color: #f2f3f5;
+        .sort-method {
+          width: 70px;
+          height: 30px;
+          box-sizing: border-box;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          justify-content: space-around;
+          border: 2px solid #dcdcdc;
+          border-radius: 4px;
+
+          .choice {
+            font-size: 15px;
+
+            i {
+              margin-left: 3px;
+            }
+          }
         }
       }
 
-      .boKe {
-        margin-top: 25px;
+      .article-list {
+        width: 850px;
+        display: flex;
+        flex-direction: column;
 
-        .el-row {
-          background-color: #fff;
-          transition: background-color 0.5s;
+        .article-item {
+          width: 850px;
+          height: 65px;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          justify-content: center;
+          border-radius: 5px;
 
-          .first {
-            background-color: #fff;
-            transition: background-color #f3f6f9 0.8s;
-            border-radius: 10% 0 0 10%;
+          .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
 
-            .el-avatar {
-              margin: 10px 10px 10px 10px;
+            img {
+              width: 50px;
+              height: auto;
+              border-radius: 50%;
+              overflow: hidden;
             }
           }
 
-          .second {
-            padding: 10px 0px 10px 0px;
-            background-color: #fff;
-            transition: background-color #f3f6f9 0.8s;
+          .simple-info {
+            width: 720px;
+            height: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            font-family: "Times New Roman", "宋体", "sans-serif";
 
-            .detail {
-              margin-left: 15px;
+            .title {
+              font-size: 18px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
 
-              p {
-                font-size: 16px;
-                font-weight: 600;
+            .name-and-time {
+              font-size: 14px;
+              display: flex;
+              flex-flow: row nowrap;
+              padding-left: 5px;
+              font-family: "微软雅黑", "sans-serif";
+              color: #c7c5c5;
+
+              .name {
+                padding-right: 5px;
               }
-
-              .userName {
-                font-size: 11px;
-                font-weight: 600;
-                color: #aaa;
-              }
-
-              .detail {
-                color: #b2aabd;
-                font-size: 10px;
-              }
-
             }
-
           }
 
-          .third {
-            background-color: #fff;
-            transition: background-color #f3f6f9 0.8s;
-            padding: 10px;
-            border-radius: 0 10% 10% 0;
+          .cate {
+            width: 80px;
 
-          }
-        }
-
-        .el-row:hover {
-          .first {
-            background-color: #f3f6f9;
-          }
-
-          .second {
-            background-color: #f3f6f9;
-            cursor: pointer;
-          }
-
-          .third {
-            background-color: #f3f6f9;
-          }
-        }
-      }
-    }
-
-  }
-
-  .el-main {
-    margin-right: 100px;
-    background-color: #fff;
-    position: relative;
-
-    .test {
-      position: absolute;
-      height: 30px;
-      top: 20px;
-      right: 70px;
-
-      .el-switch__core {
-        height: 30px;
-      }
-
-      span {
-        font-size: 18px;
-
-      }
-
-    }
-
-    .boKe {
-      margin-top: 40px;
-
-      .el-row {
-        background-color: #fff;
-        transition: background-color 0.5s;
-
-        .first {
-          background-color: #fff;
-          transition: background-color #f3f6f9 0.8s;
-          border-radius: 10% 0 0 10%;
-
-          .el-avatar {
-            margin: 10px 10px 10px 10px;
-          }
-        }
-
-        .second {
-          padding: 10px 0px 10px 0px;
-          background-color: #fff;
-          transition: background-color #f3f6f9 0.8s;
-
-          .detail {
-            margin-left: 15px;
-
-            p {
-              font-size: 16px;
-              font-weight: 600;
+            span {
+              padding: 8px;
+              color: white;
+              border-radius: 5px;
+              background-color: #546577;
             }
-
-            .userName {
-              font-size: 11px;
-              font-weight: 600;
-              color: #aaa;
-            }
-
-            .detail {
-              color: #b2aabd;
-              font-size: 10px;
-            }
-
           }
-
         }
 
-        .third {
-          background-color: #fff;
-          transition: background-color #f3f6f9 0.8s;
-          padding: 10px;
-          border-radius: 0 10% 10% 0;
-
+        .article-item:first-child {
+          margin-top: 13px;
         }
-      }
 
-      .el-row:hover {
-        .first {
+        .article-item:hover {
           background-color: #f3f6f9;
         }
+      }
 
-        .second {
-          background-color: #f3f6f9;
-          cursor: pointer;
-        }
-
-        .third {
-          background-color: #f3f6f9;
-        }
+      .pagination {
+        width: 850px;
+        display: flex;
+        margin-top: 15px;
+        justify-content: center;
       }
     }
   }
-
-
 }
 </style>

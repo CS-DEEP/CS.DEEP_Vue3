@@ -56,3 +56,43 @@ export function generateDarkColor(): string {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
+// function:计算距今时间
+export function getElapsedTime(timestamp: number): string {
+    const currentTimestamp = Date.now();
+    const timeDifference = currentTimestamp - timestamp;
+
+    const minutes = Math.floor(timeDifference / (1000 * 60));
+
+    if (minutes < 1) {
+        // 不到一分钟，显示刚刚
+        return "刚刚";
+    } else if (minutes < 60) {
+        // 不到一小时，显示几分钟前
+        return `${minutes} 分钟前`;
+    } else if (minutes >= 60 && minutes < 1440) {
+        // 超过一小时但不到一天，显示几小时前
+        const hours = Math.floor(minutes / 60);
+        return `${hours} 小时前`;
+    } else {
+        // 超过一天，显示几天前
+        const days = Math.floor(minutes / 1440);
+        return `${days} 天前`;
+    }
+}
+
+// function:防抖函数
+export function debounce(func, delay) {
+    let timerId;
+
+    return function (...args) {
+        if (timerId) {
+            clearTimeout(timerId);
+        }
+
+        timerId = setTimeout(() => {
+            func.apply(this, args);
+            timerId = null;
+        }, delay);
+    };
+}
+

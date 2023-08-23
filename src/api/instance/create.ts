@@ -22,8 +22,8 @@ export class Request {
 
         this.instance.interceptors.request.use(
             async (config: AxiosRequestConfig) => {
-                if (config.url.includes('login') || config.url.includes('register') || config.url.includes('reset')
-                    || (config.url.includes('/article/get/all') && !config.url.includes('recommend')) ||
+                if (config.url.includes('login') || config.url.includes('register') || config.url.includes('reset') ||
+                    (config.url.includes('/article/get/all') && !config.url.includes('recommend')) ||
                     config.url.includes('/article/get/tag') || config.url.includes('/user/count')) {
                     return config;
                 }
