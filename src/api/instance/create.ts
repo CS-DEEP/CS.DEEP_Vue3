@@ -27,6 +27,7 @@ export class Request {
                     config.url.includes('/article/get/tag') || config.url.includes('/user/count')) {
                     return config;
                 }
+                console.log(111)
                 const token = localStorage.getItem('token');
                 const expirationTime = localStorage.getItem('expirationTime');
                 config.headers!['token'] = `${token}`;
