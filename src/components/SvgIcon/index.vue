@@ -10,7 +10,11 @@ defineProps({
         type: String,
         default: '#icon-'
     },
-    name: String
+    name: String,
+    color: {
+        type: String,
+        default: ''
+    }
 })
 </script>
 
