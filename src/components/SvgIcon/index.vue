@@ -7,7 +7,8 @@
 <script setup lang='ts'>
 defineProps({
     prefix:{
-        
+        type:String,
+        default: '#icon-'
     }
 })
 </script>
