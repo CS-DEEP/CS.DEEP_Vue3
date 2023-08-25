@@ -21,7 +21,7 @@ app.use(router)
 app.use(store, key)
 
 // noinspection TypeScriptValidateTypes
-app.use(ElementPlus)
+app.use(ElementPlus);
 
 app.use(mavonEditor)
 
