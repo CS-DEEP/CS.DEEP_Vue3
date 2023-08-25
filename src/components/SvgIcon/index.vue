@@ -1,7 +1,7 @@
 <template>
-    <div>
-        
-    </div>
+    <svg>
+        <use :xlink:href="prefix+'message'" fill="red"></use>
+    </svg>
 </template>
 
 <script setup lang='ts'>
