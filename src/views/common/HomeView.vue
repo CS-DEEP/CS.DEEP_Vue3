@@ -88,7 +88,7 @@ import {articleItemType, userType} from "@/type";
 import CONST from "@/global/const"
 import {debounce, getElapsedTime} from "@/global/utils";
 import {ElMessage} from "element-plus";
-import SvgIcon from '@/components/SvgIcon/index.vue';
+
 
 export default {
   name: 'HomeView',

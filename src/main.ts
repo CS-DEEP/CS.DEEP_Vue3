@@ -24,6 +24,8 @@ app.use(store, key)
 app.use(ElementPlus);
 
 import 'virtual:svg-icons-register'
+import globalComponent from '@/components'
+app.use(globalComponent);
 
 app.use(mavonEditor)
 
