@@ -1,10 +1,10 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
-import store, {key} from "@/store";
+import store, { key } from "@/store";
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import '@/assets/iconfont.css';
@@ -23,7 +23,7 @@ app.use(store, key)
 // noinspection TypeScriptValidateTypes
 app.use(ElementPlus);
 
-import 'viryual:svg-icons-register' 
+import 'viryual:svg-icons-register'
 
 app.use(mavonEditor)
 
