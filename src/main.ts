@@ -23,6 +23,8 @@ app.use(store, key)
 // noinspection TypeScriptValidateTypes
 app.use(ElementPlus);
 
+import 'viryual:svg-icons-register' 
+
 app.use(mavonEditor)
 
 app.mount('#app')
