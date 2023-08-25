@@ -6,7 +6,9 @@
 
 <script setup lang='ts'>
 defineProps({
-    
+    prefix:{
+        
+    }
 })
 </script>
 
