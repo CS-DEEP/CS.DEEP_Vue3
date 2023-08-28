@@ -103,23 +103,17 @@ export default {
     AvatarAndUsername,
   },
   setup() {
-
     const searchInput = ref('')
     const activeIndex = ref('1')
-
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
-
     return {
-      // 导出的字体图标
       Search,
       Edit,
       BellFilled,
-
       searchInput,
       activeIndex,
-      //导出的函数
       handleSelect,
     }
   }
