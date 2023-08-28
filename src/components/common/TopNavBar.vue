@@ -75,7 +75,7 @@
             <el-button class="bell" type="plain" :icon="BellFilled" circle/>
           </div>
         </el-menu-item>
-        
+
         <AvatarAndUsername v-show="$store.state.haveLogin"/>
         <RegisterAndLogin v-show="!$store.state.haveLogin"/>
       </el-menu>
@@ -103,11 +103,10 @@ export default {
     AvatarAndUsername,
   },
   setup() {
-    // 数据
+
     const searchInput = ref('')
     const activeIndex = ref('1')
 
-    // 函数
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
