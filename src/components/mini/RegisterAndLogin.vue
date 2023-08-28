@@ -22,7 +22,7 @@ export default {
   .span{
     font-family: '宋体','sans-serif';
     font-size: 15px;
-    padding: 8px;
+    padding: 10px 8px 6px 8px;
     color: #222222;
   }
 }

@@ -1,7 +1,5 @@
 <!--
   用途：论坛导航栏顶部
-  创建人：yuzhiying
-  时间：2023/7/12
  -->
 <template>
   <el-affix :offset="0">
@@ -77,7 +75,7 @@
             <el-button class="bell" type="plain" :icon="BellFilled" circle/>
           </div>
         </el-menu-item>
-
+        
         <AvatarAndUsername v-show="$store.state.haveLogin"/>
         <RegisterAndLogin v-show="!$store.state.haveLogin"/>
       </el-menu>
@@ -130,6 +128,9 @@ export default {
 }
 
 </script>
+
+
+
 
 <style scoped lang='scss'>
 * {
