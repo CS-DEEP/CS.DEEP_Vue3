@@ -61,7 +61,6 @@
             </el-input>
           </el-menu-item>
         </div>
-
         <el-menu-item index="7" class="item7">
           <el-button class="edit" :icon="Edit" circle plain/>
         </el-menu-item>
