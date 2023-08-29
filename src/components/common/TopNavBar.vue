@@ -13,7 +13,6 @@
           unique-opened="true"
           @select="handleSelect"
       >
-
         <el-menu-item index="1" class="item1">
           <router-link to="/" class="font-icon">CS.DEEP</router-link>
         </el-menu-item>
