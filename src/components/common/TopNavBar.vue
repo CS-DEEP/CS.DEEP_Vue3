@@ -64,7 +64,6 @@
         <el-menu-item index="7" class="item7">
           <el-button class="edit" :icon="Edit" circle plain/>
         </el-menu-item>
-
         <el-menu-item index="8" class="item8">
           <div class="bell">
             <el-button class="bell" type="plain" :icon="BellFilled" circle/>
