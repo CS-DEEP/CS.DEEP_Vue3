@@ -118,6 +118,14 @@ const router = createRouter({
             ]
         },
         {
+            path: '/about',
+            name: 'aboutUs',
+            component: () => import('@/views/common/AboutUsView.vue'),
+            meta: {
+                verifyLoginState: false
+            }
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('../views/common/NotFoundView.vue'),

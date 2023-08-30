@@ -4,77 +4,79 @@
 <template>
   <el-affix :offset="0">
     <div class="topNav">
-    <div class="content">
-      <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          mode="horizontal"
-          menu-trigger="click"
-          unique-opened="true"
-          @select="handleSelect"
-      >
-        <el-menu-item index="1" class="item1">
-          <router-link to="/" class="font-icon">CS.DEEP</router-link>
-        </el-menu-item>
-        <div class="item-list">
-          <el-dropdown>
-            <el-button class="big-title">
-              <span>专业学习</span>
-              <el-icon class="el-icon--right">
-                <arrow-down/>
-              </el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>
-                  <router-link to="/login">专业知识</router-link>
-                </el-dropdown-item>
-                <el-dropdown-item>分享发现</el-dropdown-item>
-                <el-dropdown-item>吐槽讨论</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
-        <div class="item-list">
-          <el-dropdown>
-            <el-button class="big-title">
-              <span>关于本站</span>
-              <el-icon class="el-icon--right">
-                <arrow-down/>
-              </el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>本站介绍</el-dropdown-item>
-                <el-dropdown-item>入门指引</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
-        <div class="search-box">
-          <el-menu-item index="5" class="item5">
-            <el-input
-                v-model="searchInput"
-                placeholder="search"
-                :prefix-icon="Search"
-            >
-            </el-input>
+      <div class="content">
+        <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            menu-trigger="click"
+            unique-opened="true"
+            @select="handleSelect"
+        >
+          <el-menu-item index="1" class="item1">
+            <router-link to="/" class="font-icon">CS.DEEP</router-link>
           </el-menu-item>
-        </div>
-        <el-menu-item index="7" class="item7">
-          <el-button class="edit" :icon="Edit" circle plain/>
-        </el-menu-item>
-        <el-menu-item index="8" class="item8">
-          <div class="bell">
-            <el-button class="bell" type="plain" :icon="BellFilled" circle/>
+          <div class="item-list">
+            <el-dropdown>
+              <el-button class="big-title">
+                <span>专业学习</span>
+                <el-icon class="el-icon--right">
+                  <arrow-down/>
+                </el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>
+                    <router-link to="/login">专业知识</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item>分享发现</el-dropdown-item>
+                  <el-dropdown-item>吐槽讨论</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </div>
-        </el-menu-item>
+          <div class="item-list">
+            <el-dropdown>
+              <el-button class="big-title">
+                <span>关于本站</span>
+                <el-icon class="el-icon--right">
+                  <arrow-down/>
+                </el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>
+                    <router-link to="/about">本站介绍</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item>入门指引</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+          <div class="search-box">
+            <el-menu-item index="5" class="item5">
+              <el-input
+                  v-model="searchInput"
+                  placeholder="search"
+                  :prefix-icon="Search"
+              >
+              </el-input>
+            </el-menu-item>
+          </div>
+          <el-menu-item index="7" class="item7">
+            <el-button class="edit" :icon="Edit" circle plain/>
+          </el-menu-item>
+          <el-menu-item index="8" class="item8">
+            <div class="bell">
+              <el-button class="bell" type="plain" :icon="BellFilled" circle/>
+            </div>
+          </el-menu-item>
 
-        <AvatarAndUsername v-show="$store.state.haveLogin"/>
-        <RegisterAndLogin v-show="!$store.state.haveLogin"/>
-      </el-menu>
+          <AvatarAndUsername v-show="$store.state.haveLogin"/>
+          <RegisterAndLogin v-show="!$store.state.haveLogin"/>
+        </el-menu>
+      </div>
     </div>
-  </div>
   </el-affix>
 
 </template>
@@ -114,8 +116,6 @@ export default {
 }
 
 </script>
-
-
 
 
 <style scoped lang='scss'>
