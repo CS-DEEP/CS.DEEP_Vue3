@@ -89,6 +89,7 @@ import CONST from "@/global/const"
 import {debounce, getElapsedTime} from "@/global/utils";
 import {ElMessage} from "element-plus";
 
+
 export default {
   name: 'HomeView',
   components: {WordCloud},
@@ -141,7 +142,7 @@ export default {
           this.blogCount = res.data.data.articleCount
           let originListData = res.data.data.articleList;
           for (let i = 0; i < originListData.length; ++i) {
-            let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+            let temp: articleItemType = {...CONST.DEFAULTARTICLEITEM};
             temp.title = originListData[i].title;
             temp.id = originListData[i].id;
             temp.authorId = originListData[i].authorId;
@@ -189,7 +190,7 @@ export default {
         if (res.data.code === 200) {
           let originListData = res.data.data.articleList;
           for (let i = 0; i < originListData.length; ++i) {
-            let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+            let temp: articleItemType = {...CONST.DEFAULTARTICLEITEM};
             temp.title = originListData[i].title;
             temp.id = originListData[i].id;
             temp.authorId = originListData[i].authorId;
@@ -230,7 +231,7 @@ export default {
         this.blogCount = res.data.data.articleCount
         let originListData = res.data.data.articleList;
         for (let i = 0; i < originListData.length; ++i) {
-          let temp: articleItemType = CONST.DEFAULTARTICLEITEM;
+          let temp: articleItemType = {...CONST.DEFAULTARTICLEITEM};
           temp.title = originListData[i].title;
           temp.id = originListData[i].id;
           temp.authorId = originListData[i].authorId;
