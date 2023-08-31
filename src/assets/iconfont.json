@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "35310946",
+      "name": "养护管理",
+      "font_class": "yanghuguanli",
+      "unicode": "e77c",
+      "unicode_decimal": 59260
+    },
+    {
       "icon_id": "2584374",
       "name": "科研",
       "font_class": "keyan",

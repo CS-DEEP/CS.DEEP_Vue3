@@ -39,13 +39,13 @@
               <h3>1.网站与内容</h3>
               <ul>
                 <li><strong>DS.CEEP 主站: </strong> 聚焦相对更严肃专业的技术话题分享、讨论，让讨论有所沉淀、做到开放与可被检索</li>
-                <li><strong>DS.CEEP Wiki: </strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南</li>
-                <li><strong>B站账号「CS.DEEP社区」: </strong>以视频的形式，记录社区的日常活动</li>
-                <li><strong>微信公众号「CS.DEEP交流平台」: </strong>优化内容在微信平台上的阅读和传播体验（目前搁置中，暂无太多精力运营）</li>
+                <li><strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i class="iconfont icon-yanghuguanli"></i>施工中)</li>
+                <li><strong>B站账号「CS.DEEP社区」: </strong>以视频的形式，记录社区的日常活动( <i class="iconfont icon-yanghuguanli"></i>施工中)</li>
+                <li><strong>微信公众号「CS.DEEP交流平台」: </strong>优化内容在微信平台上的阅读和传播体验（目前搁置中，暂无太多精力运营）( <i class="iconfont icon-yanghuguanli"></i>施工中)</li>
               </ul>
             </div>
             <div class="communication">
-              <h3>2.交流社群</h3>
+              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
               <p>主要分「超级群」与「普通 IM 群聊」</p>
               <ul>
                 <li>超级群（Discord / QQ频道）：正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
@@ -53,7 +53,7 @@
               </ul>
             </div>
             <div class="party">
-              <h3>3.小聚活动</h3>
+              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
               <p>社区成员不定期发起各类 技术分享活动，模仿 <a href="https://lug.ustc.edu.cn/wiki/lug/events/" style="color: blue;">LUG活动</a> 的模式，促进成员间的沟通与联络。目前主要为线上会议的形式，会议相关记录会沉淀在视频网站上，未来视情况再考虑线下的活动。</p>
               <p>历史活动及新的活动安排参见活动页面。</p>
               <p>鉴于单打独斗的线上自学在进度把控、交流探讨等方面的困难，我们在探索更好的学习模式和方法，结合现代前沿的教育理论，可能会借鉴一些类 Moodle / Canvas / Open Edx 等 LMS
