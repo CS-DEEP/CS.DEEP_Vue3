@@ -179,7 +179,6 @@ export default {
         color: #667c99;
       }
     }
-
   }
 
   .el-main {
