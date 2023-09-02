@@ -191,7 +191,6 @@ export default {
       h1{
         margin-top: 10px;
       }
-
       h2{
         padding-top: 15px;
         padding-bottom: 3px;
