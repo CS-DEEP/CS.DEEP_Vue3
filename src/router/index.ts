@@ -139,5 +139,5 @@ const router = createRouter({
     },
 } as RouterOptions)
 
-// createRouteGuards(router, store)
+createRouteGuards(router, store)
 export default router
