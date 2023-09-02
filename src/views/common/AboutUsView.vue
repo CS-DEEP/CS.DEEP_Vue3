@@ -216,18 +216,15 @@ export default {
 
       .what {
         margin-top: 35px;
-
         .icon {
           i {
             color: #1976d2;
           }
-
           span {
             display: block;
             padding-left: 20px;
           }
         }
-
         .decorate {
           margin-top: 15px;
           background-color: #e8ecf3;
