@@ -188,7 +188,6 @@ export default {
       width: 800px;
       margin-left: auto;
       margin-right: auto;
-
       h1{
         margin-top: 10px;
       }
