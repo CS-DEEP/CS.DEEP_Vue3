@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div>
-        <router-link to='/'><span>友情链接</span></router-link>
+        <router-link to='/links'><span>友情链接</span></router-link>
       </div>
       <div>
         <router-link to="/"><span>关于我们</span></router-link>

@@ -126,6 +126,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/links',
+            name: 'links',
+            component: () => import('@/views/common/LinksView.vue'),
+            meta: {
+                verifyLoginState: false
+            }
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('../views/common/NotFoundView.vue'),

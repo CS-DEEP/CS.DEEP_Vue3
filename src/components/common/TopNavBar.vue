@@ -19,7 +19,7 @@
           <div class="item-list">
             <el-dropdown>
               <el-button class="big-title">
-                <span>专业学习</span>
+                <span class="bat-title">专业学习</span>
                 <el-icon class="el-icon--right">
                   <arrow-down/>
                 </el-icon>
@@ -38,7 +38,7 @@
           <div class="item-list">
             <el-dropdown>
               <el-button class="big-title">
-                <span>关于本站</span>
+                <span class="bat-title">关于本站</span>
                 <el-icon class="el-icon--right">
                   <arrow-down/>
                 </el-icon>
@@ -150,8 +150,8 @@ export default {
           transition: all 1s linear;
           background-color: white;
 
-          span {
-            font-size: 15px;
+          .bat-title {
+            font-size: 17px;
             font-family: '宋体', 'sans-serif';
           }
 
