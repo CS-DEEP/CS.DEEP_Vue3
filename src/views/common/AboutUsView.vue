@@ -55,7 +55,7 @@
               </ul>
             </div>
             <div class="communication">
-              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
+              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>主要分「超级群」与「普通群聊」</p>
               <ul>
                 <li><strong>超级群（如Discord）：</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
