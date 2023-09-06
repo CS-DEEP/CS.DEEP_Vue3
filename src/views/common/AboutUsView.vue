@@ -241,7 +241,6 @@ export default {
           p {
             margin-top: 0;
             color: #668abc;
-
           }
         }
       }
@@ -364,4 +363,5 @@ export default {
 
     }
   }
-}</style>
+}
+</style>
