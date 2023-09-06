@@ -195,26 +195,22 @@ export default {
       h1 {
         margin-top: 10px;
       }
-
       h2 {
         padding-top: 15px;
         padding-bottom: 3px;
         border-bottom: 2px solid #b3d4fc;
       }
-
       p {
         font-family: "Times New Roman", "宋体", "sans-serif";
         margin-top: 20px;
         line-height: 30px;
         font-size: 17px;
-
         &:first-of-type {
           span {
             font-weight: bold;
           }
         }
       }
-
       .what {
         margin-top: 35px;
 
