@@ -43,27 +43,27 @@
                 </li>
                 <li>
                   <strong>DEEP-ui: </strong>
-                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
                   <strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i
-                    class="iconfont icon-yanghuguanli"></i>施工中)
+                    class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
-                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
               </ul>
             </div>
             <div class="communication">
-              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
+              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>主要分「超级群」与「普通群聊」</p>
               <ul>
-                <li><strong>超级群（如Discord）：</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
-                <li><strong>普通群聊（QQ/微信群）：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
+                <li><strong>超级群(如Discord):</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
+                <li><strong>普通群聊(QQ/微信群)：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
               </ul>
             </div>
             <div class="party">
-              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
+              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>社区成员不定期发起各类技术分享活动，可以模仿 <a href="https://lug.ustc.edu.cn/wiki/lug/events/" style="color: blue;">LUG活动</a>
                 的模式，促进成员间的沟通与联络。目前主要为线上会议的形式，会议相关记录会沉淀在视频网站上，也许视情况考虑线下的活动。</p>
               <p>历史活动及新的活动安排参见活动页面。</p>
