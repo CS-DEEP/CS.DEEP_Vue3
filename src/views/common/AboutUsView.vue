@@ -218,13 +218,11 @@ export default {
           i {
             color: #1976d2;
           }
-
           span {
             display: block;
             padding-left: 20px;
           }
         }
-
         .decorate {
           margin-top: 15px;
           background-color: #e8ecf3;
