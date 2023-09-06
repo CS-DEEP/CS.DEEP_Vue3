@@ -43,7 +43,7 @@
                 </li>
                 <li>
                   <strong>DEEP-ui: </strong>
-                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
                   <strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i
