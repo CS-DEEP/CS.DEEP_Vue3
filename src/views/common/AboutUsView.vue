@@ -12,7 +12,7 @@
           <div class="what">
             <h1><a href="https://github.com/CS-DEEP">CS.DEEP</a> 是什么？</h1>
             <p>
-              CS.DEEP是什么这个问题其实在项目开始的时候也困扰着我们团队，我们的初心是想着为刚进入大学生活的计算机新生提供一个类似树洞的能倾述自己烦恼的地方，但是仅仅让树洞来倾诉自己的烦恼，还不如造一个不一样的“树洞”——让同学们既能倾述自己的烦恼又能收获相应的知识，让新生也能了解到老生的学习经验，让学习的路上不再孤单无助。
+              CS.DEEP是什么这个问题其实在项目开始的时候也困扰着我们团队,我们的初心是想着为刚进入大学生活的计算机新生提供一个类似树洞的能倾述自己烦恼的地方，但是仅仅让树洞来倾诉自己的烦恼，还不如造一个不一样的“树洞”——让同学们既能倾述自己的烦恼又能收获相应的知识，让新生也能了解到老生的学习经验，让学习的路上不再孤单无助。
             </p>
             <p>基于上述的想法，我们团队创建了<strong>「 CS.DEEP 搬砖技术论坛 」</strong>这样一个面向计算机领域学习的在线交流论坛。<strong>
                 小DEEP&nbsp;</strong>出生于华南师大，希望为来自各地高校、企业、中小学的计算机爱好者们提供一个在线交流平台。
@@ -21,7 +21,7 @@
               成为计算机爱好者学习工作生活的一部分一直是<strong>CS.DEEP</strong>的不懈追求，当前<strong>小DEEP</strong>主要面向以下两类人群提供连接和支撑：
             </p>
             <p class="icon">
-              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成，CS 领域从入门到进阶</span>
+              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成,CS 领域从入门到进阶</span>
               <span><i class="iconfont icon-keyan"></i><strong>&nbsp;&nbsp;&nbsp;IT相关工作、科研人员</strong>：业余技术精进、行业经验交流</span>
             </p>
 
@@ -43,7 +43,7 @@
                 </li>
                 <li>
                   <strong>DEEP-ui: </strong>
-                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中...)
+                  团队研发基于vue3的开源UI组件库,致力于提供更好的开源组件!( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
                   <strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i
