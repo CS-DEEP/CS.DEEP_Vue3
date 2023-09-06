@@ -21,7 +21,7 @@
               成为计算机爱好者学习工作生活的一部分一直是<strong>CS.DEEP</strong>的不懈追求，当前<strong>小DEEP</strong>主要面向以下两类人群提供连接和支撑：
             </p>
             <p class="icon">
-              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成，CS 领域从入门到进阶</span>
+              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成,CS 领域从入门到进阶</span>
               <span><i class="iconfont icon-keyan"></i><strong>&nbsp;&nbsp;&nbsp;IT相关工作、科研人员</strong>：业余技术精进、行业经验交流</span>
             </p>
 
@@ -43,7 +43,7 @@
                 </li>
                 <li>
                   <strong>DEEP-ui: </strong>
-                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中...)
+                  团队研发基于vue3的开源UI组件库,致力于提供更好的开源组件!( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
                   <strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i
