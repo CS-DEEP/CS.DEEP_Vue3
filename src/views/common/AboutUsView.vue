@@ -177,6 +177,7 @@ export default {
     text-align: center;
     align-items: center;
     justify-content: center;
+
     .web-intro {
       p {
         font-size: 2rem;
@@ -185,6 +186,7 @@ export default {
       }
     }
   }
+
   .el-main {
     .container {
       // background-color: #667c99;
@@ -192,25 +194,30 @@ export default {
       width: 800px;
       margin-left: auto;
       margin-right: auto;
+
       h1 {
         margin-top: 10px;
       }
+
       h2 {
         padding-top: 15px;
         padding-bottom: 3px;
         border-bottom: 2px solid #b3d4fc;
       }
+
       p {
         font-family: "Times New Roman", "宋体", "sans-serif";
         margin-top: 20px;
         line-height: 30px;
         font-size: 17px;
+
         &:first-of-type {
           span {
             font-weight: bold;
           }
         }
       }
+
       .what {
         margin-top: 35px;
 
@@ -218,16 +225,19 @@ export default {
           i {
             color: #1976d2;
           }
+
           span {
             display: block;
             padding-left: 20px;
           }
         }
+
         .decorate {
           margin-top: 15px;
           background-color: #e8ecf3;
           padding: 10px 10px;
           border: 2px dashed #667c99;
+
           p {
             margin-top: 0;
             color: #668abc;
@@ -353,4 +363,5 @@ export default {
 
     }
   }
-}</style>
+}
+</style>
