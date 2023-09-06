@@ -185,7 +185,6 @@ export default {
       }
     }
   }
-
   .el-main {
     .container {
       // background-color: #667c99;
