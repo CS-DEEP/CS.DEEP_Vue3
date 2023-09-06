@@ -177,7 +177,6 @@ export default {
     text-align: center;
     align-items: center;
     justify-content: center;
-
     .web-intro {
       p {
         font-size: 2rem;
