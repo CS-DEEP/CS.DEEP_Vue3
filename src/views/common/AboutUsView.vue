@@ -50,7 +50,7 @@
                     class="iconfont icon-yanghuguanli"></i>施工中)
                 </li>
                 <li>
-                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中.)
                 </li>
               </ul>
             </div>
