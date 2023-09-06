@@ -228,11 +228,9 @@ export default {
           background-color: #e8ecf3;
           padding: 10px 10px;
           border: 2px dashed #667c99;
-
           p {
             margin-top: 0;
             color: #668abc;
-
           }
         }
       }
