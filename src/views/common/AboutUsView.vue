@@ -58,7 +58,7 @@
               <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>主要分「超级群」与「普通群聊」</p>
               <ul>
-                <li><strong>超级群（如Discord）:</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
+                <li><strong>超级群(如Discord):</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
                 <li><strong>普通群聊（QQ/微信群）：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
               </ul>
             </div>
