@@ -58,12 +58,12 @@
               <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>主要分「超级群」与「普通群聊」</p>
               <ul>
-                <li><strong>超级群（如Discord）：</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
+                <li><strong>超级群（如Discord）:</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
                 <li><strong>普通群聊（QQ/微信群）：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
               </ul>
             </div>
             <div class="party">
-              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中..)</h3>
+              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>社区成员不定期发起各类技术分享活动，可以模仿 <a href="https://lug.ustc.edu.cn/wiki/lug/events/" style="color: blue;">LUG活动</a>
                 的模式，促进成员间的沟通与联络。目前主要为线上会议的形式，会议相关记录会沉淀在视频网站上，也许视情况考虑线下的活动。</p>
               <p>历史活动及新的活动安排参见活动页面。</p>
