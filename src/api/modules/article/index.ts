@@ -1,9 +1,9 @@
 import service from "@/api/instance";
 import {
-    createArticleRes,
+    createArticleRes, getCategoryArticleReq, getCategoryArticleRes, getDraftListRes,
     imageBackRes,
     isCollectRes,
-    isLikeRes, numberOfLikeAndCollect,
+    isLikeRes, numberOfLikeAndCollect, realTimeSearchRes,
     ResponseResult,
 } from "@/api/modules/article/type";
 import {articleType} from "@/type";
@@ -84,6 +84,21 @@ const getCollectNumber = (data: number) => {
         '?articleId=' + data)
 }
 
+const getCategoryArticle = (data: getCategoryArticleReq) => {
+    return service.get<ResponseResult<getCategoryArticleRes>>('/article/get/category' +
+        '?page=' + data.page +
+        '&pageSize=' + data.pageSize +
+        '&categoryId=' + data.categoryId)
+}
+
+const getDraftList = () => {
+    return service.get<ResponseResult<getDraftListRes>>('/article/get/draft/list')
+}
+
+const getRealTimeSearch = (data: string) => {
+    return service.get<ResponseResult<realTimeSearchRes>>('/search?keyword=' + data)
+}
+
 export default {
     createArticle,           // 创建文章
     getArticleInfo,          // 获取文章信息
@@ -99,4 +114,7 @@ export default {
     getCollectStateOfArticle,// 获取收藏状态
     getLikeNumber,           // 获取点赞数
     getCollectNumber,        // 获取收藏数
+    getCategoryArticle,      // 获取各分类的文章列表
+    getDraftList,            // 获取草稿箱列表
+    getRealTimeSearch,       // 获取实时搜索文章列表
 }

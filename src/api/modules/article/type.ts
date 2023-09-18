@@ -1,4 +1,4 @@
-import {articleBaseInfo, articleType} from "@/type";
+import {articleBaseInfo} from "@/type";
 
 export type ResponseResult<T> = {
     code: number;
@@ -24,4 +24,25 @@ export type isCollectRes = {
 
 export type numberOfLikeAndCollect = {
     count: number
+}
+
+export type getCategoryArticleReq = {
+    page: number,
+    pageSize: number,
+    categoryId: number
+}
+
+export type getCategoryArticleRes = {
+    articleCount: number,
+    articleList: Array<articleBaseInfo>
+}
+
+export type getDraftListRes = {
+    articleCount: number,
+    articleList: Array<articleBaseInfo>
+}
+
+export type realTimeSearchRes={
+    articleCount: number,
+    articleList: Array<articleBaseInfo>
 }
