@@ -12,7 +12,7 @@
           <div class="what">
             <h1><a href="https://github.com/CS-DEEP">CS.DEEP</a> 是什么？</h1>
             <p>
-              CS.DEEP是什么这个问题其实在项目开始的时候也困扰着我们团队，我们的初心是想着为刚进入大学生活的计算机新生提供一个类似树洞的能倾述自己烦恼的地方，但是仅仅让树洞来倾诉自己的烦恼，还不如造一个不一样的“树洞”——让同学们既能倾述自己的烦恼又能收获相应的知识，让新生也能了解到老生的学习经验，让学习的路上不再孤单无助。
+              CS.DEEP是什么这个问题其实在项目开始的时候也困扰着我们团队,我们的初心是想着为刚进入大学生活的计算机新生提供一个类似树洞的能倾述自己烦恼的地方，但是仅仅让树洞来倾诉自己的烦恼，还不如造一个不一样的“树洞”——让同学们既能倾述自己的烦恼又能收获相应的知识，让新生也能了解到老生的学习经验，让学习的路上不再孤单无助。
             </p>
             <p>基于上述的想法，我们团队创建了<strong>「 CS.DEEP 搬砖技术论坛 」</strong>这样一个面向计算机领域学习的在线交流论坛。<strong>
                 小DEEP&nbsp;</strong>出生于华南师大，希望为来自各地高校、企业、中小学的计算机爱好者们提供一个在线交流平台。
@@ -21,7 +21,7 @@
               成为计算机爱好者学习工作生活的一部分一直是<strong>CS.DEEP</strong>的不懈追求，当前<strong>小DEEP</strong>主要面向以下两类人群提供连接和支撑：
             </p>
             <p class="icon">
-              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成，CS 领域从入门到进阶</span>
+              <span><i class="iconfont icon-zhuanjia"></i> <strong>&nbsp; 计算机学习者：</strong>通识教育、学习方法养成,CS 领域从入门到进阶</span>
               <span><i class="iconfont icon-keyan"></i><strong>&nbsp;&nbsp;&nbsp;IT相关工作、科研人员</strong>：业余技术精进、行业经验交流</span>
             </p>
 
@@ -43,27 +43,27 @@
                 </li>
                 <li>
                   <strong>DEEP-ui: </strong>
-                  团队研发基于vue3的开源UI组件库，致力于提供更好的开源组件！( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  团队研发基于vue3的开源UI组件库,致力于提供更好的开源组件!( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
                   <strong>DS.CEEP Wiki:</strong>着力于 CS 本科阶段的公共知识库的构建，沉淀社区成员在计算机学习中积累的有用经验，提供入门到进阶的导览、学习指南( <i
-                    class="iconfont icon-yanghuguanli"></i>施工中)
+                    class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
                 <li>
-                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中)
+                  <strong>未来规划: </strong>实现电脑PC端、移动端、小程序多平台的同步……( <i class="iconfont icon-yanghuguanli"></i>施工中...)
                 </li>
               </ul>
             </div>
             <div class="communication">
-              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
+              <h3>2.交流社群( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>主要分「超级群」与「普通群聊」</p>
               <ul>
-                <li><strong>超级群（如Discord）：</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
-                <li><strong>普通群聊（QQ/微信群）：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
+                <li><strong>超级群(如Discord):</strong>正在尝试中的在线社群新形态，可以更好支撑大家的日常讨论</li>
+                <li><strong>普通群聊(QQ/微信群)：</strong>方便成员在线上/线下建立联系、更及时的问题求助、日常的活动、约饭等等</li>
               </ul>
             </div>
             <div class="party">
-              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中)</h3>
+              <h3>3.小聚活动( <i class="iconfont icon-yanghuguanli"></i>施工中...)</h3>
               <p>社区成员不定期发起各类技术分享活动，可以模仿 <a href="https://lug.ustc.edu.cn/wiki/lug/events/" style="color: blue;">LUG活动</a>
                 的模式，促进成员间的沟通与联络。目前主要为线上会议的形式，会议相关记录会沉淀在视频网站上，也许视情况考虑线下的活动。</p>
               <p>历史活动及新的活动安排参见活动页面。</p>
@@ -241,7 +241,6 @@ export default {
           p {
             margin-top: 0;
             color: #668abc;
-
           }
         }
       }
@@ -364,4 +363,5 @@ export default {
 
     }
   }
-}</style>
+}
+</style>
