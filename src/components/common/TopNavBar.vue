@@ -64,11 +64,11 @@
             </el-menu-item>
           </div>
           <el-menu-item index="7" class="item7">
-            <el-button class="edit" :icon="Edit" circle plain/>
+            <el-button class="edit" :icon="Edit" circle plain @click="toMyDraftPage"/>
           </el-menu-item>
           <el-menu-item index="8" class="item8">
             <div class="bell">
-              <el-button class="bell" type="plain" :icon="BellFilled" circle/>
+              <el-button class="bell" type="plain" :icon="BellFilled" circle @click="toMyMessagePage"/>
             </div>
           </el-menu-item>
 
@@ -91,6 +91,8 @@ import {
 } from '@element-plus/icons-vue'
 import RegisterAndLogin from "@/components/mini/RegisterAndLogin.vue"
 import AvatarAndUsername from "@/components/mini/AvatarAndUsername.vue"
+import router from "@/router";
+import store from "@/store";
 
 export default {
   name: "TopNavBar",
@@ -104,6 +106,14 @@ export default {
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
+    const toMyMessagePage = () => {
+      console.log(router)
+      router.push({name: 'message', params: {userId: store.state.userinfo.id}})
+    }
+    const toMyDraftPage = () => {
+      console.log(111)
+      router.push({name: 'draft', params: {userId: store.state.userinfo.id}})
+    }
     return {
       Search,
       Edit,
@@ -111,6 +121,8 @@ export default {
       searchInput,
       activeIndex,
       handleSelect,
+      toMyMessagePage,
+      toMyDraftPage
     }
   }
 }
@@ -237,7 +249,7 @@ export default {
           .el-input {
             margin-top: 10px;
             padding: 0;
-            font-size: 15px;
+            font-size: 16px;
             font-family: "Times New Roman", "宋体", "sans-serif";
           }
         }
