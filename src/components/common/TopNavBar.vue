@@ -157,7 +157,7 @@ export default {
       })
     }
     const jumpToSearchPage = () => {
-      router.push({name: 'search', params: {keyword: searchInput.value}})
+      router.push({name: 'search', params: {key: searchInput.value}})
     }
     const toArticleDetails = (id: number) => {
       router.push({name: 'articleDetails', params: {postId: id}})

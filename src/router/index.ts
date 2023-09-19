@@ -142,7 +142,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/search?keyword=:keyword',
+            path: '/search?key=:keyword',
             name: 'search',
             component: () => import('@/views/article/ArticleSearchView.vue'),
             meta: {
@@ -163,5 +163,5 @@ const router = createRouter({
     },
 } as RouterOptions)
 
-// createRouteGuards(router, store)
+createRouteGuards(router, store)
 export default router
