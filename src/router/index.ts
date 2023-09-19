@@ -134,6 +134,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/cate/:cateId([0-2])',
+            name: 'search',
+            component: () => import('@/views/article/ArticleDiffCateView.vue'),
+            meta: {
+                verifyLoginState: false
+            }
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('../views/common/NotFoundView.vue'),
