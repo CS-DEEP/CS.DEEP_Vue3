@@ -27,10 +27,14 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>
-                    <router-link to="/login">专业知识</router-link>
+                    <router-link to="/cate/0">专业知识</router-link>
                   </el-dropdown-item>
-                  <el-dropdown-item>分享发现</el-dropdown-item>
-                  <el-dropdown-item>吐槽讨论</el-dropdown-item>
+                  <el-dropdown-item>
+                    <router-link to="/cate/1">分享发现</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <router-link to="/cate/2">吐槽讨论</router-link>
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
