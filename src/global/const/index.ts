@@ -153,6 +153,21 @@ const DEFAULTARTICLEITEM = {
     category: '专业知识'
 }
 
+const CATEGORYOBJ = [
+    {
+        name: '专业知识',
+        intro: '这里是分享知识的专属区域，在这里你可以看到专业性的知识的讨论~'
+    },
+    {
+        name: '分享发现',
+        intro: '本论坛不局限分享知识，在这里你可以看到更多其他的有趣的发现~'
+    },
+    {
+        name: '吐槽讨论',
+        intro: '在这里大家可以在合法合理的范围内进行适当地吐槽讨论~'
+    }
+]
+
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -166,4 +181,5 @@ export default {
     DEFAULTTWOLEVELCOMMENTPLUS,// 默认二级评论
     DEFAULTREPLYCOMMENTREQ,// 默认回复请求
     DEFAULTARTICLEITEM,    // 默认文章列表Item
+    CATEGORYOBJ,           // 分类介绍
 }

@@ -140,7 +140,8 @@ export default {
       }).then(async res => {
         if (res.data.code === 200) {
           this.blogCount = res.data.data.articleCount
-          let originListData = res.data.data.articleList;
+          let originListData = res.data.data.articleList
+          let targetList = []
           for (let i = 0; i < originListData.length; ++i) {
             let temp: articleItemType = {...CONST.DEFAULTARTICLEITEM};
             temp.title = originListData[i].title;
@@ -152,8 +153,9 @@ export default {
               temp.avatar = res.avatar;
               temp.authorName = res.username;
             })
-            this.articleList.push(temp)
+            targetList.push(temp)
           }
+          this.articleList = targetList
         } else {
           console.log(res.data.message)
         }
@@ -229,7 +231,8 @@ export default {
     }).then(async res => {
       if (res.data.code === 200) {
         this.blogCount = res.data.data.articleCount
-        let originListData = res.data.data.articleList;
+        let originListData = res.data.data.articleList
+        let targetList = []
         for (let i = 0; i < originListData.length; ++i) {
           let temp: articleItemType = {...CONST.DEFAULTARTICLEITEM};
           temp.title = originListData[i].title;
@@ -241,8 +244,9 @@ export default {
             temp.avatar = res.avatar;
             temp.authorName = res.username;
           })
-          this.articleList.push(temp)
+          targetList.push(temp)
         }
+        this.articleList = targetList
       } else {
         console.log(res.data.message)
       }
@@ -350,9 +354,9 @@ export default {
           }
 
           p {
-            font-size: 14px;
+            font-size: 15px;
             margin-top: 5px;
-            font-family: "Times New Roman", "微软雅黑", "sans-serif";
+            font-family: "Times New Roman", "楷体", "sans-serif";
 
             span {
               margin-right: 5px;

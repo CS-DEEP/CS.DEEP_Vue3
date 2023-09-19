@@ -107,11 +107,9 @@ export default {
       console.log(key, keyPath)
     }
     const toMyMessagePage = () => {
-      console.log(router)
       router.push({name: 'message', params: {userId: store.state.userinfo.id}})
     }
     const toMyDraftPage = () => {
-      console.log(111)
       router.push({name: 'draft', params: {userId: store.state.userinfo.id}})
     }
     return {
