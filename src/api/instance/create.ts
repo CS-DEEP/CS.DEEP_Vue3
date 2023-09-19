@@ -23,9 +23,10 @@ export class Request {
         this.instance.interceptors.request.use(
             async (config: AxiosRequestConfig) => {
                 if (config.url.includes('login') || config.url.includes('register') || config.url.includes('reset') ||
-                (config.url.includes('/article/get/all') && !config.url.includes('recommend')) ||
-                config.url.includes('/article/get/tag') || config.url.includes('/user/count')) {
-                return config;
+                    (config.url.includes('/article/get/all') && !config.url.includes('recommend')) ||
+                    config.url.includes('/article/get/tag') || config.url.includes('/user/count') ||
+                    config.url.includes('/article/get/category') || config.url.includes('/search?keyword=')) {
+                    return config;
                 }
                 console.log(111)
                 const token = localStorage.getItem('token');
@@ -38,8 +39,8 @@ export class Request {
 
                 // TODO:token过期不会自动跳转到登录？
                 if (!token || expirationDate < currentDate) {
-                localStorage.clear();
-                window.location.href = '/login';
+                    localStorage.clear();
+                    window.location.href = '/login';
                 }
                 return config;
             },

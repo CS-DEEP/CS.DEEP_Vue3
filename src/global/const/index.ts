@@ -23,12 +23,18 @@ const DEFAULTARTICLE = {
     nodeId: -1,
     id: 0,
     authorId: 0,
-    title: '这是一篇测试文章',
-    content: `$$
-x_1+y_1=z_1
-$$
+    title: '师范生如何提高自主学习能力？',
+    content: `
+## 自主学习能力的重要性
 
-这个公式$x+y=z$怎么样`,
+1. xxxx
+2. xxxx
+3. xxxx
+
+## 如何提高自主学习能力
+
+1. xxxx
+2. xxxx`,
     categoryId: -1,
     createTime: 1689949389,
     updateTime: 1689949389,
@@ -38,7 +44,7 @@ $$
 const CATEGORYLIST = ['专业知识', '分享发现', '吐槽讨论']
 const DEFAULTCOMMENT: commentType = {
     id: 1,
-    content: "啊啊啊啊今天10连没出金QWQ，和散兵无缘了QWQ，巴拉巴拉巴拉巴拉巴拉；啊啊啊啊今天10连没出金QWQ，和散兵是不是无缘了QWQ，巴拉巴拉巴拉巴拉巴拉",
+    content: "学到了很多感谢分享！",
     authorId: 0,
     articleId: 1,
     createTime: 1690965366840,
@@ -49,7 +55,7 @@ const DEFAULTCOMMENT: commentType = {
 }
 const DEFAULTREPLYCOMMENT: commentType = {
     id: 1,
-    content: "呦呦呦~不会有人抽不到吧",
+    content: "以后有机会可以多交流交流呀~",
     authorId: 1,
     articleId: 1,
     createTime: 1690965366840,
@@ -87,6 +93,17 @@ const DEFAULTREPLYCOMMENTREQPLUS = {
     isReply: 1
 }
 
+const DEFAULTTWOLEVELCOMMENT = {
+    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
+    name: '2aurora2',
+    publishTime: '2023-08-05 17:30:30',
+    ownReplyContent: DEFAULTREPLYCOMMENT,
+    quoteContent: '学到了很多，感谢分享',
+    isOwn: false,
+    isNasty: 0,
+    isShowNastyMark: false
+}
+
 const DEFAULTONELEVELCOMMENT = {
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
     name: '布林布林的',
@@ -95,22 +112,12 @@ const DEFAULTONELEVELCOMMENT = {
     isShowEmoji: false,
     isShowNastyMark: false,
     publishTime: '2023-8-4 22:20:20',
-    numOfReply: 0,
+    numOfReply: 1,
     isOwn: false,
-    twoLevelCommentList: [],
+    twoLevelCommentList: [DEFAULTTWOLEVELCOMMENT],
     replyEditComment: DEFAULTREPLYCOMMENTREQ
 }
 
-const DEFAULTTWOLEVELCOMMENT = {
-    avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
-    name: '布林布林的',
-    publishTime: '2023-08-05 17:30:30',
-    ownReplyContent: DEFAULTREPLYCOMMENT,
-    quoteContent: '啊啊啊啊今天10连没出金QWQ，和散兵无缘了QWQ，巴拉巴拉巴拉巴拉巴拉；啊啊啊啊今天10连没出金QWQ，和散兵是不是无缘了QWQ，巴拉巴拉巴拉巴拉巴拉',
-    isOwn: false,
-    isNasty: 1,
-    isShowNastyMark: false
-}
 const DEFAULTTWOLEVELCOMMENTPLUS = {
     avatar: 'https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png',
     name: 'GGBond',
@@ -146,6 +153,21 @@ const DEFAULTARTICLEITEM = {
     category: '专业知识'
 }
 
+const CATEGORYOBJ = [
+    {
+        name: '专业知识',
+        intro: '这里是分享知识的专属区域，在这里你可以看到专业性的知识的讨论~'
+    },
+    {
+        name: '分享发现',
+        intro: '本论坛不局限分享知识，在这里你可以看到更多其他的有趣的发现~'
+    },
+    {
+        name: '吐槽讨论',
+        intro: '在这里大家可以在合法合理的范围内进行适当地吐槽讨论~'
+    }
+]
+
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -159,4 +181,5 @@ export default {
     DEFAULTTWOLEVELCOMMENTPLUS,// 默认二级评论
     DEFAULTREPLYCOMMENTREQ,// 默认回复请求
     DEFAULTARTICLEITEM,    // 默认文章列表Item
+    CATEGORYOBJ,           // 分类介绍
 }

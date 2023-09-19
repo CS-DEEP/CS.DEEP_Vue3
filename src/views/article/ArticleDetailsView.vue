@@ -343,9 +343,9 @@ export default {
   },
   data() {
     let articleInfo: articleBaseInfo = CONST.DEFAULTARTICLE
-    let articleTags: Array<string> = []
+    let articleTags: Array<string> = ['自主', '在线学习']
     let authorInfo: userType = CONST.DEFAULTUSERINFO
-    let articleCate: string = "专业知识"
+    let articleCate: string = "自主学习"
     let markToHtml: string
     let isLike: number = 0
     let isCollect: number = 0
