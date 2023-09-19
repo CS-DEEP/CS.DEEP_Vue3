@@ -62,7 +62,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/post/:postId',
+            path: '/post/:postId(\\d+)',
             name: 'articleDetails',
             component: () => import('@/views/article/ArticleDetailsView.vue'),
             meta: {
@@ -135,8 +135,16 @@ const router = createRouter({
         },
         {
             path: '/cate/:cateId([0-2])',
-            name: 'search',
+            name: 'category',
             component: () => import('@/views/article/ArticleDiffCateView.vue'),
+            meta: {
+                verifyLoginState: false
+            }
+        },
+        {
+            path: '/search?keyword=:keyword',
+            name: 'search',
+            component: () => import('@/views/article/ArticleSearchView.vue'),
             meta: {
                 verifyLoginState: false
             }
@@ -155,5 +163,5 @@ const router = createRouter({
     },
 } as RouterOptions)
 
-createRouteGuards(router, store)
+// createRouteGuards(router, store)
 export default router

@@ -25,3 +25,9 @@ export type articleItemType = {
     elapsed: string,
     category: string
 }
+
+export type draftItemType = {
+    id: number,
+    title: string,
+    updateTime: string
+}

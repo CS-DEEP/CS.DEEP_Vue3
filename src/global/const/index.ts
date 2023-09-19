@@ -168,6 +168,12 @@ const CATEGORYOBJ = [
     }
 ]
 
+const DEFAULTDRAFTITEM = {
+    id: 0,
+    title: '加载中……',
+    updateTime: '2023-9-19 20:12:12'
+}
+
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -182,4 +188,5 @@ export default {
     DEFAULTREPLYCOMMENTREQ,// 默认回复请求
     DEFAULTARTICLEITEM,    // 默认文章列表Item
     CATEGORYOBJ,           // 分类介绍
+    DEFAULTDRAFTITEM,      // 默认草稿箱Item
 }
