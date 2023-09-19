@@ -233,7 +233,7 @@ export default {
       return timestampToDateTimeString(this.articleInfo.updateTime);
     },
   },
-  mounted() {
+  mounted: function () {
     this.initPage();
     window.addEventListener('scroll', this.handleScroll);
     // 获取文章信息
