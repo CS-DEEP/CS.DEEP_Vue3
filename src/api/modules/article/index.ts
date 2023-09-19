@@ -85,7 +85,7 @@ const getCollectNumber = (data: number) => {
 }
 
 const getCategoryArticle = (data: getCategoryArticleReq) => {
-    return service.get<ResponseResult<getCategoryArticleRes>>('/article/get/category' +
+    return service.get<ResponseResult<getCategoryArticleRes>>('/article/get/category/list' +
         '?page=' + data.page +
         '&pageSize=' + data.pageSize +
         '&categoryId=' + data.categoryId)

@@ -59,7 +59,7 @@ export default {
     api.articleApi.getCategoryArticle({
       page: 1,
       pageSize: 12,
-      categoryId: Number(this.$route.params.cateId)
+      categoryId: Number(this.$route.params.cateId) + 1
     }).then(async res => {
       if (res.data.code === 200) {
         this.articleCount = res.data.data.articleCount
