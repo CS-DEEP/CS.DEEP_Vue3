@@ -13,7 +13,7 @@
       <p>暂无数据</p>
     </div>
     <div class="article-list">
-      <div class="article-item" v-for="(item,index) in articleList" :key="index">
+      <div class="article-item" v-for="(item,index) in articleList" :key="index" @click="toArticleDetail(item.id)">
         <div class="avatar">
           <img :src="item.avatar" alt="avatar">
         </div>
@@ -49,6 +49,7 @@ import CONST from '../../global/const'
 import {articleItemType, userType} from "@/type";
 import {debounce, getElapsedTime} from "@/global/utils";
 import {ElMessage} from "element-plus";
+import router from "@/router";
 
 export default {
   name: "ArticleDiffCateView",
@@ -150,6 +151,9 @@ export default {
           })
         }
       })
+    },
+    toArticleDetail(id: number) {
+      router.push({name: 'articleDetails', params: {postId: id}})
     }
   }
 }
