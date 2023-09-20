@@ -65,13 +65,12 @@
                   :suffix-icon="Search"
                   @input="searchHandle"
                   @keydown.enter="jumpToSearchPage"
-                  @blur="cancelFocus"
               >
               </el-input>
               <div class="search-extern-res">
                 <div class="searchRes" v-show="showRes">
                   <div class="resItem" v-for="(item,index) in searchResult" :key="index"
-                       @click="toArticleDetails(item.id)">
+                       @click="toArticleDetails(item.id)" :to="`/post/${item.id}`">
                     {{ item.title }}
                   </div>
                 </div>
@@ -122,12 +121,9 @@ export default {
   setup() {
     const searchInput = ref('')
     const activeIndex = ref('1')
-    const resCount = ref(0)
+    const resCount = ref(2)
     const showRes = ref(false)
-    const searchResult: Ref<articleBaseInfo[]> = ref([])
-    const handleSelect = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
+    const searchResult: Ref<articleBaseInfo[]> = ref([CONST.DEFAULTARTICLE, CONST.DEFAULTARTICLE])
     const toMyMessagePage = () => {
       router.push({name: 'message', params: {userId: store.state.userinfo.id}})
     }
@@ -157,13 +153,14 @@ export default {
       })
     }
     const jumpToSearchPage = () => {
-      router.push({name: 'search', params: {key: searchInput.value}})
+      router.push({name: 'search', params: {keyword: searchInput.value}})
+      showRes.value = false
+      searchInput.value = ''
     }
     const toArticleDetails = (id: number) => {
       router.push({name: 'articleDetails', params: {postId: id}})
-    }
-    const cancelFocus = () => {
       showRes.value = false
+      searchInput.value = ''
     }
     return {
       Search,
@@ -174,8 +171,6 @@ export default {
       searchInput,
       activeIndex,
       searchResult,
-      cancelFocus,
-      handleSelect,
       toMyMessagePage,
       toMyDraftPage,
       searchHandle,
@@ -311,13 +306,14 @@ export default {
             width: 350px;
             margin-top: 10px;
             padding: 0;
-            font-size: 16px;
+            font-size: 15px;
             font-family: "Times New Roman", "宋体", "sans-serif";
           }
 
           .search-extern-res {
             position: absolute;
             top: 49px;
+            z-index: 10000;
 
             .searchRes {
               position: relative;
@@ -329,12 +325,15 @@ export default {
               flex-direction: column;
 
               .resItem {
-                height: 45px;
+                height: 40px;
                 padding-left: 5px;
-                padding-bottom: 3px;
-                font-size: 16px;
-                border-color: #797575;
+                padding-bottom: 5px;
+                font-size: 15px;
                 color: #222222;
+                display: flex;
+                font-family: "Times New Roman", "宋体", "sans-serif";
+                align-items: center;
+                user-select: none;
 
                 &:hover {
                   background-color: #e3e5e7;
