@@ -87,7 +87,7 @@ export default {
     let isFollow: Array<boolean> = [];
     let curList: Array<userType> = [];
     let followerList: Array<userType> = [];
-    let numOfItem: number = 3;
+    let numOfItem: number = 0;
     return {
       dialogVisible,
       followerList,

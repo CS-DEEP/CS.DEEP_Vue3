@@ -27,10 +27,14 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>
-                    <router-link to="/login">专业知识</router-link>
+                    <router-link to="/cate/0">专业知识</router-link>
                   </el-dropdown-item>
-                  <el-dropdown-item>分享发现</el-dropdown-item>
-                  <el-dropdown-item>吐槽讨论</el-dropdown-item>
+                  <el-dropdown-item>
+                    <router-link to="/cate/1">分享发现</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <router-link to="/cate/2">吐槽讨论</router-link>
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -58,9 +62,19 @@
               <el-input
                   v-model="searchInput"
                   placeholder="search"
-                  :prefix-icon="Search"
+                  :suffix-icon="Search"
+                  @input="searchHandle"
+                  @keydown.enter="jumpToSearchPage"
               >
               </el-input>
+              <div class="search-extern-res">
+                <div class="searchRes" v-show="showRes">
+                  <div class="resItem" v-for="(item,index) in searchResult" :key="index"
+                       @click="toArticleDetails(item.id)" :to="`/post/${item.id}`">
+                    {{ item.title }}
+                  </div>
+                </div>
+              </div>
             </el-menu-item>
           </div>
           <el-menu-item index="7" class="item7">
@@ -83,7 +97,7 @@
 
 
 <script lang='ts'>
-import {ref} from 'vue'
+import {Ref, ref} from 'vue'
 import {
   Search,
   Edit,
@@ -93,6 +107,10 @@ import RegisterAndLogin from "@/components/mini/RegisterAndLogin.vue"
 import AvatarAndUsername from "@/components/mini/AvatarAndUsername.vue"
 import router from "@/router";
 import store from "@/store";
+import api from "@/api/modules"
+import {articleBaseInfo} from "@/type";
+import {ElMessage} from "element-plus";
+import CONST from "@/global/const"
 
 export default {
   name: "TopNavBar",
@@ -103,24 +121,61 @@ export default {
   setup() {
     const searchInput = ref('')
     const activeIndex = ref('1')
-    const handleSelect = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
+    const resCount = ref(2)
+    const showRes = ref(false)
+    const searchResult: Ref<articleBaseInfo[]> = ref([CONST.DEFAULTARTICLE, CONST.DEFAULTARTICLE])
     const toMyMessagePage = () => {
       router.push({name: 'message', params: {userId: store.state.userinfo.id}})
     }
     const toMyDraftPage = () => {
       router.push({name: 'draft', params: {userId: store.state.userinfo.id}})
     }
+    const searchHandle = () => {
+      showRes.value = true
+      api.articleApi.getRealTimeSearch(searchInput.value).then(res => {
+        if (res.data.code === 200) {
+          if (res.data.data.articleCount > 0) {
+            showRes.value = true
+          }
+          if (res.data.data.articleCount > 5) {
+            searchResult.value = res.data.data.articleList.slice(0, 5)
+          } else {
+            searchResult.value = res.data.data.articleList
+          }
+        } else {
+          ElMessage({
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    const jumpToSearchPage = () => {
+      router.push({name: 'search', params: {keyword: searchInput.value}})
+      showRes.value = false
+      searchInput.value = ''
+    }
+    const toArticleDetails = (id: number) => {
+      router.push({name: 'articleDetails', params: {postId: id}})
+      showRes.value = false
+      searchInput.value = ''
+    }
     return {
       Search,
       Edit,
       BellFilled,
+      showRes,
+      resCount,
       searchInput,
       activeIndex,
-      handleSelect,
+      searchResult,
       toMyMessagePage,
-      toMyDraftPage
+      toMyDraftPage,
+      searchHandle,
+      jumpToSearchPage,
+      toArticleDetails
     }
   }
 }
@@ -237,24 +292,55 @@ export default {
         margin-top: -2px;
 
         .item5 {
-          width: 200px;
+          width: 350px;
           padding: 0;
           margin-right: 10px;
           border-bottom: 0;
           float: right;
           transition: width 1s ease;
+          background-color: white;
+          position: relative;
 
           .el-input {
+            background-color: white;
+            width: 350px;
             margin-top: 10px;
             padding: 0;
-            font-size: 16px;
+            font-size: 15px;
             font-family: "Times New Roman", "宋体", "sans-serif";
           }
-        }
 
-        .item5:hover, .item5:focus-within {
-          width: 300px;
-          background-color: white;
+          .search-extern-res {
+            position: absolute;
+            top: 49px;
+            z-index: 10000;
+
+            .searchRes {
+              position: relative;
+              width: 350px;
+              height: max-content;
+              background-color: #ffffff;
+              border-radius: 5px;
+              display: flex;
+              flex-direction: column;
+
+              .resItem {
+                height: 40px;
+                padding-left: 5px;
+                padding-bottom: 5px;
+                font-size: 15px;
+                color: #222222;
+                display: flex;
+                font-family: "Times New Roman", "宋体", "sans-serif";
+                align-items: center;
+                user-select: none;
+
+                &:hover {
+                  background-color: #e3e5e7;
+                }
+              }
+            }
+          }
         }
       }
 

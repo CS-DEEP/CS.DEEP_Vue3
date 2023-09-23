@@ -27,8 +27,6 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopover: typeof import('element-plus/es')['ElPopover']
-    ElSwitch: typeof import('element-plus/es')['ElSwitch']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FooterBar: typeof import('./src/components/common/FooterBar.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']

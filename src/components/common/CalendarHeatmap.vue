@@ -114,15 +114,15 @@ export default {
     fillColor() {
       for (let i = 0; i < this.columnArray.length; ++i) {
         for (let j = 0; j < this.columnArray[i].data.length; ++j) {
-          if (this.nodeArray?.[i * 7 + j].activity <= 10) {
+          if (this.nodeArray?.[i * 7 + j].activity == 0) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[0];
-          } else if (this.nodeArray?.[i * 7 + j].activity <= 20) {
+          } else if (this.nodeArray?.[i * 7 + j].activity <= 15) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[1];
           } else if (this.nodeArray?.[i * 7 + j].activity <= 30) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[2];
-          } else if (this.nodeArray?.[i * 7 + j].activity <= 40) {
+          } else if (this.nodeArray?.[i * 7 + j].activity <= 45) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[3];
-          } else if (this.nodeArray?.[i * 7 + j].activity > 40) {
+          } else if (this.nodeArray?.[i * 7 + j].activity > 60) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[4];
           }
         }
