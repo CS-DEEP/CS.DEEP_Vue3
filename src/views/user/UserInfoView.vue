@@ -22,7 +22,7 @@
         <div class="heatmap-part">
           <span>活跃度热力图</span>
           <div class="heatmap">
-            <CalendarHeatmap/>
+            <CalendarHeatmap :NodeArray="heatInfo"/>
             <div class="desc">
               <div class="box" v-for="(color, index) in colors" :key="index" :style="`background:${color};`"></div>
             </div>
@@ -43,6 +43,8 @@ import CalendarHeatmap from "@/components/common/CalendarHeatmap.vue";
 import CONST from "@/global/const/index.ts"
 import router from "@/router";
 import {ElMessage} from "element-plus";
+import {perDay} from "@/type";
+import {timestampToDateTimeStringSimple} from "@/global/utils";
 
 export default {
   name: "UserInfoView",
@@ -77,6 +79,25 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+    api.userApi.getHeatmapInfo(this.$route.params.userId).then(res => {
+      if (res.data.code === 200) {
+        let temp: perDay = CONST.DEFAULTPERDAY;
+        let targetList: Array<perDay> = []
+        for (let i = 0; i < res.data.data.activationList.length; ++i) {
+          let data = timestampToDateTimeStringSimple(res.data.data.activationList[i].date);
+          temp.data = data;
+          temp.activity = res.data.data.activationList[i].act_val
+        }
+        this.heatInfo = targetList
+      } else {
+        ElMessage({
+          type: 'error',
+          message: res.data.message
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   },
   data() {
     return {
@@ -86,6 +107,7 @@ export default {
       colors: CONST.COLORS,
       isOwn: true,
       isFollow: false,
+      heatInfo: []
     }
   },
   methods: {

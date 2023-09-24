@@ -46,7 +46,8 @@
             </el-dropdown>
           </div>
           <div class="article-list">
-            <div class="article-item" v-for="(item,index) in articleList" :key="index">
+            <div class="article-item" v-for="(item,index) in articleList" :key="index"
+                 @click="toArticleDetails(item.id)">
               <div class="avatar">
                 <img :src="item.avatar" alt="avatar">
               </div>
@@ -211,6 +212,9 @@ export default {
           })
         }
       })
+    },
+    toArticleDetails(id: number) {
+      router.push({name: 'articleDetails', params: {postId: id}})
     }
   },
   mounted() {

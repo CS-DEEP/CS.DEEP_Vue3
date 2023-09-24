@@ -174,6 +174,11 @@ const DEFAULTDRAFTITEM = {
     updateTime: '2023-9-19 20:12:12'
 }
 
+const DEFAULTPERDAY = {
+    data: '2023-09-24',
+    activity: 0
+}
+
 export default {
     MONTHS,          // 各月份的英文简写
     COLORS,          // 不同活跃度的颜色标注
@@ -189,4 +194,5 @@ export default {
     DEFAULTARTICLEITEM,    // 默认文章列表Item
     CATEGORYOBJ,           // 分类介绍
     DEFAULTDRAFTITEM,      // 默认草稿箱Item
+    DEFAULTPERDAY,         // 默认活跃度信息
 }
