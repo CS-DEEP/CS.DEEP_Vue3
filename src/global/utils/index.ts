@@ -10,7 +10,18 @@ export async function getImageFileFromUrl(imageUrl: string): Promise<File> {
     return new File([blob], fileName, {type: blob.type});
 }
 
-// function:时间戳转换
+// function:时间戳转换不含时分秒
+export function timestampToDateTimeStringSimple(timestamp: number): string {
+    const date = new Date(timestamp); // 将时间戳转换为毫秒
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+// function:时间戳转换含时分秒
 export function timestampToDateTimeString(timestamp: number): string {
     const date = new Date(timestamp); // 将时间戳转换为毫秒
 

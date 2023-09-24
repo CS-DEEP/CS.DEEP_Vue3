@@ -30,10 +30,10 @@ export default {
   name: "calendarHeatmap",
   data() {
     let columnArray: Array<columnDate>;
-    let nodeArray: Array<perDay>;
+    let nodeArray: Array<perDay> = [];
     return {
       columnArray,
-      nodeArray: []
+      nodeArray,
     }
   },
   props: {

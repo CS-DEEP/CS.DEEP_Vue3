@@ -68,7 +68,7 @@
               >
               </el-input>
               <div class="search-extern-res">
-                <div class="searchRes" v-show="showRes">
+                <div class="searchRes" v-show="showRes&&searchInput.length>0">
                   <div class="resItem" v-for="(item,index) in searchResult" :key="index"
                        @click="toArticleDetails(item.id)" :to="`/post/${item.id}`">
                     {{ item.title }}
@@ -117,6 +117,11 @@ export default {
   components: {
     RegisterAndLogin,
     AvatarAndUsername,
+  },
+  mounted() {
+    document.body.addEventListener('click', () => {
+      this.showRes = false
+    })
   },
   setup() {
     const searchInput = ref('')

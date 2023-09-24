@@ -142,7 +142,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/search?key=:keyword',
+            path: '/search?key=:key',
             name: 'search',
             component: () => import('@/views/article/ArticleSearchView.vue'),
             meta: {

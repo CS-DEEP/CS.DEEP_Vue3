@@ -4,8 +4,7 @@
       <el-header class="header">
         <div class="headerContainer">
           <div class="headTop">
-            <!--TODO:分类页跳转-->
-            <el-button plain>{{ articleCate }}</el-button>
+            <el-button plain @click="toCateView">{{ articleCate }}</el-button>
             <div class="tags">
               <div v-for="(item,index) in articleTags" :key="index">
                 {{ item }} {{ index < articleTags.length - 1 ? '&' : '' }}
@@ -25,27 +24,15 @@
               </template>
               <template #default>
                 <div class="demo-rich-content"
-                     style="display: flex; gap: 8px; flex-direction: row;background-color: transparent">
+                     style="display: flex; gap: 8px; flex-direction: row;background-color: transparent"
+                     @click="toUserinfoView">
                   <el-avatar :size="80" :src="authorInfo.avatar"/>
                   <div style="margin: 5px 10px;position:relative;flex-direction: column">
-                    <div style="font-size: 18px;font-family: 'Times New Roman','宋体','sans-serif'">
+                    <div style="font-size: 20px;font-family: 'Times New Roman','宋体','sans-serif'">
                       {{ authorInfo.username }}
                     </div>
-                    <div style="font-size: 10px;font-family: 'Times New Roman','宋体','sans-serif'">
+                    <div style="font-size: 15px;font-family: 'Times New Roman','宋体','sans-serif'">
                       {{ authorInfo.age }}岁
-                    </div>
-                    <div style="">
-                      <!--TODO:用户关注Handle以及用户个人中心跳转-->
-                      <el-button style="
-                      background-color: #959896;
-                      color: #fff;
-                      border: 2px solid #dcdcdc;
-                      width: 60px;
-                      height: 25px;
-                      margin-top: 5px;
-                      text-align: center;
-                      ">关注
-                      </el-button>
                     </div>
                   </div>
                 </div>
@@ -224,6 +211,7 @@ import haveNotCollect from "@/assets/image/haveNotCollect.png"
 import ArticleHtml from "@/components/common/ArticleHtml.vue";
 import faceData from "@/assets/emoji/emoji.json"
 import {ElMessage} from "element-plus";
+import router from "@/router";
 
 export default {
   name: "ArticleDetailsView",
@@ -310,13 +298,11 @@ export default {
       console.log(err)
     })
     // 获取一级评论
-    // TODO:懒加载
     api.commentApi.getOneLevelComment({
       articleId: this.$route.params.postId,
       page: this.page
     }).then(async res => {
       if (res.data.code === 200) {
-        console.log(res.data.data)
         // 重新生成一级评论新类型对象信息
         for (let i = 0; i < res.data.data.commentList.length; ++i) {
           let tmp = {...CONST.DEFAULTONELEVELCOMMENT}
@@ -335,7 +321,10 @@ export default {
           this.oneLevelCommentList.push(tmp)
         }
       } else {
-        console.log(res.data.message)
+        ElMessage({
+          type: 'error',
+          message: res.data.message
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -359,6 +348,7 @@ export default {
     let faceShow = false
     let page = 1
     let oneLevelCommentList: Array<oneLevelCommentType> = []
+    let isLoading = false
 
     return {
       articleInfo,
@@ -382,6 +372,7 @@ export default {
       faceShow,
       page,
       oneLevelCommentList,
+      isLoading
     }
   },
   methods: {
@@ -667,7 +658,6 @@ export default {
     },
     // 触底加载更多一级评论(懒加载)
     loadMoreOneLevelComment() {
-      // TODO：这种形式的加载中仅用作测试，后续更改
       ElMessage('加载评论中……')
       this.page += 1
       api.commentApi.getOneLevelComment({
@@ -693,6 +683,7 @@ export default {
             tmp.replyEditComment.articleId = this.$route.params.postId
             this.oneLevelCommentList.push(tmp)
           }
+          this.isLoading = true
         } else {
           console.log(res.data.message)
         }
@@ -710,9 +701,23 @@ export default {
       const targetElementPosition = targetElement.offsetTop;
 
       // 判断是否滚动到目标元素，可以根据具体情况进行微调
-      if (scrollPosition >= targetElementPosition - 900) {
+      if (scrollPosition >= targetElementPosition - 900 && !this.isLoading) {
+        this.isLoading = true
         this.loadMoreOneLevelComment();
       }
+    },
+    toCateView() {
+      let id = 0;
+      for (let i = 0; i < 3; ++i) {
+        if (CONST.CATEGORYOBJ[i].name === this.articleCate) {
+          id = i;
+          break;
+        }
+      }
+      router.push({name: 'category', params: {cateId: id}})
+    },
+    toUserinfoView() {
+      router.push({name: 'userInfo', params: {userId: this.authorInfo.id}})
     }
   }
 }
