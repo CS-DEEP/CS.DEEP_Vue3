@@ -1,5 +1,4 @@
 import {userType} from '@/type'
-import user from "@/api/modules/user/index";
 
 export type LoginData = {
     user: userType;
@@ -23,6 +22,15 @@ export type IsFollowData = {
     isFollow: boolean;
 }
 
+export type DayItem = {
+    date: number,
+    act_val: number
+}
+
+export type GetHeatmapInfoRes = {
+    activationList: Array<DayItem>
+}
+
 export type UserinfoEditRequest = {
     username: string;
     gender: number;
@@ -34,6 +42,7 @@ export type UserinfoEditRequest = {
 export type FollowingList = {
     following: Array<userType>
 }
+
 export type FollowerList = {
     follower: Array<userType>
 }

@@ -10,6 +10,7 @@ import {
     UserinfoEditRequest,
     FollowingList,
     FollowerList,
+    GetHeatmapInfoRes,
 } from "@/api/modules/user/type";
 
 const login = (data: loginType) => {
@@ -97,6 +98,10 @@ const getFollowerList = (data: number) => {
         '?userId=' + data)
 }
 
+const getHeatmapInfo = (data: number) => {
+    return service.get<ResponseResult<GetHeatmapInfoRes>>('/user/activation?userId=' + data)
+}
+
 export default {
     login,               // 登录
     logout,              // 退出登录
@@ -113,4 +118,5 @@ export default {
     uploadInfo,          // 更新用户信息
     getFollowingList,    // 获取关注列表
     getFollowerList,     // 获取粉丝列表
+    getHeatmapInfo,      // 获取用户活跃度信息
 };

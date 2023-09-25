@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {RouterView} from 'vue-router'
 import FooterBar from './components/common/FooterBar.vue'
-import TopNavBar from "@/components/common/TopNavBar.vue";
+import TopNavBar from "@/components/common/TopNavBar.vue"
 </script>
 
 <template>
