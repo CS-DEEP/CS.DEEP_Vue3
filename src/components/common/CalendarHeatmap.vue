@@ -47,12 +47,23 @@ export default {
   mounted() {
     this.nodeArray = [...this.NodeArray]
     this.init();
-    // 此数据仅作测试用，后续删掉，报错不用管
-    for (let i = 0; i < 366; ++i) {
-      this.nodeArray?.push({
-        data: '2023-7-10',
-        activity: 12
-      })
+    for (let k = 0; k < this.NodeArray?.length; ++k) {
+      let flag = false
+      for (let i = 0; i < this.columnArray.length; ++i) {
+        for (let j = 0; j < this.columnArray[i].data.length; ++j) {
+          if (this.nodeArray?.[k].data === this.columnArray[i].data[j]['data']) {
+            this.columnArray[i].data[j]['activity'] = this.nodeArray?.[k].activity
+            flag = true
+            break
+          }
+          if (flag) {
+            break
+          }
+        }
+        if (flag) {
+          break
+        }
+      }
     }
     this.fillColor();
   },
@@ -114,15 +125,15 @@ export default {
     fillColor() {
       for (let i = 0; i < this.columnArray.length; ++i) {
         for (let j = 0; j < this.columnArray[i].data.length; ++j) {
-          if (this.nodeArray?.[i * 7 + j].activity == 0) {
+          if (this.columnArray[i].data[j]['activity'] == 0) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[0];
-          } else if (this.nodeArray?.[i * 7 + j].activity <= 15) {
+          } else if (this.columnArray[i].data[j]['activity'] <= 15) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[1];
-          } else if (this.nodeArray?.[i * 7 + j].activity <= 30) {
+          } else if (this.columnArray[i].data[j]['activity'] <= 30) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[2];
-          } else if (this.nodeArray?.[i * 7 + j].activity <= 45) {
+          } else if (this.columnArray[i].data[j]['activity'] <= 45) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[3];
-          } else if (this.nodeArray?.[i * 7 + j].activity > 60) {
+          } else if (this.columnArray[i].data[j]['activity'] > 60) {
             this.columnArray[i].data[j]['color'] = CONST.COLORS[4];
           }
         }
@@ -187,6 +198,7 @@ body {
       .date {
         width: 11px;
         height: 11px;
+        border-radius: 5px;
 
         :hover {
           width: 13px;
