@@ -150,6 +150,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/guide',
+            name: 'guide',
+            component: () => import('@/views/common/GuidanceView.vue'),
+            meta: {
+                verifyLoginState: false
+            }
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'notFound',
             component: () => import('../views/common/NotFoundView.vue'),
