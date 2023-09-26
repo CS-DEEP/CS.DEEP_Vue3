@@ -52,7 +52,9 @@
                   <el-dropdown-item>
                     <router-link to="/about">本站介绍</router-link>
                   </el-dropdown-item>
-                  <el-dropdown-item>入门指引</el-dropdown-item>
+                  <el-dropdown-item>
+                    <router-link to="/guide">入门指引</router-link>
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
