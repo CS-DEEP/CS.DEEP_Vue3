@@ -23,8 +23,8 @@ export type IsFollowData = {
 }
 
 export type DayItem = {
-    date: number,
-    act_val: number
+    key: number,
+    value: number
 }
 
 export type GetHeatmapInfoRes = {

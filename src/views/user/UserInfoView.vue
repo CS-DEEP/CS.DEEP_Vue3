@@ -84,11 +84,13 @@ export default {
         let temp: perDay = CONST.DEFAULTPERDAY;
         let targetList: Array<perDay> = []
         for (let i = 0; i < res.data.data.activationList.length; ++i) {
-          let data = timestampToDateTimeStringSimple(res.data.data.activationList[i].date);
+          let data = timestampToDateTimeStringSimple(res.data.data.activationList[i].key);
           temp.data = data;
-          temp.activity = res.data.data.activationList[i].act_val
+          temp.activity = res.data.data.activationList[i].value
+          targetList.push(temp)
         }
         this.heatInfo = targetList
+        console.log(this.heatInfo)
       } else {
         ElMessage({
           type: 'error',

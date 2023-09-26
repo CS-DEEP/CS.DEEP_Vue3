@@ -44,7 +44,8 @@ export default {
       }
     }
   },
-  mounted() {
+  beforeUpdate() {
+    console.log(this.NodeArray)
     this.nodeArray = [...this.NodeArray]
     this.init();
     for (let k = 0; k < this.NodeArray?.length; ++k) {
