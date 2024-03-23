@@ -76,6 +76,7 @@ a {
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 
   .content {
     width: max-content;

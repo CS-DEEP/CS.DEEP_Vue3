@@ -4,6 +4,7 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
+    "strict": false,
     "types": ["node"]
   }
 }

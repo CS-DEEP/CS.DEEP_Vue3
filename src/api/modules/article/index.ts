@@ -1,12 +1,12 @@
 import service from "@/api/instance";
-import {
+import type {
     createArticleRes, getCategoryArticleReq, getCategoryArticleRes, getDraftListRes,
     imageBackRes,
     isCollectRes,
     isLikeRes, numberOfLikeAndCollect, realTimeSearchRes,
     ResponseResult,
 } from "@/api/modules/article/type";
-import {articleType} from "@/type";
+import type {articleType} from "@/type";
 
 const createArticle = () => {
     return service.post<ResponseResult<createArticleRes>>('/article/create')

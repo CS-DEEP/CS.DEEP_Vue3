@@ -1,4 +1,4 @@
-import {
+import type {
     GetCommentInfoRes,
     GetOneLevelCommentReq,
     GetOneLevelCommentRes, GetTwoLevelCommentRes,

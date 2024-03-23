@@ -15,7 +15,7 @@
     </div>
     <div class="web-intro">
       <p>CS.DEEP</p>
-      <p>一个致力于服务每一位计算机人的论坛平台</p>
+      <p>一个致力于服务每一位师范生的在线素养画像平台</p>
       <p>Github地址: <a href="https://github.com/CS-DEEP" target="_blank">https://github.com/CS-DEEP</a></p>
       <p>商务邮箱: cs_deep@163.com</p>
     </div>

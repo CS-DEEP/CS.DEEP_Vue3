@@ -1,4 +1,4 @@
-import {articleBaseInfo} from "@/type";
+import type {articleBaseInfo} from "@/type";
 
 export type ResponseResult<T> = {
     code: number;
