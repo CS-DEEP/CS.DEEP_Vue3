@@ -1,6 +1,6 @@
-import {Router} from "vue-router";
+import type {Router} from "vue-router";
 import {Store} from "vuex";
-import StateTypes from "@/store/interface";
+import type StateTypes from "@/store/interface";
 
 export const createRouteGuards = (route: Router, store: Store<StateTypes>) => {
     route.beforeEach(async (to, from, next) => {

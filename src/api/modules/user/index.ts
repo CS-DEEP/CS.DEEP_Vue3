@@ -1,6 +1,6 @@
 import service from '../../instance/index'
-import {loginType, registerType, resetPwdType} from '@/type'
-import {
+import type {loginType, registerType, resetPwdType} from '@/type'
+import type {
     ResponseResult,
     FollowerData,
     FollowingData,
