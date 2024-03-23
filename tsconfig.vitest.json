@@ -4,6 +4,10 @@
   "compilerOptions": {
     "composite": true,
     "lib": [],
-    "types": ["node", "jsdom"]
+    "strict": false,
+    "types": [
+      "node",
+      "jsdom"
+    ]
   }
 }

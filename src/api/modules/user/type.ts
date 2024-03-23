@@ -1,4 +1,4 @@
-import {userType} from '@/type'
+import type {userType} from '@/type'
 
 export type LoginData = {
     user: userType;
@@ -18,26 +18,37 @@ export type UserinfoData = {
     user: userType;
 }
 
-export type LoginResult = {
-    code: number;
-    message: string;
-    data: LoginData;
+export type IsFollowData = {
+    isFollow: boolean;
 }
 
-export type CommonResult = {
-    code: number;
-    message: string;
-    data: any;
+export type DayItem = {
+    key: number,
+    value: number
 }
 
-export type FollowResult<T> = {
+export type GetHeatmapInfoRes = {
+    activationList: Array<DayItem>
+}
+
+export type UserinfoEditRequest = {
+    username: string;
+    gender: number;
+    age: number;
+    avatar: FormData;
+    description: string;
+}
+
+export type FollowingList = {
+    following: Array<userType>
+}
+
+export type FollowerList = {
+    follower: Array<userType>
+}
+
+export type ResponseResult<T> = {
     code: number;
     message: string;
     data: T;
-}
-
-export type GetUserinfoResult = {
-    code: number;
-    message: string;
-    data: UserinfoData;
 }

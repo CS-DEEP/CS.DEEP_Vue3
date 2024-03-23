@@ -20,13 +20,18 @@
       </div>
       <div class="per">
         <img src="../../assets/image/logout.png" alt="choice">
-        <router-link class="user-link" to="#">退出登录</router-link>
+        <span class="user-link" @click="logoutHandle">退出登录</span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+
+<script lang="ts">
+import api from "@/api/modules/index.ts"
+import CONST from "@/global/const/index.ts"
+import {ElMessage} from "element-plus";
+
 export default {
   name: "AvatarAndUsername",
   data() {
@@ -38,16 +43,40 @@ export default {
     showMenu() {
       this.isShow = !this.isShow;
     },
+    logoutHandle() {
+      api.userApi.logout().then(res => {
+        if (res.data.code === 200) {
+          localStorage.clear();
+          this.$store.commit('updateLoginState');
+          this.$store.commit('updateUserinfo', CONST.DEFAULTUSERINFO)
+          ElMessage({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.$router.push('/')
+        } else {
+          console.log(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss">
+
+a {
+  text-decoration: none;
+}
+
 .avatar-username {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 
   .content {
     width: max-content;
@@ -89,6 +118,7 @@ export default {
   }
 
   .menu {
+    z-index: 100;
     width: 130px;
     height: max-content;
     display: flex;
