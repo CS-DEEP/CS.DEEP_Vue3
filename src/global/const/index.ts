@@ -3,7 +3,7 @@
 *   创建时间: 2023-07-09
 * */
 
-import {commentType, twoLevelCommentType} from "@/type";
+import type {commentType, twoLevelCommentType} from "@/type";
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const COLORS = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']

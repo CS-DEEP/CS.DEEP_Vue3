@@ -16,7 +16,6 @@ import TopNavBar from "@/components/common/TopNavBar.vue"
       <FooterBar/>
     </div>
   </div>
-
 </template>
 
 <style lang="scss">
@@ -37,7 +36,7 @@ body {
 
   .views {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     flex: 1;
   }
 

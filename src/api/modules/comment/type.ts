@@ -1,4 +1,4 @@
-import {commentType} from "@/type";
+import type {commentType} from "@/type";
 
 export type ResponseResult<T> = {
     code: number;

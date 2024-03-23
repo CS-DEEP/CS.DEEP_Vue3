@@ -5,7 +5,7 @@
       <el-header>
         <div class="web-intro">
           <p>CS.DEEP</p>
-          <p>一个致力于服务每一位计算机人的论坛平台</p>
+          <p>一个致力于服务每一位师范生的在线素养画像平台</p>
         </div>
       </el-header>
 

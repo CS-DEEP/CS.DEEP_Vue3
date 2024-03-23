@@ -1,4 +1,4 @@
-import {
+import type {
     getParticularArticleListReq,
     getParticularArticleListRes,
     getRandomTagListRes, getWebsiteUserCountRes,

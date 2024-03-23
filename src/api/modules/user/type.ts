@@ -1,4 +1,4 @@
-import {userType} from '@/type'
+import type {userType} from '@/type'
 
 export type LoginData = {
     user: userType;

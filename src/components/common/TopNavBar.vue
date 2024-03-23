@@ -6,22 +6,22 @@
     <div class="topNav">
       <div class="content">
         <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo"
-            mode="horizontal"
-            menu-trigger="click"
-            unique-opened="true"
-            @select="handleSelect"
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          menu-trigger="click"
+          unique-opened="true"
+          @select="handleSelect"
         >
-          <el-menu-item index="1" class="item1">
+          <el-menu-item index="1" class="item1" style="background-color: transparent">
             <router-link to="/" class="font-icon">CS.DEEP</router-link>
           </el-menu-item>
           <div class="item-list">
-            <el-dropdown>
+            <el-dropdown class="dropdown">
               <el-button class="big-title">
                 <span class="bat-title">专业学习</span>
                 <el-icon class="el-icon--right">
-                  <arrow-down/>
+                  <arrow-down />
                 </el-icon>
               </el-button>
               <template #dropdown>
@@ -40,11 +40,11 @@
             </el-dropdown>
           </div>
           <div class="item-list">
-            <el-dropdown>
+            <el-dropdown class="dropdown">
               <el-button class="big-title">
                 <span class="bat-title">关于本站</span>
                 <el-icon class="el-icon--right">
-                  <arrow-down/>
+                  <arrow-down />
                 </el-icon>
               </el-button>
               <template #dropdown>
@@ -59,14 +59,19 @@
               </template>
             </el-dropdown>
           </div>
+          <div class="item-list">
+            <el-button class="big-title">
+              <router-link class="bat-title" to="/persona/guide" style="color: black">画像评测</router-link>
+            </el-button>
+          </div>
           <div class="search-box">
             <el-menu-item index="5" class="item5">
               <el-input
-                  v-model="searchInput"
-                  placeholder="search"
-                  :suffix-icon="Search"
-                  @input="searchHandle"
-                  @keydown.enter="jumpToSearchPage"
+                v-model="searchInput"
+                placeholder="search"
+                :suffix-icon="Search"
+                @input="searchHandle"
+                @keydown.enter="jumpToSearchPage"
               >
               </el-input>
               <div class="search-extern-res">
@@ -80,16 +85,16 @@
             </el-menu-item>
           </div>
           <el-menu-item index="7" class="item7">
-            <el-button class="edit" :icon="Edit" circle plain @click="toMyDraftPage"/>
+            <el-button class="edit" :icon="Edit" circle plain @click="toMyDraftPage" />
           </el-menu-item>
           <el-menu-item index="8" class="item8">
             <div class="bell">
-              <el-button class="bell" type="plain" :icon="BellFilled" circle @click="toMyMessagePage"/>
+              <el-button class="bell" type="plain" :icon="BellFilled" circle @click="toMyMessagePage" />
             </div>
           </el-menu-item>
 
-          <AvatarAndUsername v-show="$store.state.haveLogin"/>
-          <RegisterAndLogin v-show="!$store.state.haveLogin"/>
+          <AvatarAndUsername v-show="$store.state.haveLogin" />
+          <RegisterAndLogin v-show="!$store.state.haveLogin" />
         </el-menu>
       </div>
     </div>
@@ -99,26 +104,26 @@
 
 
 <script lang='ts'>
-import {Ref, ref} from 'vue'
+import { Ref, ref } from 'vue'
 import {
   Search,
   Edit,
-  BellFilled,
+  BellFilled
 } from '@element-plus/icons-vue'
-import RegisterAndLogin from "@/components/mini/RegisterAndLogin.vue"
-import AvatarAndUsername from "@/components/mini/AvatarAndUsername.vue"
-import router from "@/router";
-import store from "@/store";
-import api from "@/api/modules"
-import {articleBaseInfo} from "@/type";
-import {ElMessage} from "element-plus";
-import CONST from "@/global/const"
+import RegisterAndLogin from '@/components/mini/RegisterAndLogin.vue'
+import AvatarAndUsername from '@/components/mini/AvatarAndUsername.vue'
+import router from '@/router'
+import store from '@/store'
+import api from '@/api/modules'
+import { articleBaseInfo } from '@/type'
+import { ElMessage } from 'element-plus'
+import CONST from '@/global/const'
 
 export default {
-  name: "TopNavBar",
+  name: 'TopNavBar',
   components: {
     RegisterAndLogin,
-    AvatarAndUsername,
+    AvatarAndUsername
   },
   mounted() {
     document.body.addEventListener('click', () => {
@@ -132,10 +137,10 @@ export default {
     const showRes = ref(false)
     const searchResult: Ref<articleBaseInfo[]> = ref([CONST.DEFAULTARTICLE, CONST.DEFAULTARTICLE])
     const toMyMessagePage = () => {
-      router.push({name: 'message', params: {userId: store.state.userinfo.id}})
+      router.push({ name: 'message', params: { userId: store.state.userinfo.id } })
     }
     const toMyDraftPage = () => {
-      router.push({name: 'draft', params: {userId: store.state.userinfo.id}})
+      router.push({ name: 'draft', params: { userId: store.state.userinfo.id } })
     }
     const searchHandle = () => {
       showRes.value = true
@@ -160,12 +165,12 @@ export default {
       })
     }
     const jumpToSearchPage = () => {
-      router.push({name: 'search', params: {keyword: searchInput.value}})
+      router.push({ name: 'search', params: { keyword: searchInput.value } })
       showRes.value = false
       searchInput.value = ''
     }
     const toArticleDetails = (id: number) => {
-      router.push({name: 'articleDetails', params: {postId: id}})
+      router.push({ name: 'articleDetails', params: { postId: id } })
       showRes.value = false
       searchInput.value = ''
     }
@@ -229,6 +234,7 @@ export default {
 
           &:hover {
             background-color: transparent !important;
+            border: none !important;
           }
         }
       }
@@ -236,7 +242,7 @@ export default {
 
       .item8 {
         width: 10px;
-        margin-top: -9px;
+        margin-top: -25px;
         border-bottom: 0;
 
         .bell {
@@ -265,7 +271,6 @@ export default {
       }
 
       .item7 {
-        margin-top: 15px;
         width: 10px;
         border-bottom: 0;
 
@@ -295,11 +300,11 @@ export default {
       }
 
       .search-box {
-        width: 400px;
+        width: 320px;
         margin-top: -2px;
 
         .item5 {
-          width: 350px;
+          width: 270px;
           padding: 0;
           margin-right: 10px;
           border-bottom: 0;
@@ -370,7 +375,9 @@ export default {
       }
     }
   }
-
 }
 
+.el-tooltip__trigger:focus-visible {
+  outline: unset;
+}
 </style>
