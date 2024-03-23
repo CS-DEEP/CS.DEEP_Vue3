@@ -4,12 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import {onBeforeMount, onMounted, ref} from 'vue'
 import router from '@/router'
 import store from '@/store'
-import { ElMessage } from 'element-plus'
-import { getNextProblem } from '@/global/utils'
+import {ElMessage} from 'element-plus'
+import {getNextProblem} from '@/global/utils'
 import ChatInputComp from '@/components/persona/ChatInputComp.vue'
+import api from "@/api/modules";
 
 const id = Number(router.currentRoute.value.params.id)
 const history = ref(store.state.messageHistory[id])
@@ -53,6 +54,15 @@ const answerHandle = (answer) => {
     })
   }
 }
+
+onMounted(() => {
+  api.personaApi.getProblemList(id).then(res => {
+    store.commit('updateQueryProblem', [id, res.data.data.questionList])
+    console.log(res.data.data)
+  }).catch(err => {
+    console.log(err)
+  })
+})
 </script>
 
 <style scoped lang="scss">
