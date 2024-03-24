@@ -61,7 +61,7 @@ const answerHandle = (answer: string) => {
     // 清空重新测评
     store.commit('clearMessage', id)
   } else if (answer === '查看当前画像结果') {
-    // TODO: 跳转画像测评结果
+    router.push({ name: 'persona', params: { userId: store.state.userinfo.id } })
   } else {
     // 先保存用户回答
     store.commit('updateMessageHistory', [id, {

@@ -33,20 +33,26 @@
               <span>粉丝列表</span>
             </router-link>
           </div>
-          <div v-show="isOwn">
+          <div v-if="isOwn">
             <router-link :to="{name:'message',params:{userId: user.id}}">
               <img src="../../assets/image/msg.png" alt="message">
               <span>我的消息</span>
             </router-link>
           </div>
-          <div v-show="isOwn">
+          <div v-if="isOwn">
+            <router-link :to="{name:'persona',params:{userId: user.id}}">
+              <img src="../../assets/image/persona.png" alt="persona">
+              <span>我的画像</span>
+            </router-link>
+          </div>
+          <div v-if="isOwn">
             <router-link :to="{name:'draft',params:{userId: user.id}}">
               <img src="../../assets/image/temp.png" alt="temp">
               <span>草稿箱</span>
             </router-link>
           </div>
         </div>
-        <div class="show-list">
+        <div class="show-list" style="width: 70%">
           <router-view/>
         </div>
       </div>
@@ -180,6 +186,7 @@ export default {
       margin: 10px auto;
       display: flex;
       flex-direction: row;
+      height: fit-content;
 
       .detail-sidebar {
         display: flex;

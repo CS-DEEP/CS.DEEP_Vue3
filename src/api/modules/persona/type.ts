@@ -14,3 +14,8 @@ export type postSendAnswerRes = {
   score: number,
   suggestion: string
 }
+
+export type getOverallRes = {
+  scoreList: [number],
+  suggestionList: [string]
+}

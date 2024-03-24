@@ -108,6 +108,14 @@ const router = createRouter({
           }
         },
         {
+          path: 'persona',
+          name: 'persona',
+          component: () => import('@/views/persona/MyPersonaView.vue'),
+          meta: {
+            verifyLoginState: true
+          }
+        },
+        {
           path: 'drafts',
           name: 'draft',
           component: () => import('@/views/user/details/MyDraftView.vue'),
@@ -169,14 +177,6 @@ const router = createRouter({
       path: '/persona/query/:id(\\d+)',
       name: 'persona-query',
       component: () => import('@/views/persona/QueryView.vue'),
-      meta: {
-        verifyLoginState: true
-      }
-    },
-    {
-      path: '/persona/result',
-      name: 'persona-res',
-      component: () => import('@/views/persona/PersonaResultView.vue'),
       meta: {
         verifyLoginState: true
       }

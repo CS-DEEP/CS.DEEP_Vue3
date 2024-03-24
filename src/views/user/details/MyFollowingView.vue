@@ -56,7 +56,6 @@ export default {
       if (res.data.code === 200) {
         this.followingList = res.data.data.following;
         this.numOfItem = res.data.data.following.length;
-        console.log(this.followingList)
         for (let i = 0; i < this.numOfItem && i < 6; ++i) {
           this.curList.push(this.followingList[i])
         }

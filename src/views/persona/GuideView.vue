@@ -26,9 +26,10 @@
 <script setup lang="ts">
 import CardSectionComp from '@/components/persona/CardSectionComp.vue'
 import router from '@/router'
+import store from '@/store'
 
 const toResultView = () => {
-  router.push('/persona/result')
+  router.push({ name: 'persona', params: { userId: store.state.userinfo.id } })
 }
 </script>
 

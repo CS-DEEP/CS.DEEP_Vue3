@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <form class="search-form" @submit.prevent>
-      <input v-model="answer" type="search" placeholder="按 Enter 发送回复（Tips: 回复“查看当前画像结果”即可前往查看各维度得分）" class="search-input">
+      <input v-model="answer" type="search"
+             placeholder="按 Enter 发送回复（Tips: 回复“查看当前画像结果”即可前往查看各维度得分）" class="search-input">
       <button @click="answerHandle" type="submit" class="search-button">
         <svg class="submit-button">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
@@ -27,6 +28,7 @@ const emit = defineEmits(['answerVal'])
 
 const answerHandle = () => {
   emit('answerVal', answer.value)
+  answer.value = ''
 }
 
 onMounted(() => {
