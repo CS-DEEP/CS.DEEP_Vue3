@@ -33,8 +33,8 @@ import api from '@/api/modules'
 import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 
-const scoreList = ref([2, 3, 4, 3])
-const suggestionList = ref(['建议1', '建议2', '建议3'])
+const scoreList = ref([])
+const suggestionList = ref([])
 const dom0 = shallowRef()
 const dom1 = shallowRef()
 const dom2 = shallowRef()
