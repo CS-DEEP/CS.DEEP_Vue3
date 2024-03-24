@@ -1,5 +1,11 @@
 import service from '@/api/instance'
-import type { getOverallRes, getProblemListRes, postSendAnswerRes, ResponseResult } from '@/api/modules/persona/type'
+import type {
+  getAtlasRes,
+  getOverallRes,
+  getProblemListRes,
+  postSendAnswerRes,
+  ResponseResult
+} from '@/api/modules/persona/type'
 import type { Answer } from '@/type'
 
 const getProblemList = (data: number) => {
@@ -18,8 +24,13 @@ const getOverallResult = () => {
   return service.get<ResponseResult<getOverallRes>>('/persona/get/score')
 }
 
+const getAtlasRelation = () => {
+  return service.get<ResponseResult<getAtlasRes>>('/atlas/get')
+}
+
 export default {
-  getProblemList,   // 获取不同维度的问题
-  postSendAnswer,   // 获取当前回复的得分和建议
-  getOverallResult  // 获取所有得分和建议
+  getProblemList,    // 获取不同维度的问题
+  postSendAnswer,    // 获取当前回复的得分和建议
+  getOverallResult,  // 获取所有得分和建议
+  getAtlasRelation   // 获取知识图谱关系
 }

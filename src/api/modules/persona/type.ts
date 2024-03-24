@@ -19,3 +19,9 @@ export type getOverallRes = {
   scoreList: [number],
   suggestionList: [string]
 }
+
+export type getAtlasRes = {
+  nodes: [],
+  categories: [],
+  links: []
+}

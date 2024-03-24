@@ -46,6 +46,12 @@
             </router-link>
           </div>
           <div v-if="isOwn">
+            <router-link :to="{name:'atlas',params:{userId: user.id}}">
+              <img src="../../assets/image/atlas.png" alt="atlas">
+              <span>知识图谱</span>
+            </router-link>
+          </div>
+          <div v-if="isOwn">
             <router-link :to="{name:'draft',params:{userId: user.id}}">
               <img src="../../assets/image/temp.png" alt="temp">
               <span>草稿箱</span>

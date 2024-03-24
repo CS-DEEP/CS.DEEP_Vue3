@@ -8,7 +8,7 @@ import type { Problem, userType } from '@/type'
 export default createStore<StateTypes>({
   state: {
     userinfo: CONST.DEFAULTUSERINFO,
-    haveLogin: true,
+    haveLogin: false,
     messageHistory: [
       [
         {

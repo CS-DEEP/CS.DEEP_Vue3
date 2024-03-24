@@ -116,6 +116,14 @@ const router = createRouter({
           }
         },
         {
+          path: 'atlas',
+          name: 'atlas',
+          component: () => import('@/views/persona/MyAtlasView.vue'),
+          meta: {
+            verifyLoginState: true
+          }
+        },
+        {
           path: 'drafts',
           name: 'draft',
           component: () => import('@/views/user/details/MyDraftView.vue'),
