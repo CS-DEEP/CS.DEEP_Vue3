@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <form class="search-form">
-      <input v-model="answer" type="search" placeholder="按 Enter 发送" class="search-input">
+    <form class="search-form" @submit.prevent>
+      <input v-model="answer" type="search" placeholder="按 Enter 发送回复（Tips: 回复“查看当前画像结果”即可前往查看各维度得分）" class="search-input">
       <button @click="answerHandle" type="submit" class="search-button">
         <svg class="submit-button">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
@@ -50,8 +50,7 @@ $color: #e24040;
 
 .container {
   height: 50px;
-  padding-bottom: 10px;
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,12 +59,11 @@ $color: #e24040;
 .search-form {
   width: 100%;
   position: relative;
-  top: 50%;
   left: 50%;
   height: 40px;
   border-radius: 10px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   background: #fff;
   transition: all 0.3s ease;
 

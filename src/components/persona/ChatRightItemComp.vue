@@ -2,11 +2,9 @@
   <div class="container">
     <div class="message-box">
       <div class="avatar">
-        <img src="@/assets/image/user.svg" alt="avatar">
+        <img src="@/assets/image/user.svg" alt="avatar" style="width: 40px;height: 40px">
       </div>
-      <div class="message">
-        <p>{{ message }}</p>
-      </div>
+      <div class="message" v-html="message"></div>
     </div>
   </div>
 </template>
@@ -47,10 +45,10 @@ const infoProps = defineProps({
 .message {
   max-width: 70%;
   word-wrap: break-word;
-  background-color: #7aa5e5;
+  background-color: #2f67f5;
   border-radius: 10px;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-right: 10px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 18px;
 }
 </style>

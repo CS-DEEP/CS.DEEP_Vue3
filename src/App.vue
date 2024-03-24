@@ -33,6 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #f3f5fc;
 
   .views {
     width: 100%;

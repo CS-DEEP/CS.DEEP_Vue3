@@ -8,24 +8,24 @@ import type { Problem, userType } from '@/type'
 export default createStore<StateTypes>({
   state: {
     userinfo: CONST.DEFAULTUSERINFO,
-    haveLogin: false,
+    haveLogin: true,
     messageHistory: [
       [
         {
           role: 'assistant',
-          content: '欢迎来到“在线自主学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+          content: '欢迎来到“在线自主学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
         }
       ],
       [
         {
           role: 'assistant',
-          content: '欢迎来到“在线协作学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+          content: '欢迎来到“在线协作学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
         }
       ],
       [
         {
           role: 'assistant',
-          content: '欢迎来到“数字化学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+          content: '欢迎来到“数字化学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
         }
       ]
     ],
@@ -66,7 +66,7 @@ export default createStore<StateTypes>({
         state.messageHistory[0] = [
           {
             role: 'assistant',
-            content: '欢迎来到“在线自主学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+            content: '欢迎来到“在线自主学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
           }
         ]
         state.queryIndex[0] = 0
@@ -74,7 +74,7 @@ export default createStore<StateTypes>({
         state.messageHistory[1] = [
           {
             role: 'assistant',
-            content: '欢迎来到“在线协作学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+            content: '欢迎来到“在线协作学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
           }
         ]
         state.queryIndex[1] = 0
@@ -82,7 +82,7 @@ export default createStore<StateTypes>({
         state.messageHistory[2] = [
           {
             role: 'assistant',
-            content: '欢迎来到“数字化学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复“我已准备好”，未准备好请回复“我还没准备好”。'
+            content: '欢迎来到“数字化学习能力”的画像测评！接下来将会询问你一系列问题，你是否准备好了？如果准备好请回复<strong>“我已准备好”</strong>，未准备好请回复<strong>“我还没准备好”</strong>。'
           }
         ]
         state.queryIndex[2] = 0

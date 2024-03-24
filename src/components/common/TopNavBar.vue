@@ -17,6 +17,11 @@
             <router-link to="/" class="font-icon">CS.DEEP</router-link>
           </el-menu-item>
           <div class="item-list">
+            <el-button class="big-title">
+              <router-link class="bat-title" to="/persona/guide" style="color: black">画像评测</router-link>
+            </el-button>
+          </div>
+          <div class="item-list">
             <el-dropdown class="dropdown">
               <el-button class="big-title">
                 <span class="bat-title">专业学习</span>
@@ -58,11 +63,6 @@
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
-          </div>
-          <div class="item-list">
-            <el-button class="big-title">
-              <router-link class="bat-title" to="/persona/guide" style="color: black">画像评测</router-link>
-            </el-button>
           </div>
           <div class="search-box">
             <el-menu-item index="5" class="item5">

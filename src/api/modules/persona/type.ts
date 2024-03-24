@@ -9,3 +9,8 @@ export type ResponseResult<T> = {
 export type getProblemListRes = {
   questionList: [Problem]
 }
+
+export type postSendAnswerRes = {
+  score: number,
+  suggestion: string
+}
