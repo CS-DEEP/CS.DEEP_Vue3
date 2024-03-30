@@ -64,7 +64,7 @@ body {
   justify-content: center;
   padding: 1rem;
   max-width: 1024px;
-  margin: 20px auto;
+  margin: 2px auto;
   font-family: "Times New Roman", serif;
 
   @media (min-width: $bp-md) {

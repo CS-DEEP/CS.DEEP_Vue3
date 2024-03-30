@@ -39,6 +39,8 @@ const toResultView = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background-color: #c8d6e8;
 }
 
 button {
@@ -51,7 +53,7 @@ button {
 
 button {
   --primary-color: #111;
-  --hovered-color: #c84747;
+  --hovered-color: #9d2a2a;
   position: relative;
   display: flex;
   font-weight: 550;

@@ -24,7 +24,7 @@ const infoProps = defineProps({
   align-items: flex-start;
   width: 100%;
   height: max-content;
-  color: #000;
+  color: #fff;
 }
 
 .message-box {
@@ -44,9 +44,9 @@ const infoProps = defineProps({
 .message {
   max-width: 85%;
   word-wrap: break-word;
-  background-color: #ffffff;
   border-radius: 10px;
   padding: 10px;
   font-size: 18px;
+  background-color: #3082d5;
 }
 </style>

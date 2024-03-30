@@ -102,11 +102,11 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .query-box {
-  background-color: #f3f5fc;
-  height: 680px;
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100vh;
+  background-color: #190b52;
 }
 
 .container {
@@ -136,5 +136,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 60px;
 }
 </style>

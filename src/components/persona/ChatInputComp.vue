@@ -52,16 +52,17 @@ $color: #e24040;
 
 .container {
   height: 50px;
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #190b52;
 }
 
 .search-form {
-  width: 100%;
+  width: 60%;
   position: relative;
-  left: 50%;
+  left: 30%;
   height: 40px;
   border-radius: 10px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);

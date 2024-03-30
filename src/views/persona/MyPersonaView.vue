@@ -34,8 +34,8 @@ import api from '@/api/modules'
 import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 
-const scoreList = ref([1, 2, 3, 4])
-const suggestionList = ref(['没有建议', '没有建议', '没有建议'])
+const scoreList = ref([3.2, 2.3, 3.5, 3.0])
+const suggestionList = ref([])
 const subScore = ref([[1, 2, 3, 4], [0, 2, 1, 4], [2, 3, 4, 1]])
 const dom0 = shallowRef()
 const dom1 = shallowRef()
@@ -77,7 +77,22 @@ const drawScorePie = () => {
       left: 'center',
       bottom: -4
     },
-    color: ['#5470c6', '#cbc4c4'],
+    graphic: [
+      {
+        //环形图中间添加文字
+        type: 'text', //通过不同top值可以设置上下显示
+        left: 'center',
+        top: 'center',
+        style: {
+          text: scoreList.value[0],
+          textAlign: 'center',
+          fill: '#1E7CE8',
+          fontSize: 25,
+          lineHeight: 20
+        }
+      }
+    ],
+    color: ['#6687ec', '#e5dcdc'],
     tooltip: {
       trigger: 'item'
     },
@@ -85,10 +100,10 @@ const drawScorePie = () => {
       {
         name: '在线自主学习能力',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 5,
           borderColor: '#fff',
           borderWidth: 2
         },
@@ -111,18 +126,33 @@ const drawScorePie = () => {
       left: 'center',
       bottom: -4
     },
-    color: ['#5470c6', '#cbc4c4'],
+    color: ['#6687ec', '#e5dcdc'],
     tooltip: {
       trigger: 'item'
     },
+    graphic: [
+      {
+        //环形图中间添加文字
+        type: 'text', //通过不同top值可以设置上下显示
+        left: 'center',
+        top: 'center',
+        style: {
+          text: scoreList.value[1],
+          textAlign: 'center',
+          fill: '#1E7CE8',
+          fontSize: 30,
+          lineHeight: 20
+        }
+      }
+    ],
     series: [
       {
         name: '在线协作学习能力',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 5,
           borderColor: '#fff',
           borderWidth: 2
         },
@@ -145,7 +175,22 @@ const drawScorePie = () => {
       left: 'center',
       bottom: -4
     },
-    color: ['#5470c6', '#cbc4c4'],
+    graphic: [
+      {
+        //环形图中间添加文字
+        type: 'text', //通过不同top值可以设置上下显示
+        left: 'center',
+        top: 'center',
+        style: {
+          text: scoreList.value[2],
+          textAlign: 'center',
+          fill: '#1E7CE8',
+          fontSize: 30,
+          lineHeight: 20
+        }
+      }
+    ],
+    color: ['#6687ec', '#e5dcdc'],
     tooltip: {
       trigger: 'item'
     },
@@ -153,10 +198,10 @@ const drawScorePie = () => {
       {
         name: '数字化学习能力',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 5,
           borderColor: '#fff',
           borderWidth: 2
         },
@@ -179,18 +224,33 @@ const drawScorePie = () => {
       left: 'center',
       bottom: -4
     },
-    color: ['#5470c6', '#cbc4c4'],
+    color: ['#6687ec', '#e5dcdc'],
     tooltip: {
       trigger: 'item'
     },
+    graphic: [
+      {
+        //环形图中间添加文字
+        type: 'text', //通过不同top值可以设置上下显示
+        left: 'center',
+        top: 'center',
+        style: {
+          text: scoreList.value[3],
+          textAlign: 'center',
+          fill: '#1E7CE8',
+          fontSize: 30,
+          lineHeight: 20
+        }
+      }
+    ],
     series: [
       {
         name: '综合评价',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 5,
           borderColor: '#fff',
           borderWidth: 2
         },
@@ -328,6 +388,15 @@ onBeforeUnmount(() => {
       padding-top: 8px;
       padding-right: 8px;
     }
+  }
+}
+
+.sub-score-box {
+  position: relative;
+
+  #sub-score {
+    position: relative;
+    left: -85px;
   }
 }
 </style>

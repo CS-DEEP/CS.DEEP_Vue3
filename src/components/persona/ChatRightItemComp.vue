@@ -45,10 +45,10 @@ const infoProps = defineProps({
 .message {
   max-width: 70%;
   word-wrap: break-word;
-  background-color: #2f67f5;
+  background-color: #86c5e0;
   border-radius: 10px;
   padding: 10px;
-  color: #ffffff;
+  color: #000;
   font-size: 18px;
 }
 </style>

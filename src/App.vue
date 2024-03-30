@@ -33,7 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f3f5fc;
+  background-color: #fff;
 
   .views {
     width: 100%;
@@ -43,7 +43,6 @@ body {
 
   .footer-container {
     flex-shrink: 0;
-    margin-top: 20px;
   }
 }
 
